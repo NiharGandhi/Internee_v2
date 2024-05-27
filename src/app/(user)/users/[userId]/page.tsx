@@ -24,6 +24,8 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import Link from 'next/link';
+import { DownloadCloudIcon, FileIcon } from 'lucide-react';
 
 
 const UserPublicPage = async ({
@@ -76,6 +78,19 @@ const UserPublicPage = async ({
                                 Graduation Date: {user?.GraduationDate ? user.GraduationDate.toDateString() : 'N/A'}
                             </div>
                         </div>
+                        {user?.resume ? (
+                            <Link href={user?.resume}>
+                                <div className="flex items-center justify-center p-3 w-full bg-purple-100 border-purple-200 border text-purple-700 rounded-md">
+                                    {user?.name}&apos;s Resume
+                                    <DownloadCloudIcon className='h-5 w-5 mr-2' />
+                                </div>
+                            </Link>
+                        ) : (
+                                <div className='flex items-center justify-center h-16 bg-slate-100 rounded-md text-slate-400'>
+                                    <FileIcon className='h-5 w-5 text-slate-400 mr-2' />
+                                    No Resume Uploaded by {user?.name}
+                                </div>
+                        )}
                     </CardContent>
                     <CardFooter>
                         <Popover>

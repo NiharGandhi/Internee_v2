@@ -24,6 +24,8 @@ model User {
   
   skills String? @db.Text
 
+  resume String? @db.Text
+
   role UserRole @default(USER)
 }
 
