@@ -20,7 +20,20 @@ model User {
   EducationLevel String? @db.Text
   InstitutionName String? @db.Text
   GraduationDate DateTime?
-  email String? @db.Text
+  email String? @unique @db.Text
   
   skills String? @db.Text
+
+  role UserRole @default(USER)
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+model Events {
+  id String @id @default(uuid())
+  title String @db.Text
+  dateTime DateTime
 }

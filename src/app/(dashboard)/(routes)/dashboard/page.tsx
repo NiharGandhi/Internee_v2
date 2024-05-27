@@ -4,14 +4,21 @@ import { BarChart, BookIcon, CalendarIcon, NetworkIcon, UserIcon, UsersIcon } fr
 import Link from 'next/link'
 import React, { useState } from 'react'
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/components/ui/card";
+import useEvents from '@/hooks/useEvents';
+import EventCard from '@/components/EventCard';
 
 const Dashboard = () => {
+  const { events, loading, error } = useEvents();
+
   const [isNavOpen, setIsNavOpen] = useState(false); // State to track if navbar is open
 
   // Function to toggle navbar state
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
   };
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr] overflow-hidden">
@@ -126,7 +133,7 @@ const Dashboard = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center justify-between">
-                    <div className="text-4xl font-bold">8</div>
+                    <div className="text-4xl font-bold">{events.length}</div>
                     <CalendarIcon className="h-8 w-8 text-gray-500 dark:text-gray-400" />
                   </div>
                 </CardContent>
@@ -154,43 +161,7 @@ const Dashboard = () => {
                   <BarChart className="aspect-[4/3]" />
                 </CardContent>
               </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Upcoming Events</CardTitle>
-                  <CardDescription>Your upcoming events</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid gap-4">
-                    <div className="flex items-center gap-4">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800">
-                        <CalendarIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold">Internee Networking Event</h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">June 15, 2023 - 7:00 PM</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800">
-                        <CalendarIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold">Career Development Workshop</h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">July 10, 2023 - 6:30 PM</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800">
-                        <CalendarIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold">Alumni Reunion</h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">August 1, 2023 - 8:00 PM</p>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <EventCard events={events} />
             </div>
           </div>
         </main>
