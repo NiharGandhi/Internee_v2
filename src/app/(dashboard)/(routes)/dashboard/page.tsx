@@ -1,23 +1,53 @@
 "use client";
 
-import { BarChart, BookIcon, CalendarIcon, NetworkIcon, UserIcon, UsersIcon } from 'lucide-react'
+import { BookIcon, CalendarIcon, NetworkIcon, UserIcon, UsersIcon } from 'lucide-react'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/components/ui/card";
 import useEvents from '@/hooks/useEvents';
 import EventCard from '@/components/EventCard';
+import useOnlineResources from '@/hooks/useOnlineResource';
+import ResourceCard from '@/components/ResourceCard';
+
+const Loader = () => (
+  <div className="flex justify-center items-center h-screen">
+    {/* Insert your loader SVG here */}
+    <svg xmlns="http://www.w3.org/2000/svg" className="animate-spin h-10 w-10 text-gray-500" viewBox="0 0 24 24">
+      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A8.001 8.001 0 0112 4.472v3.764l4.065 2.329-1.346 2.338-4.119-2.371zM12 20c3.866 0 7-3.134 7-7h-4c0 2.761-2.239 5-5 5s-5-2.239-5-5H0c0 4.962 4.037 9 9 9z"></path>
+    </svg>
+  </div>
+);
 
 const Dashboard = () => {
   const { events, loading, error } = useEvents();
+  const { onlineResources, loadingRes, errorRes } = useOnlineResources();
 
   const [isNavOpen, setIsNavOpen] = useState(false); // State to track if navbar is open
+  const [users, setUsers] = useState([]);
 
   // Function to toggle navbar state
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
   };
 
-  if (loading) return <div>Loading...</div>;
+  useEffect(() => {
+    // Fetch users data from API
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch('/api/allUsers');
+        const data = await response.json();
+        console.log(data);
+        setUsers(data);
+      } catch (error) {
+        console.error('Failed to fetch users', error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  if (loading) return <div><Loader /></div>;
   if (error) return <div>{error}</div>;
 
   return (
@@ -121,7 +151,7 @@ const Dashboard = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center justify-between">
-                    <div className="text-4xl font-bold">125</div>
+                    <div className="text-4xl font-bold">{users.length}</div>
                     <UsersIcon className="h-8 w-8 text-gray-500 dark:text-gray-400" />
                   </div>
                 </CardContent>
@@ -145,22 +175,14 @@ const Dashboard = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center justify-between">
-                    <div className="text-4xl font-bold">42</div>
+                    <div className="text-4xl font-bold">{onlineResources.length}</div>
                     <BookIcon className="h-8 w-8 text-gray-500 dark:text-gray-400" />
                   </div>
                 </CardContent>
               </Card>
             </div>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Users by Profile</CardTitle>
-                  <CardDescription></CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <BarChart className="aspect-[4/3]" />
-                </CardContent>
-              </Card>
+              <ResourceCard resources={onlineResources} title='Online Resouces' cardDesc='Useful links and resources for interns' />
               <EventCard events={events} />
             </div>
           </div>

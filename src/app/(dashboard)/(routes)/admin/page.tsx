@@ -1,18 +1,17 @@
 "use client";
 
 import { Button } from '@/components/ui/button';
-import { db } from '@/lib/db';
-import { auth, getAuth } from '@clerk/nextjs/server';
-import axios from 'axios';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 const Admin = () => {
   return (
-    <div>
+    <div className='flex flex-col space-y-4 py-4 px-2'>
       <Link href={"/admin/eventManagement"}>
         <Button>Add Event</Button>
+      </Link>
+      <Link href={"/admin/resourceManagement"}>
+        <Button>Add Resources</Button>
       </Link>
     </div>
   )

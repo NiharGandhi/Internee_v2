@@ -21,19 +21,24 @@ const EventCard: React.FC<EventCardProps> = ({ events }) => {
                 <CardDescription>Events you may be interested in</CardDescription>
             </CardHeader>
             <CardContent>
-                <div className="grid gap-4">
-                    {events.map((event) => (
-                        <div key={event.id} className="flex items-center gap-4">
-                            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800">
-                                <CalendarIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+                {events.length > 0 ? (
+                    <div className="grid gap-4">
+                        {events.map((event) => (
+                            <div key={event.id} className="flex items-center gap-4">
+                                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800">
+                                    <CalendarIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+                                </div>
+                                <div>
+                                    <h3 className="text-lg font-semibold">{event.title}</h3>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">{event.dateTime}</p>
+                                </div>
                             </div>
-                            <div>
-                                <h3 className="text-lg font-semibold">{event.title}</h3>
-                                <p className="text-sm text-gray-500 dark:text-gray-400">{event.dateTime}</p>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                ) : (
+                    <p className="text-sm text-gray-500 dark:text-gray-400">No Events available.</p>
+                )}
+                
             </CardContent>
         </Card>
     );

@@ -37,3 +37,24 @@ model Events {
   title String @db.Text
   dateTime DateTime
 }
+
+model OnlineReourses {
+  id String @id @default(uuid())
+  name String @db.Text
+  desc String @db.Text
+  link String @db.Text
+}
+
+model RecommendedBooks {
+  id String @id @default(uuid())
+  name String @db.Text
+  author String @db.Text
+  link String @db.Text
+}
+
+model UsefulTools {
+  id String @id @default(uuid())
+  name String @db.Text
+  desc String @db.Text
+  link String @db.Text
+}

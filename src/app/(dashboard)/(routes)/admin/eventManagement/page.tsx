@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import axios from "axios";
-import { useRouter } from "next/navigation";
 
 import { format } from "date-fns";
 
@@ -25,7 +24,6 @@ import {
 } from "@/components/ui/form";
 
 import { Input } from "@/components/ui/input";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
@@ -41,7 +39,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
-import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/components/ui/card";
 import { CalendarIcon } from 'lucide-react';
 import EventCard from '@/components/EventCard';
 import useEvents from '@/hooks/useEvents';
@@ -53,14 +50,8 @@ const formSchema = z.object({
   }),
 });
 
-interface Event {
-  id: string;
-  title: string;
-  dateTime: string;
-}
 
 const EventManagement = () => {
-  const router = useRouter();
 
   const { events, loading, error } = useEvents();
 
