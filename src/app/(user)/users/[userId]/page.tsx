@@ -25,7 +25,7 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import Link from 'next/link';
-import { DownloadCloudIcon, FileIcon } from 'lucide-react';
+import { CalendarIcon, DownloadCloudIcon, FileIcon, LinkIcon } from 'lucide-react';
 
 
 const UserPublicPage = async ({
@@ -46,12 +46,22 @@ const UserPublicPage = async ({
         }
     })
 
+    const projects = await db.project.findMany({
+        where: {
+            userId: userId,
+        }
+    })
+
 
     return (
         <div>
             <Header />
             <Breadcrumb className='mt-2 ml-10'>
                 <BreadcrumbList>
+                    <BreadcrumbItem>
+                        <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
                     <BreadcrumbItem>
                         <BreadcrumbLink href="/users">Users</BreadcrumbLink>
                     </BreadcrumbItem>
@@ -90,6 +100,38 @@ const UserPublicPage = async ({
                                     <FileIcon className='h-5 w-5 text-slate-400 mr-2' />
                                     No Resume Uploaded by {user?.name}
                                 </div>
+                        )}
+                        <h2 className='py-4 font-sans text-2xl'>{user?.name}&apos;s Projects</h2>
+                        {projects !== null && (
+                            <div className='grid grid-cols-1 gap-4 mt-4'>
+                                {projects.map((project: any, index: number) => (
+                                    <div key={index} className="flex items-center gap-4">
+                                        {project.link ? ( // Check if project has a link
+                                            <> {/* Wrap in Link if project has a link */}
+                                                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800">
+                                                    <Link href={project.link}>
+                                                        <LinkIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+                                                    </Link>
+                                                </div>
+                                                <div>
+                                                    <h3 className="text-lg font-semibold">{project.name}</h3>
+                                                    <p className="text-sm text-gray-500 dark:text-gray-400">{project.description}</p>
+                                                </div>
+                                            </>
+                                        ) : ( // Render just the div if project does not have a link
+                                            <>
+                                                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800">
+                                                    <CalendarIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+                                                </div>
+                                                <div>
+                                                    <h3 className="text-lg font-semibold">{project.name}</h3>
+                                                    <p className="text-sm text-gray-500 dark:text-gray-400">{project.description}</p>
+                                                </div>
+                                            </>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
                         )}
                     </CardContent>
                     <CardFooter>

@@ -27,11 +27,21 @@ model User {
   resume String? @db.Text
 
   role UserRole @default(USER)
+  projects Project[]
 }
 
 enum UserRole {
   ADMIN
   USER
+}
+
+model Project {
+  id          String   @id @default(uuid())
+  name        String   @db.Text
+  description String   @db.Text
+  link        String?  @db.Text
+  userId      String
+  user        User     @relation(fields: [userId], references: [userId])
 }
 
 model Events {

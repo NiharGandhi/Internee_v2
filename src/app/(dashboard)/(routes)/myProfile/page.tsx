@@ -45,9 +45,10 @@ from '@/components/ui/breadcrumb';
 import { useToast } from '@/components/ui/use-toast';
 import { Separator } from "@/components/ui/separator"
 
-import { CalendarIcon, ConstructionIcon, DownloadCloudIcon, FileIcon } from 'lucide-react';
+import { CalendarIcon, ConstructionIcon, DownloadCloudIcon, FileIcon, LinkIcon, Trash2Icon } from 'lucide-react';
 import { FileUpload } from '@/components/file-upload';
 import Link from 'next/link';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const formSchema = z.object({
     name: z.string().min(2).max(50),
@@ -84,10 +85,24 @@ const MyProfile = () => {
     const [userData, setUserData] = useState<any>(null);
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true); // State to track loading
+    const [projects, setProjects] = useState<any>(null);
 
     const toggleEdit = () => {
         setIsEditing(!isEditing);
     };
+
+    useEffect(() => {
+        const fetchUserProjects = async () => {
+            try {
+                const response = await axios.get("/api/addProjects");
+                setProjects(response.data);
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+        };
+        fetchUserProjects();
+        setLoading(false);
+    }, []);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -221,8 +236,28 @@ const MyProfile = () => {
         }
     };
 
-    
-    // Render loader while data is being fetched
+    const handleDeleteProject = async (index: any) => {
+        try {
+            const projectId = userData[index].id; // Assuming the project ID is stored in userData
+
+            const response = await axios.delete(`/api/addProjects/${projectId}`);
+
+            toast({
+                title: "Congratulations",
+                description: "Profile Deleted Successfully.",
+            })
+
+            window.location.reload();
+
+        } catch (error) {
+            console.error("Error deleting project:", error);
+            toast({
+                title: "Error",
+                description: "An error occurred while deleting the project.",
+            });
+        }
+    };
+
     if (loading) return <Loader />;
 
     return (
@@ -235,7 +270,7 @@ const MyProfile = () => {
                         </BreadcrumbItem>
                         <BreadcrumbSeparator />
                         <BreadcrumbItem>
-                            <BreadcrumbPage>Resources</BreadcrumbPage>
+                            <BreadcrumbPage>My Profile</BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>
@@ -416,11 +451,56 @@ const MyProfile = () => {
                     </Form>
                     <Separator />
                     <div>
-                        <h2 className='font-bold text-2xl font-sans py-4'>Certifications & Achivements</h2>
-                        <div className='flex flex-col items-center justify-center text-2xl text-purple-500'>
-                            <ConstructionIcon className='h-96 w-96 text-yellow-400' />
-                            You caught us. We are still working on this to make your experience better. 🤩
+                        <div className='flex'>
+                            <h2 className='font-bold text-2xl font-sans py-4'>Projects</h2>
+                            <Link href={"/myProfile/projects"} className='py-4 ml-auto'>
+                                <Button>
+                                    Edit Projects
+                                </Button>
+                            </Link>
                         </div>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Your Projects</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                {projects !== null && (
+                                    <div className='grid grid-cols-1 gap-4 mt-4'>
+                                        {projects.map((project: any, index: number) => (
+                                            <div key={index} className="flex items-center gap-4">
+                                                {project.link ? ( // Check if project has a link
+                                                    <> {/* Wrap in Link if project has a link */}
+                                                        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800">
+                                                            <Link href={project.link}>
+                                                                <LinkIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+                                                            </Link>
+                                                        </div>
+                                                        <div>
+                                                            <h3 className="text-lg font-semibold">{project.name}</h3>
+                                                            <p className="text-sm text-gray-500 dark:text-gray-400">{project.description}</p>
+                                                        </div>
+                                                    </>
+                                                ) : ( // Render just the div if project does not have a link
+                                                    <>
+                                                        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800">
+                                                            <CalendarIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+                                                        </div>
+                                                        <div>
+                                                            <h3 className="text-lg font-semibold">{project.name}</h3>
+                                                            <p className="text-sm text-gray-500 dark:text-gray-400">{project.description}</p>
+                                                        </div>
+                                                    </>
+                                                )}
+                                                <div className='ml-auto'>
+                                                    <Button onClick={() => handleDeleteProject(index)} variant={"destructive"}><Trash2Icon className='w-4 h-4' /></Button>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+
+                            </CardContent>
+                        </Card>
                     </div>
                 </div>
             </div>
