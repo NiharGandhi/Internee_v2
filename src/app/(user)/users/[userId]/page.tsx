@@ -48,7 +48,7 @@ const UserPublicPage = async ({
 
     const projects = await db.project.findMany({
         where: {
-            userId: userId,
+            userId: user?.userId,
         }
     })
 
