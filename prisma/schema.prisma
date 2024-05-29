@@ -28,6 +28,7 @@ model User {
 
   role UserRole @default(USER)
   projects Project[]
+  certificates Certificate[]
 }
 
 enum UserRole {
@@ -41,6 +42,16 @@ model Project {
   description String   @db.Text
   link        String?  @db.Text
   imageUrl    String? @db.Text
+  userId      String
+  user        User     @relation(fields: [userId], references: [userId])
+}
+
+model Certificate {
+  id          String   @id @default(uuid())
+  name        String   @db.Text
+  description String   @db.Text
+  link        String?  @db.Text
+  certificateUrl    String? @db.Text
   userId      String
   user        User     @relation(fields: [userId], references: [userId])
 }

@@ -12,30 +12,30 @@ export async function DELETE(req: any) {
         }
 
         const { pathname } = parse(req.url);
-        const projectId = pathname?.split("/").pop();
+        const certificateId = pathname?.split("/").pop();
 
         // Check if projectId is provided
-        if (!projectId) {
+        if (!certificateId) {
             return new NextResponse("Project ID not provided", { status: 400 });
         }
 
         // Find the project by ID and check if it belongs to the authenticated user
-        const project = await db.project.findFirst({
+        const certificate = await db.certificate.findFirst({
             where: {
-                id: projectId,
+                id: certificateId,
                 userId: userId
             }
         });
 
         // If project is not found or doesn't belong to the user, return 404 Not Found
-        if (!project) {
+        if (!certificate) {
             return new NextResponse("Project not found", { status: 404 });
         }
 
         // Delete the project
-        await db.project.delete({
+        await db.certificate.delete({
             where: {
-                id: projectId
+                id: certificateId
             }
         });
 

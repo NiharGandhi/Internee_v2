@@ -12,14 +12,15 @@ export async function POST(req: Request,) {
             return new NextResponse("UNAUTHORIZED", { status: 500 })
         }
 
-        const { name, description, link } = await req.json();
+        const { name, description, link, imageUrl } = await req.json();
 
         const newProject = await db.project.create({
             data: {
                 userId: userId,
                 name: name,
                 description: description,
-                link: link
+                link: link,
+                imageUrl: imageUrl
             }
         })
 

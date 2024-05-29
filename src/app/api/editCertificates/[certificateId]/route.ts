@@ -8,19 +8,19 @@ export async function GET(req: Request,) {
         const { userId } = auth();
         const { pathname } = parse(req.url);
         console.log(pathname)
-        const projectId = pathname?.split("/").pop();
+        const certificateId = pathname?.split("/").pop();
 
         if (!userId) {
             return new NextResponse("UNAUTHORIZED", { status: 500 })
         }
 
-        const usersProject = await db.project.findUnique({
+        const usersCertificate = await db.certificate.findUnique({
             where: {
-                id: projectId
+                id: certificateId
             }
         })
 
-        return NextResponse.json(usersProject);
+        return NextResponse.json(usersCertificate);
     } catch (error) {
         console.log("ERROR API", error);
     }
@@ -32,24 +32,24 @@ export async function PUT(req: Request,) {
 
         const { pathname } = parse(req.url);
         console.log(pathname)
-        const projectId = pathname?.split("/").pop();
+        const certificateId = pathname?.split("/").pop();
 
         if (!userId) {
             return new NextResponse("UNAUTHORIZED", { status: 500 })
         }
 
-        const { name, description, link, imageUrl } = await req.json();
+        const { name, description, link, certificateUrl } = await req.json();
 
-        const newCertificate = await db.project.update({
+        const newCertificate = await db.certificate.update({
             where: {
-                id: projectId
+                id: certificateId
             },
             data: {
                 userId: userId,
                 name: name,
                 description: description,
                 link: link,
-                imageUrl: imageUrl
+                certificateUrl: certificateUrl
             }
         })
 

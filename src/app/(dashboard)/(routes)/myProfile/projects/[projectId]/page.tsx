@@ -212,7 +212,7 @@ const ProjectEditPage = ({
     const onSave = async () => {
         try {
             const values = form.getValues(); // Retrieve form values
-            const response = await axios.put("/api/addProjects", values);
+            const response = await axios.put(`/api/editProjects/${projectData.id}`, values);
             // router.push(`/users/${response.data.id}`);
             toast({
                 title: "Congratulations",

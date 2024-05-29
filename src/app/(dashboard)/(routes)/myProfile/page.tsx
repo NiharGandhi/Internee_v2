@@ -49,6 +49,7 @@ import { CalendarIcon, DownloadCloudIcon, FileIcon } from 'lucide-react';
 import { FileUpload } from '@/components/file-upload';
 import Link from 'next/link';
 import ProfileProjectsDisplay from '@/components/profileProjectsDisplay';
+import ProfileCertificatesDisplay from '@/components/profileCertificatesDisplay';
 
 const formSchema = z.object({
     name: z.string().min(2).max(50),
@@ -86,6 +87,7 @@ const MyProfile = () => {
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true); // State to track loading
     const [projects, setProjects] = useState<any>(null);
+    const [certificates, setCertificates] = useState<any>(null);
 
     const toggleEdit = () => {
         setIsEditing(!isEditing);
@@ -101,6 +103,19 @@ const MyProfile = () => {
             }
         };
         fetchUserProjects();
+        setLoading(false);
+    }, []);
+
+    useEffect(() => {
+        const fetchUserCertificates = async () => {
+            try {
+                const response = await axios.get("/api/addCertificates");
+                setCertificates(response.data);
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+        };
+        fetchUserCertificates();
         setLoading(false);
     }, []);
 
@@ -433,6 +448,7 @@ const MyProfile = () => {
                     <Separator />
                     <div>
                         <ProfileProjectsDisplay projects={projects} />
+                        <ProfileCertificatesDisplay certificates={certificates}/>
                     </div>
                 </div>
             </div>

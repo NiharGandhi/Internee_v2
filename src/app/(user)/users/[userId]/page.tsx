@@ -52,6 +52,15 @@ const UserPublicPage = async ({
         }
     })
 
+    
+    
+    const certificates = await db.certificate.findMany({
+        where: {
+            userId: user?.userId,
+        }
+    });
+
+    console.log("CERT",certificates)
 
     return (
         <div>
@@ -102,7 +111,7 @@ const UserPublicPage = async ({
                                 </div>
                         )}
                         <h2 className='py-4 font-sans text-2xl'>{user?.name}&apos;s Projects</h2>
-                        {projects !== null && (
+                        {projects && projects.length > 0 ? (
                             <div className='grid grid-cols-1 gap-4 mt-4'>
                                 {projects.map((project: any, index: number) => (
                                     <div key={index} className="flex items-center gap-4">
@@ -141,6 +150,41 @@ const UserPublicPage = async ({
                                     
                                 ))}
                             </div>
+                        ) : (
+                                <div className='flex items-center justify-center h-16 bg-slate-100 rounded-md text-slate-400'>
+                                    <FileIcon className='h-5 w-5 text-slate-400 mr-2' />
+                                    No Projects Uploaded by {user?.name}
+                                </div>
+                        )}
+                        <h2 className='py-4 font-sans text-2xl'>{user?.name}&apos;s Certificates</h2>
+                        {certificates && certificates.length > 0 ? (
+                            <div className='grid grid-cols-1 gap-4 mt-4'>
+                                {certificates.map((certificate: any, index: number) => (
+                                    <div key={index} className="flex items-center gap-4">
+                                        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800">
+                                            <CalendarIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+                                        </div>
+                                        <div className='w-32 lg:w-[800px]'>
+                                            <h3 className="text-lg font-semibold">{certificate.name}</h3>
+                                            <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-1">{certificate.description}</p>
+                                        </div>
+                                        <Link href={`/users/${userId}/certificates/${certificate.id}`} className='ml-auto'>
+                                            <div className="h-auto w-auto items-center justify-center rounded-lg bg-purple-100 dark:bg-gray-800 text-sm px-2 lg:block hidden">
+                                                Learn More
+                                            </div>
+                                            <div className="h-auto w-auto items-center justify-center rounded-lg bg-purple-100 dark:bg-gray-800 text-sm px-2 lg:hidden">
+                                                <ArrowBigRight />
+                                            </div>
+                                        </Link>
+                                    </div>
+
+                                ))}
+                            </div>
+                        ) : (
+                                <div className='flex items-center justify-center h-16 bg-slate-100 rounded-md text-slate-400'>
+                                    <FileIcon className='h-5 w-5 text-slate-400 mr-2' />
+                                    No Certificates Uploaded by {user?.name}
+                                </div>
                         )}
                     </CardContent>
                     <CardFooter>
