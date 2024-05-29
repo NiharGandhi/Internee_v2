@@ -51,6 +51,7 @@ import { auth } from '@clerk/nextjs/server';
 import { db } from '@/lib/db';
 import Image from 'next/image';
 import FallBack from "../../../../../../../public/fallback.png";
+import { Textarea } from '@/components/ui/textarea';
 
 const formSchema = z.object({
     name: z.string().min(2),
@@ -135,7 +136,7 @@ const ProjectEditPage = ({
                 return (
                     <div className='flex items-center justify-center h-16 bg-slate-100 rounded-md text-slate-400'>
                         <FileIcon className='h-5 w-5 text-slate-400 mr-2' />
-                        No Resume Uploaded. Upload Now!!!
+                        No Image Uploaded. Upload Now!!!
                     </div>
                 );
             }
@@ -272,7 +273,12 @@ const ProjectEditPage = ({
                                       <FormItem>
                                           <FormLabel>Description</FormLabel>
                                           <FormControl>
-                                              <Input placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing...." {...field} disabled={!isEditing} />
+                                              <Textarea
+                                                  placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing...."
+                                                  className="resize-none"
+                                                  {...field}
+                                                  disabled={!isEditing}
+                                              />
                                           </FormControl>
                                           <FormMessage />
                                       </FormItem>

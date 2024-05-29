@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -33,10 +32,12 @@ import {
     from '@/components/ui/breadcrumb';
 
 import { useToast } from '@/components/ui/use-toast';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { CalendarIcon, DeleteIcon, DownloadCloudIcon, EllipsisVertical, FileIcon, LinkIcon, MenuIcon, PencilIcon, Trash2Icon } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { CalendarIcon, EllipsisVertical, LinkIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+
+import { Textarea } from "@/components/ui/textarea";
 
 import {
     DropdownMenu,
@@ -46,6 +47,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+
 import { FileUpload } from '@/components/file-upload';
 
 
@@ -254,7 +256,11 @@ const AddProjectsPage = () => {
                                         <FormItem>
                                             <FormLabel>Description</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit..." {...field} />
+                                                <Textarea
+                                                    placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing...."
+                                                    className="resize-none"
+                                                    {...field}
+                                                />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
