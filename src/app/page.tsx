@@ -41,15 +41,13 @@ export default function Home() {
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
                   <Link
-                    className="inline-flex h-10 items-center justify-center rounded-md bg-[#6c5ce7] px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-[#6c5ce7]/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#6c5ce7] disabled:pointer-events-none disabled:opacity-50 dark:bg-[#6c5ce7] dark:text-gray-50 dark:hover:bg-[#6c5ce7]/90 dark:focus-visible:ring-[#6c5ce7]"
                     href="/sign-up"
                   >
-                    Sign Up
-                  </Link>
-                  <Link
-                    href="/dashboard"
-                  >
-                    <ShimmerButton>Dashboard</ShimmerButton>
+                    <ShimmerButton
+                      shimmerSize="0.2em"
+                      shimmerDuration="3s"
+                      background="#6c5ce7"
+                    >Sign Up</ShimmerButton>
                   </Link>
                 </div>
               </div>
