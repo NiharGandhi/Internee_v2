@@ -3,6 +3,7 @@ import React from 'react'
 
 import { Button } from "@/components/ui/button"
 import Link from 'next/link'
+import ShimmerButton from './magicui/shimmer-button'
 
 const Header = () => {
     return (
@@ -17,6 +18,11 @@ const Header = () => {
                     </SignInButton>
                 </SignedOut>
                 <SignedIn>
+                    <Link
+                        href="/dashboard"
+                    >
+                        <ShimmerButton className='py-1 mr-2'>Dashboard</ShimmerButton>
+                    </Link>
                     <UserButton />
                 </SignedIn>
             </div>

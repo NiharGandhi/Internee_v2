@@ -17,6 +17,9 @@ export const ourFileRouter = {
     userResume: f({ pdf: { maxFileSize: "4MB", maxFileCount: 1 } })
         .middleware(() => handleAuth())
         .onUploadComplete(() => {}),
+    projectImage: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
+        .middleware(() => handleAuth())
+        .onUploadComplete(() => { }),
         
 } satisfies FileRouter;
 

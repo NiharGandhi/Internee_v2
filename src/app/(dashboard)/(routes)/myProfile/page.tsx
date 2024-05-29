@@ -49,6 +49,7 @@ import { CalendarIcon, ConstructionIcon, DownloadCloudIcon, FileIcon, LinkIcon, 
 import { FileUpload } from '@/components/file-upload';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { CaptionLabel } from 'react-day-picker';
 
 const formSchema = z.object({
     name: z.string().min(2).max(50),
@@ -226,35 +227,13 @@ const MyProfile = () => {
         try {
             const values = form.getValues(); // Retrieve form values
             const response = await axios.put("/api/users", values);
-            router.push(`/users/${response.data.id}`);
+            // router.push(`/users/${response.data.id}`);
             toast({
                 title: "Congratulations",
                 description: "Profile Updated Successfully.",
             })
         } catch (error) {
             console.error("Error updating profile:", error);
-        }
-    };
-
-    const handleDeleteProject = async (index: any) => {
-        try {
-            const projectId = userData[index].id; // Assuming the project ID is stored in userData
-
-            const response = await axios.delete(`/api/addProjects/${projectId}`);
-
-            toast({
-                title: "Congratulations",
-                description: "Profile Deleted Successfully.",
-            })
-
-            window.location.reload();
-
-        } catch (error) {
-            console.error("Error deleting project:", error);
-            toast({
-                title: "Error",
-                description: "An error occurred while deleting the project.",
-            });
         }
     };
 
@@ -384,6 +363,9 @@ const MyProfile = () => {
                                                 <PopoverContent className="w-auto p-0" align="start">
                                                     <Calendar
                                                         mode="single"
+                                                        captionLayout='dropdown'
+                                                        fromYear={1900} 
+                                                        toYear={3000}
                                                         selected={field.value}
                                                         onSelect={field.onChange}
                                                         disabled={(date) =>
@@ -475,9 +457,9 @@ const MyProfile = () => {
                                                                 <LinkIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
                                                             </Link>
                                                         </div>
-                                                        <div>
+                                                        <div className='w-32 lg:w-[800px]'>
                                                             <h3 className="text-lg font-semibold">{project.name}</h3>
-                                                            <p className="text-sm text-gray-500 dark:text-gray-400">{project.description}</p>
+                                                            <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-1">{project.description}</p>
                                                         </div>
                                                     </>
                                                 ) : ( // Render just the div if project does not have a link
@@ -485,15 +467,12 @@ const MyProfile = () => {
                                                         <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800">
                                                             <CalendarIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
                                                         </div>
-                                                        <div>
+                                                            <div className='w-32 lg:w-[800px]'>
                                                             <h3 className="text-lg font-semibold">{project.name}</h3>
-                                                            <p className="text-sm text-gray-500 dark:text-gray-400">{project.description}</p>
+                                                            <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-1">{project.description}</p>
                                                         </div>
                                                     </>
                                                 )}
-                                                <div className='ml-auto'>
-                                                    <Button onClick={() => handleDeleteProject(index)} variant={"destructive"}><Trash2Icon className='w-4 h-4' /></Button>
-                                                </div>
                                             </div>
                                         ))}
                                     </div>

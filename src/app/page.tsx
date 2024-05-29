@@ -6,6 +6,9 @@ import Link from "next/link";
 import HeroImage from "../../public/placeholder.png";
 import FetaureImage from "../../public/features.jpeg";
 import Header from "@/components/header";
+import AnimatedGradientText from "@/components/magicui/animated-gradient-text";
+import AnimatedShinyText from "@/components/magicui/animated-shiny-text";
+import ShimmerButton from "@/components/magicui/shimmer-button";
 
 export default function Home() {
   return (
@@ -44,10 +47,9 @@ export default function Home() {
                     Sign Up
                   </Link>
                   <Link
-                    className="inline-flex h-10 items-center justify-center rounded-md border border-[#6c5ce7] bg-white px-8 text-sm font-medium shadow-sm transition-colors hover:bg-gray-100 hover:text-[#6c5ce7] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#6c5ce7] disabled:pointer-events-none disabled:opacity-50 dark:border-[#6c5ce7] dark:bg-gray-950 dark:hover:bg-[#6c5ce7]/20 dark:hover:text-gray-50 dark:focus-visible:ring-[#6c5ce7]"
                     href="/dashboard"
                   >
-                    Dashboard
+                    <ShimmerButton>Dashboard</ShimmerButton>
                   </Link>
                 </div>
               </div>
@@ -90,12 +92,6 @@ export default function Home() {
                   </li>
                 </ul>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                  <Link
-                    className="inline-flex h-10 items-center justify-center rounded-md bg-[#6c5ce7] px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-[#6c5ce7]/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#6c5ce7] disabled:pointer-events-none disabled:opacity-50 dark:bg-[#6c5ce7] dark:text-gray-50 dark:hover:bg-[#6c5ce7]/90 dark:focus-visible:ring-[#6c5ce7]"
-                    href="/sign-up"
-                  >
-                    Sign Up
-                  </Link>
                   <Link
                     className="inline-flex h-10 items-center justify-center rounded-md border border-[#6c5ce7] bg-white px-8 text-sm font-medium shadow-sm transition-colors hover:bg-gray-100 hover:text-[#6c5ce7] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#6c5ce7] disabled:pointer-events-none disabled:opacity-50 dark:border-[#6c5ce7] dark:bg-gray-950 dark:hover:bg-[#6c5ce7]/20 dark:hover:text-gray-50 dark:focus-visible:ring-[#6c5ce7]"
                     href="/sign-up"
@@ -146,12 +142,6 @@ export default function Home() {
               </div>
             </div>
             <div className="flex flex-col gap-2 min-[400px]:flex-row justify-center">
-              <Link
-                className="inline-flex h-10 items-center justify-center rounded-md bg-[#6c5ce7] px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-[#6c5ce7]/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#6c5ce7] disabled:pointer-events-none disabled:opacity-50 dark:bg-[#6c5ce7] dark:text-gray-50 dark:hover:bg-[#6c5ce7]/90 dark:focus-visible:ring-[#6c5ce7]"
-                href="/sign-up"
-              >
-                Sign Up
-              </Link>
               <Link
                 className="inline-flex h-10 items-center justify-center rounded-md border border-[#6c5ce7] bg-white px-8 text-sm font-medium shadow-sm transition-colors hover:bg-gray-100 hover:text-[#6c5ce7] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#6c5ce7] disabled:pointer-events-none disabled:opacity-50 dark:border-[#6c5ce7] dark:bg-gray-950 dark:hover:bg-[#6c5ce7]/20 dark:hover:text-gray-50 dark:focus-visible:ring-[#6c5ce7]"
                 href="/sign-up"

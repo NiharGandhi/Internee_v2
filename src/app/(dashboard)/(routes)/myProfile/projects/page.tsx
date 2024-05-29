@@ -34,13 +34,26 @@ import {
 
 import { useToast } from '@/components/ui/use-toast';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { CalendarIcon, DeleteIcon, LinkIcon, Trash2Icon } from 'lucide-react';
+import { CalendarIcon, DeleteIcon, DownloadCloudIcon, EllipsisVertical, FileIcon, LinkIcon, MenuIcon, PencilIcon, Trash2Icon } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { FileUpload } from '@/components/file-upload';
+
 
 const formSchema = z.object({
     name: z.string().min(2),
     description: z.string().min(1),
     link: z.string().optional(),
+    imageUrl: z.string().optional(),
 })
 
 const Loader = () => (
@@ -56,6 +69,8 @@ const Loader = () => (
 const AddProjectsPage = () => {
 
     const { toast } = useToast();
+
+    const router  = useRouter();
 
     const [userData, setUserData] = useState<any>(null);
     const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -84,6 +99,7 @@ const AddProjectsPage = () => {
             name: "",
             description: "",// or another default
             link: "",
+            imageUrl: "",
         },
     });
 
@@ -93,9 +109,24 @@ const AddProjectsPage = () => {
                 name: userData.name,
                 description: userData.description,
                 link: userData.link,
+                imageUrl: userData.imageUrl,
             });
         }
     }, [form, userData]);
+
+    // Resume URL rendering logic
+    const renderResumeUrl = () => {
+        return <FileUpload endpoint="projectImage" onChange={handleResumeUpload} />;
+    };
+
+
+    // Handle resume upload
+    const handleResumeUpload = (url?: string) => {
+        if (url) {
+            form.setValue("imageUrl", url);
+            onSave();
+        }
+    };
 
     // Button rendering logic
     const renderButtons = () => {
@@ -121,6 +152,20 @@ const AddProjectsPage = () => {
         }
     }
 
+    const onSave = async () => {
+        try {
+            const values = form.getValues(); // Retrieve form values
+            const response = await axios.put("/api/addProjects", values);
+            // router.push(`/users/${response.data.id}`);
+            toast({
+                title: "Congratulations",
+                description: "Profile Updated Successfully.",
+            })
+        } catch (error) {
+            console.error("Error updating profile:", error);
+        }
+    };
+
     const handleDelete = async (index: any) => {
         try {
             const projectId = userData[index].id; // Assuming the project ID is stored in userData
@@ -133,6 +178,21 @@ const AddProjectsPage = () => {
             })
 
             window.location.reload();
+
+        } catch (error) {
+            console.error("Error deleting project:", error);
+            toast({
+                title: "Error",
+                description: "An error occurred while deleting the project.",
+            });
+        }
+    };
+
+    const handleEdit = async (index: any) => {
+        try {
+            const projectId = userData[index].id; // Assuming the project ID is stored in userData
+
+            router.push(`/myProfile/projects/${projectId}`)
 
         } catch (error) {
             console.error("Error deleting project:", error);
@@ -162,7 +222,7 @@ const AddProjectsPage = () => {
                         </BreadcrumbItem>
                         <BreadcrumbSeparator />
                         <BreadcrumbItem>
-                            <BreadcrumbPage>Edit Projects</BreadcrumbPage>
+                            <BreadcrumbPage>Add Projects</BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>
@@ -178,13 +238,10 @@ const AddProjectsPage = () => {
                                     name="name"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Name</FormLabel>
+                                            <FormLabel>Name of the Project</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="Internee" {...field} />
+                                                <Input placeholder="Internee" {...field} required/>
                                             </FormControl>
-                                            <FormDescription>
-                                                This is your public display name.
-                                            </FormDescription>
                                             <FormMessage />
                                         </FormItem>
 
@@ -197,11 +254,8 @@ const AddProjectsPage = () => {
                                         <FormItem>
                                             <FormLabel>Description</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="Rochester Institute of Technology" {...field} />
+                                                <Input placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit..." {...field} />
                                             </FormControl>
-                                            <FormDescription>
-                                                Currently Studing in or Recently Graduated From
-                                            </FormDescription>
                                             <FormMessage />
                                         </FormItem>
 
@@ -214,16 +268,30 @@ const AddProjectsPage = () => {
                                         <FormItem>
                                             <FormLabel>Link</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="Rochester Institute of Technology" {...field} />
+                                                <Input placeholder="www.google.com" {...field} />
                                             </FormControl>
-                                            <FormDescription>
-                                                Currently Studing in or Recently Graduated From
-                                            </FormDescription>
                                             <FormMessage />
                                         </FormItem>
 
                                     )}
                                 />
+                                <div>
+                                    <FormField
+                                        control={form.control}
+                                        name="imageUrl"
+                                        render={({ field }) => (
+                                            <FormControl>
+                                                <FormItem>
+                                                    <FormLabel>Project Image</FormLabel>
+                                                    <FormControl>
+                                                        {renderResumeUrl()}
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            </FormControl>
+                                        )}
+                                    />
+                                </div>
                             </form>
                         </Form>
                         {renderButtons()}
@@ -245,9 +313,9 @@ const AddProjectsPage = () => {
                                                                 <LinkIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
                                                             </Link>
                                                         </div>
-                                                        <div>
+                                                        <div className='w-32 lg:w-96'>
                                                             <h3 className="text-lg font-semibold">{project.name}</h3>
-                                                            <p className="text-sm text-gray-500 dark:text-gray-400">{project.description}</p>
+                                                            <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-1">{project.description}</p>
                                                         </div>
                                                     </>
                                                 ) : ( // Render just the div if project does not have a link
@@ -255,14 +323,23 @@ const AddProjectsPage = () => {
                                                         <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800">
                                                             <CalendarIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
                                                         </div>
-                                                        <div>
+                                                        <div className='w-32 lg:w-96'>
                                                             <h3 className="text-lg font-semibold">{project.name}</h3>
-                                                            <p className="text-sm text-gray-500 dark:text-gray-400">{project.description}</p>
+                                                            <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-1">{project.description}</p>
                                                         </div>
                                                     </>
                                                 )}
-                                                <div className='ml-auto'>
-                                                    <Button onClick={() => handleDelete(index)} variant={"destructive"}><Trash2Icon className='w-4 h-4' /></Button>
+                                                <div className='ml-auto space-x-1'>
+                                                    <DropdownMenu>
+                                                        <DropdownMenuTrigger><EllipsisVertical /></DropdownMenuTrigger>
+                                                        <DropdownMenuContent>
+                                                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                                            <DropdownMenuSeparator />
+                                                            <DropdownMenuItem onClick={() => handleEdit(index)}>Edit</DropdownMenuItem>
+                                                            <DropdownMenuItem onClick={() => handleDelete(index)} className='text-red-500'>Delete</DropdownMenuItem>
+                                                        </DropdownMenuContent>
+                                                    </DropdownMenu>
+
                                                 </div>
                                             </div>
                                         ))}

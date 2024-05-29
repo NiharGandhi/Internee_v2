@@ -29,6 +29,32 @@ export async function POST(req: Request,) {
     }
 }
 
+export async function PUT(req: Request,) {
+    try {
+        const { userId } = auth();
+
+        if (!userId) {
+            return new NextResponse("UNAUTHORIZED", { status: 500 })
+        }
+
+        const { name, description, link, imageUrl } = await req.json();
+
+        const newProject = await db.project.create({
+            data: {
+                userId: userId,
+                name: name,
+                description: description,
+                link: link,
+                imageUrl: imageUrl,
+            }
+        })
+
+        return NextResponse.json(newProject);
+    } catch (error) {
+        console.log("ERROR API", error);
+    }
+}
+
 export async function GET(req: Request,) {
     try {
         const { userId } = auth();

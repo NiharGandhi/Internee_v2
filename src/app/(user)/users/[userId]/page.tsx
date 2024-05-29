@@ -25,7 +25,7 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import Link from 'next/link';
-import { CalendarIcon, DownloadCloudIcon, FileIcon, LinkIcon } from 'lucide-react';
+import { ArrowBigRight, CalendarIcon, DownloadCloudIcon, FileIcon, LinkIcon, PencilIcon } from 'lucide-react';
 
 
 const UserPublicPage = async ({
@@ -113,9 +113,9 @@ const UserPublicPage = async ({
                                                         <LinkIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
                                                     </Link>
                                                 </div>
-                                                <div>
+                                                <div className='w-32 lg:w-[800px]'>
                                                     <h3 className="text-lg font-semibold">{project.name}</h3>
-                                                    <p className="text-sm text-gray-500 dark:text-gray-400">{project.description}</p>
+                                                    <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-1">{project.description}</p>
                                                 </div>
                                             </>
                                         ) : ( // Render just the div if project does not have a link
@@ -123,13 +123,22 @@ const UserPublicPage = async ({
                                                 <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800">
                                                     <CalendarIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
                                                 </div>
-                                                <div>
+                                                    <div className='w-32 lg:w-[800px]'>
                                                     <h3 className="text-lg font-semibold">{project.name}</h3>
-                                                    <p className="text-sm text-gray-500 dark:text-gray-400">{project.description}</p>
+                                                    <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-1">{project.description}</p>
                                                 </div>
                                             </>
                                         )}
+                                        <Link href={`/users/${userId}/${project.id}`} className='ml-auto'>
+                                            <div className="h-auto w-auto items-center justify-center rounded-lg bg-purple-100 dark:bg-gray-800 text-sm px-2 lg:block hidden">
+                                               Learn More
+                                            </div>
+                                            <div className="h-auto w-auto items-center justify-center rounded-lg bg-purple-100 dark:bg-gray-800 text-sm px-2 lg:hidden">
+                                                <ArrowBigRight />
+                                            </div>
+                                        </Link>
                                     </div>
+                                    
                                 ))}
                             </div>
                         )}

@@ -8,6 +8,7 @@ import useEvents from '@/hooks/useEvents';
 import EventCard from '@/components/EventCard';
 import useOnlineResources from '@/hooks/useOnlineResource';
 import ResourceCard from '@/components/ResourceCard';
+import NumberTicker from '@/components/magicui/number-ticker';
 
 const Loader = () => (
   <div className="flex justify-center items-center h-screen">
@@ -151,7 +152,9 @@ const Dashboard = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center justify-between">
-                    <div className="text-4xl font-bold">{users.length}</div>
+                    <div className="text-4xl font-bold">
+                      <NumberTicker value={users.length} direction='up'></NumberTicker>
+                    </div>
                     <UsersIcon className="h-8 w-8 text-gray-500 dark:text-gray-400" />
                   </div>
                 </CardContent>
@@ -163,7 +166,9 @@ const Dashboard = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center justify-between">
-                    <div className="text-4xl font-bold">{events.length}</div>
+                    <div className="text-4xl font-bold">
+                      <NumberTicker value={events.length} direction='up'></NumberTicker>
+                    </div>
                     <CalendarIcon className="h-8 w-8 text-gray-500 dark:text-gray-400" />
                   </div>
                 </CardContent>
@@ -175,7 +180,9 @@ const Dashboard = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center justify-between">
-                    <div className="text-4xl font-bold">{onlineResources.length}</div>
+                    <div className="text-4xl font-bold">
+                      <NumberTicker value={onlineResources.length} direction='up'></NumberTicker>
+                    </div>
                     <BookIcon className="h-8 w-8 text-gray-500 dark:text-gray-400" />
                   </div>
                 </CardContent>

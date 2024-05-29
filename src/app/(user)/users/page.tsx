@@ -17,6 +17,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import Header from '@/components/header';
 import Link from 'next/link';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
+import { format } from 'date-fns';
 
 
 
@@ -29,6 +30,11 @@ const UsersPage = async () => {
     }
 
     const users = await db.user.findMany();
+
+    const formatDate = (dateString: Date | null) => {
+        if (!dateString) return 'N/A';
+        return format(new Date(dateString), 'dd MMMM yyyy');
+    };
 
     return (
         <div>
@@ -55,11 +61,19 @@ const UsersPage = async () => {
                         <CardContent>
                             <Badge>{user.skills}</Badge>
                             <div className='flex flex-col py-2 justify-center'>
-                                <div>
-                                    Education Level: {user.EducationLevel}
+                                <div className='flex'>
+                                    Education Level: {
+                                        <div className='ml-1 font-semibold'>
+                                            {user.EducationLevel}
+                                        </div>
+                                    }
                                 </div>
-                                <div>
-                                    Graduation Date: {user.GraduationDate ? new Date(user.GraduationDate).toDateString() : 'N/A'}
+                                <div className='flex'>
+                                    Graduation Date: {
+                                    <div className='ml-1 font-semibold'>
+                                        {formatDate(user.GraduationDate)}
+                                    </div>
+                                    }
                                 </div>
                             </div>
                         </CardContent>
