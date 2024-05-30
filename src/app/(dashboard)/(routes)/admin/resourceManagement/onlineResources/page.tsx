@@ -47,6 +47,7 @@ import EventCard from '@/components/EventCard';
 import useEvents from '@/hooks/useEvents';
 import useOnlineResources from '@/hooks/useOnlineResource';
 import ResourceCard from '@/components/ResourceCard';
+import { useToast } from '@/components/ui/use-toast';
 
 const formSchema = z.object({
     name: z.string().min(2).max(50),
@@ -56,7 +57,7 @@ const formSchema = z.object({
 
 
 const OnlineResources = () => {
-    const router = useRouter();
+    const { toast } = useToast();
 
     const { onlineResources, loadingRes, errorRes } = useOnlineResources();
 
@@ -73,7 +74,10 @@ const OnlineResources = () => {
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
             const response = await axios.post("/api/onlineResources", values);
-            // Handle successful response if needed
+            toast({
+                title: "Book Added"
+            })
+            window.location.reload();
         } catch {
             // toast.error("Something went wrong while creating")
             console.log("[ERROR] Something went wrong while creating User");

@@ -9,6 +9,8 @@ import EventCard from '@/components/EventCard';
 import useOnlineResources from '@/hooks/useOnlineResource';
 import ResourceCard from '@/components/ResourceCard';
 import NumberTicker from '@/components/magicui/number-ticker';
+import useRecommendedBooks from '@/hooks/useRecommendedBooks';
+import useUsefulTool from '@/hooks/useTool';
 
 const Loader = () => (
   <div className="flex justify-center items-center h-screen">
@@ -23,6 +25,8 @@ const Loader = () => (
 const Dashboard = () => {
   const { events, loading, error } = useEvents();
   const { onlineResources, loadingRes, errorRes } = useOnlineResources();
+  const { recommendedBooks, loadingBooks, errorBooks } = useRecommendedBooks();
+  const { usefulTools, loadingTools, errorTools } = useUsefulTool();
 
   const [isNavOpen, setIsNavOpen] = useState(false); // State to track if navbar is open
   const [users, setUsers] = useState([]);
@@ -175,8 +179,8 @@ const Dashboard = () => {
               </Card>
               <Card>
                 <CardHeader>
-                  <CardTitle>Upcoming Events</CardTitle>
-                  <CardDescription>Events youre attending</CardDescription>
+                  <CardTitle>Events</CardTitle>
+                  <CardDescription>Number of Events (Including those of past)</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center justify-between">
@@ -195,7 +199,7 @@ const Dashboard = () => {
                 <CardContent>
                   <div className="flex items-center justify-between">
                     <div className="text-4xl font-bold">
-                      <NumberTicker value={onlineResources.length} direction='up'></NumberTicker>
+                      <NumberTicker value={onlineResources.length + usefulTools.length + recommendedBooks.length} direction='up'></NumberTicker>
                     </div>
                     <BookIcon className="h-8 w-8 text-gray-500 dark:text-gray-400" />
                   </div>
@@ -204,7 +208,7 @@ const Dashboard = () => {
             </div>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <ResourceCard resources={onlineResources} title='Online Resouces' cardDesc='Useful links and resources for interns' />
-              <EventCard events={events} />
+              <EventCard events={events} title='Upcoming Events' desc='Events you may be interested in' upcomingEventsActive pastEventsActive={false}/>
             </div>
           </div>
         </main>

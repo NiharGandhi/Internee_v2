@@ -49,6 +49,7 @@ import useOnlineResources from '@/hooks/useOnlineResource';
 import ResourceCard from '@/components/ResourceCard';
 import useUsefulTool from '@/hooks/useTool';
 import UsefulToolCard from '@/components/UsefulToolCard';
+import { useToast } from '@/components/ui/use-toast';
 
 const formSchema = z.object({
     name: z.string().min(2).max(50),
@@ -58,7 +59,8 @@ const formSchema = z.object({
 
 
 const UseFulTools = () => {
-    const router = useRouter();
+
+    const { toast } = useToast();
 
     const { usefulTools, loadingTools, errorTools } = useUsefulTool();
 
@@ -75,7 +77,10 @@ const UseFulTools = () => {
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
             const response = await axios.post("/api/usefulTools", values);
-            // Handle successful response if needed
+            toast({
+                title: "Tool Added"
+            })
+            window.location.reload();
         } catch {
             // toast.error("Something went wrong while creating")
             console.log("[ERROR] Something went wrong while creating User");

@@ -6,11 +6,26 @@ import { BarChart, BookIcon, CalendarIcon, NetworkIcon, UserIcon, UsersIcon } fr
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/components/ui/card";
 import useEvents from '@/hooks/useEvents';
 import EventCard from '@/components/EventCard';
+import { isBefore } from 'date-fns';
+
+interface Event {
+    id: string;
+    title: string;
+    dateTime: string;
+}
+
+interface EventsPageProps {
+    events: Event[];
+}
 
 
-const EventsPage = () => {
 
+const EventsPage: React.FC<EventsPageProps> = () => {
     const { events, loading, error } = useEvents();
+
+    const currentDate = new Date();
+    const pastEvents = events.filter(event => isBefore(new Date(event.dateTime), currentDate));
+    const upcomingEvents = events.filter(event => !isBefore(new Date(event.dateTime), currentDate));
 
     return (
         <div>
@@ -30,44 +45,24 @@ const EventsPage = () => {
                 <main className="flex-1 lg:p-6 px-4 py-4">
                     <div className="grid gap-6">
                         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                            <EventCard events={events} />
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle>Past Events</CardTitle>
-                                    <CardDescription>Events that have previously occured</CardDescription>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="grid gap-4">
-                                        <div className="flex items-center gap-4">
-                                            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800">
-                                                <CalendarIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
-                                            </div>
-                                            <div>
-                                                <h3 className="text-lg font-semibold">Networking Event</h3>
-                                                <p className="text-sm text-gray-500 dark:text-gray-400">June 15, 2023 - 7:00 PM</p>
-                                            </div>
-                                        </div>
-                                        <div className="flex items-center gap-4">
-                                            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800">
-                                                <CalendarIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
-                                            </div>
-                                            <div>
-                                                <h3 className="text-lg font-semibold">Career Development Workshop</h3>
-                                                <p className="text-sm text-gray-500 dark:text-gray-400">July 10, 2023 - 6:30 PM</p>
-                                            </div>
-                                        </div>
-                                        <div className="flex items-center gap-4">
-                                            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800">
-                                                <CalendarIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
-                                            </div>
-                                            <div>
-                                                <h3 className="text-lg font-semibold">Alumni Reunion</h3>
-                                                <p className="text-sm text-gray-500 dark:text-gray-400">August 1, 2023 - 8:00 PM</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </CardContent>
-                            </Card>
+                            <div className="container mx-auto px-4">
+                                <div>
+                                    {upcomingEvents.length > 0 ? (
+                                        <EventCard events={upcomingEvents} title='Upcoming Events' desc='Events you may be interested in' upcomingEventsActive pastEventsActive={false}/>
+                                    ) : (
+                                        <p className="text-sm text-gray-500 dark:text-gray-400">No upcoming events available.</p>
+                                    )}
+                                </div>
+                            </div>
+                            <div className="container mx-auto px-4">
+                                <div>
+                                    {pastEvents.length > 0 ? (
+                                        <EventCard events={pastEvents} title='Past Events' desc='Events you may have been interested in' upcomingEventsActive={false} pastEventsActive/>
+                                    ) : (
+                                        <p className="text-sm text-gray-500 dark:text-gray-400">No past events available.</p>
+                                    )}
+                                </div>  
+                            </div>
                         </div>
                     </div>
                 </main>

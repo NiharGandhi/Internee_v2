@@ -49,6 +49,7 @@ import useOnlineResources from '@/hooks/useOnlineResource';
 import ResourceCard from '@/components/ResourceCard';
 import useRecommendedBooks from '@/hooks/useRecommendedBooks';
 import OnlineBookCard from '@/components/OnlineBooksCard';
+import { useToast } from '@/components/ui/use-toast';
 
 const formSchema = z.object({
     name: z.string().min(2).max(50),
@@ -58,7 +59,7 @@ const formSchema = z.object({
 
 
 const RecommendedBooks = () => {
-    const router = useRouter();
+    const { toast } = useToast();
 
     const { recommendedBooks, loadingBooks, errorBooks } = useRecommendedBooks();
 
@@ -75,6 +76,10 @@ const RecommendedBooks = () => {
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
             const response = await axios.post("/api/recommendedBooks", values);
+            toast({
+                title: "Book Added"
+            })
+            window.location.reload();
             // Handle successful response if needed
         } catch {
             // toast.error("Something went wrong while creating")

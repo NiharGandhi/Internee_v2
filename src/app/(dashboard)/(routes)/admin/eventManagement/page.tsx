@@ -42,6 +42,7 @@ import {
 import { CalendarIcon } from 'lucide-react';
 import EventCard from '@/components/EventCard';
 import useEvents from '@/hooks/useEvents';
+import { useToast } from '@/components/ui/use-toast';
 
 const formSchema = z.object({
   title: z.string().min(2).max(50),
@@ -52,6 +53,8 @@ const formSchema = z.object({
 
 
 const EventManagement = () => {
+
+  const { toast } = useToast();
 
   const { events, loading, error } = useEvents();
 
@@ -67,7 +70,10 @@ const EventManagement = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const response = await axios.post("/api/events", values);
-      // Handle successful response if needed
+      toast({
+        title: "Event Added"
+      })
+      window.location.reload();
     } catch {
       // toast.error("Something went wrong while creating")
       console.log("[ERROR] Something went wrong while creating User");
@@ -138,6 +144,9 @@ const EventManagement = () => {
                       <PopoverContent className="w-auto p-0" align="start">
                         <Calendar
                           mode="single"
+                          captionLayout='dropdown'
+                          fromYear={1900}
+                          toYear={3000}
                           selected={field.value}
                           onSelect={field.onChange}
                           disabled={(date) =>
@@ -159,7 +168,7 @@ const EventManagement = () => {
           </Form>
         </div>
         <div className='w-full py-4 lg:px-10 md:px-10'>
-          <EventCard events={events} />
+          <EventCard events={events} title='Upcoming Events' desc='Events you may be interested in' upcomingEventsActive={true} pastEventsActive={false}/>
         </div>
       </div>
     </div>

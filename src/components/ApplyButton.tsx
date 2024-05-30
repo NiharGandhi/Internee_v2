@@ -14,6 +14,27 @@ const ApplyButton = ({ user, company, internship }:
 
     const { toast } = useToast();
 
+	useEffect(() => {
+		const checkApplicationStatus = async () => {
+			try {
+				const response = await axios.get('/api/checkApplied', {
+					params: {
+						userId: user.id,
+						internshipId: internship.id,
+					},
+				});
+				
+				if (!(response.data === null)) {
+					setApplied(true);
+				}
+			} catch (error) {
+				console.error("Error checking application status:", error);
+			}
+		};
+
+		checkApplicationStatus();
+	}, [user.id, internship.id]);
+
     const applyInternship = async () => {
         setLoading(true);
 
@@ -264,13 +285,23 @@ const ApplyButton = ({ user, company, internship }:
 </html>
                 `,
             });
-
+			try {
+				await axios.post('/api/checkApplied', {
+					id: user.id,
+					internshipId: internship.id,
+				});
+			} catch (error) {
+				console.error("Error checking application status:", error);
+			}
             toast({
-                title: "Application Successful"
+                title: "Application Successfull"
             })
             setApplied(true); // Update state to indicate email has been sent
         } catch (error) {
-            console.error("Error sending email:", error);
+			toast({
+				title: "Error While Applying",
+				description: "Try again later"
+			})
         } finally {
             setLoading(false);
         }
