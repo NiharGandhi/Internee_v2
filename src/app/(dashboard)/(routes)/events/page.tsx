@@ -8,19 +8,8 @@ import useEvents from '@/hooks/useEvents';
 import EventCard from '@/components/EventCard';
 import { isBefore } from 'date-fns';
 
-interface Event {
-    id: string;
-    title: string;
-    dateTime: string;
-}
 
-interface EventsPageProps {
-    events: Event[];
-}
-
-
-
-const EventsPage: React.FC<EventsPageProps> = () => {
+const EventsPage = () => {
     const { events, loading, error } = useEvents();
 
     const currentDate = new Date();
