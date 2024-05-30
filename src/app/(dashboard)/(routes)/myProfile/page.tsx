@@ -160,17 +160,8 @@ const MyProfile = () => {
 
     // Resume URL rendering logic
     const renderResumeUrl = () => {
-        if (!userData || !userData.resume) {
-            if (isEditing) {
-                return <FileUpload endpoint="userResume" onChange={handleResumeUpload} />;
-            } else {
-                return (
-                    <div className='flex items-center justify-center h-16 bg-slate-100 rounded-md text-slate-400'>
-                        <FileIcon className='h-5 w-5 text-slate-400 mr-2' />
-                        No Resume Uploaded. Upload Now!!!
-                    </div>
-                );
-            }
+        if (!userData) {
+            return <FileUpload endpoint="userResume" onChange={handleResumeUpload} />;
         } else if (userData) {
             if (isEditing) {
                 return <FileUpload endpoint="userResume" onChange={handleResumeUpload} />;

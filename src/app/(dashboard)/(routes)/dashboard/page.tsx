@@ -1,6 +1,6 @@
 "use client";
 
-import { BookIcon, CalendarIcon, NetworkIcon, UserIcon, UsersIcon } from 'lucide-react'
+import { BookIcon, CalendarIcon, CogIcon, Laptop2Icon, NetworkIcon, UserIcon, UsersIcon, WorkflowIcon } from 'lucide-react'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/components/ui/card";
@@ -71,6 +71,13 @@ const Dashboard = () => {
           </Link>
           <Link
             className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-100 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+            href="/internships"
+          >
+            <CogIcon className="h-4 w-4" />
+            Internships
+          </Link>
+          <Link
+            className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-100 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
             href="/events"
           >
             <CalendarIcon className="h-4 w-4" />
@@ -119,6 +126,13 @@ const Dashboard = () => {
             </Link>
             <Link
               className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-100 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+              href="/internships"
+            >
+              <CogIcon className="h-4 w-4" />
+              Internships
+            </Link>
+            <Link
+              className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-100 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
               href="/events"
             >
               <CalendarIcon className="h-4 w-4" />
@@ -126,7 +140,7 @@ const Dashboard = () => {
             </Link>
             <Link
               className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-100 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-              href="resources"
+              href="/resources"
             >
               <BookIcon className="h-4 w-4" />
               Resources

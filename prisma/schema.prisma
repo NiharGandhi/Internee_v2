@@ -29,6 +29,7 @@ model User {
   role UserRole @default(USER)
   projects Project[]
   certificates Certificate[]
+  applications Application[]
 }
 
 enum UserRole {
@@ -81,4 +82,38 @@ model UsefulTools {
   name String @db.Text
   desc String @db.Text
   link String @db.Text
+}
+
+model Company {
+  id String @id @default(uuid())
+  userId String @unique
+  name String @db.Text
+  email String @db.Text
+  CompanyDescription String? @db.Text
+  CompanyImageUrl String? @db.Text
+
+  projects CreateInternship[]
+}
+
+model CreateInternship {
+  id          String   @id @default(uuid())
+  name        String   @db.Text
+  EducationLevel String? @db.Text
+  InternshipDescription String? @db.Text
+  InternshipRequirement String? @db.Text
+  Paid Boolean
+  AmountPaid String? @db.Text
+  userId      String
+  user        Company     @relation(fields: [userId], references: [userId])
+  applications Application[]
+}
+
+model Application {
+  id                   String             @id @default(uuid())
+  user                 User               @relation(fields: [userId], references: [id])
+  userId               String
+  internship           CreateInternship   @relation(fields: [internshipId], references: [id])
+  internshipId         String
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
 }
