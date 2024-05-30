@@ -32,12 +32,3 @@ export async function POST(req: any) {
         return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
     }
 }
-
-export function middleware(req: any) {
-    if (req.method !== 'POST') {
-        return NextResponse.json({ message: 'Method Not Allowed' }, { status: 405 });
-    }
-}
-
-
-
