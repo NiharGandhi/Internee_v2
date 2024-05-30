@@ -19,7 +19,6 @@ const useOnlineResources = () => {
             try {
                 const response = await axios.get('/api/onlineResources');
                 setOnlineResources(response.data);
-                console.log(response.data);
             } catch (err) {
                 setErrorRes('Error fetching Resources data');
             } finally {
