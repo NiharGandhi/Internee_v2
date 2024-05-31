@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
 
-    console.log("GET URL: ", req.url)
+    // console.log("GET URL: ", req.url)
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("userId");
     const internshipId = searchParams.get("internshipId");
