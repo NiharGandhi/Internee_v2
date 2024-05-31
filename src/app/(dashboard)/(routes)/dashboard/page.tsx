@@ -1,6 +1,6 @@
 "use client";
 
-import { BookIcon, CalendarIcon, CogIcon, Laptop2Icon, NetworkIcon, UserIcon, UsersIcon, WorkflowIcon } from 'lucide-react'
+import { BookIcon, CalendarIcon, CogIcon, Laptop2Icon, NetworkIcon, StarIcon, UserIcon, UsersIcon, WorkflowIcon } from 'lucide-react'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/components/ui/card";
@@ -42,7 +42,7 @@ const Dashboard = () => {
       try {
         const response = await fetch('/api/allUsers');
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         setUsers(data);
       } catch (error) {
         console.error('Failed to fetch users', error);
@@ -79,6 +79,13 @@ const Dashboard = () => {
           >
             <CogIcon className="h-4 w-4" />
             Internships
+          </Link>
+          <Link
+            className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-100 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+            href="/internships/appliedInternships"
+          >
+            <StarIcon className="h-4 w-4" />
+            Applied Internships
           </Link>
           <Link
             className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-100 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
@@ -134,6 +141,13 @@ const Dashboard = () => {
             >
               <CogIcon className="h-4 w-4" />
               Internships
+            </Link>
+            <Link
+              className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-100 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+              href="/internships/appliedInternships"
+            >
+              <StarIcon className="h-4 w-4" />
+              Applied Internships
             </Link>
             <Link
               className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-100 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"

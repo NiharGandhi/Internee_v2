@@ -29,7 +29,7 @@ const InternshipsPage = async () => {
         return redirect("/")
     }
 
-    const users = await db.createInternship.findMany();
+    const internships = await db.createInternship.findMany();
 
     return (
         <div>
@@ -46,14 +46,14 @@ const InternshipsPage = async () => {
             </Breadcrumb>
             <h1 className='font-bold text-4xl mt-2 px-10'>Internships</h1>
             <div className='py-4 px-8'>
-                {users.map(user => (
-                    <Card key={user.id} className='mb-4'>
+                {internships.map(internship => (
+                    <Card key={internship.id} className='mb-4'>
                         <CardHeader>
-                            <CardTitle className='font-bold'>{user.name}</CardTitle>
-                            <CardDescription>{user.InternshipDescription}</CardDescription>
+                            <CardTitle className='font-bold'>{internship.name}</CardTitle>
+                            <CardDescription>{internship.InternshipDescription}</CardDescription>
                         </CardHeader>
                         <CardFooter>
-                            <Link className='ml-auto' href={`/internships/${user.id}`}>Explore</Link>
+                            <Link className='ml-auto' href={`/internships/${internship.id}`}>Explore</Link>
                         </CardFooter>
                     </Card>
                 ))}

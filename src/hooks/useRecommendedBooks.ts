@@ -19,7 +19,7 @@ const useRecommendedBooks = () => {
             try {
                 const response = await axios.get('/api/recommendedBooks');
                 setRecommendedBooks(response.data);
-                console.log(response.data);
+                // console.log(response.data);
             } catch (err) {
                 setErrorBooks('Error fetching Resources data');
             } finally {

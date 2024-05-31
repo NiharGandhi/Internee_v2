@@ -19,7 +19,7 @@ const useUsefulTool = () => {
             try {
                 const response = await axios.get('/api/usefulTools');
                 setUsefulTools(response.data);
-                console.log(response.data);
+                // console.log(response.data);
             } catch (err) {
                 setErrorTools('Error fetching Resources data');
             } finally {
