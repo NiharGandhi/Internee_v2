@@ -62,7 +62,11 @@ export async function createCustomerIfNull() {
     const { userId } = auth();
 
     if (userId) {
-        const user = await db.user.findFirst({ where: { userId: userId } });
+        const user = await db.user.findFirst({ 
+            where: { 
+                userId: userId 
+            } 
+        });
 
         if (!user?.stripe_customer_id) {
             const customer = await stripe.customers.create({

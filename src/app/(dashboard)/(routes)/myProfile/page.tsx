@@ -120,7 +120,6 @@ const MyProfile = () => {
             }
         };
         fetchUserProjects();
-        setLoading(false);
     }, []);
 
     useEffect(() => {
@@ -133,7 +132,6 @@ const MyProfile = () => {
             }
         };
         fetchUserCertificates();
-        setLoading(false);
     }, []);
 
     useEffect(() => {
@@ -146,7 +144,6 @@ const MyProfile = () => {
             }
         };
         fetchUserData();
-        setLoading(false);
     }, []);
 
     useEffect(() => {
@@ -188,6 +185,7 @@ const MyProfile = () => {
                 resumeUrl: userData.resume,
             });
         }
+        setLoading(false);
     }, [form, userData]);
 
     // Resume URL rendering logic
@@ -333,7 +331,7 @@ const MyProfile = () => {
         }
     };
 
-    if (loading) return <Loader />;
+    if (loading) return <div><Loader /></div>;
 
     return (
         <>

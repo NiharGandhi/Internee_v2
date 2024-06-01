@@ -22,7 +22,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { cn } from '@/lib/utils';
-import { createCustomerIfNull } from '@/lib/stripe';
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Label } from '@/components/ui/label';
 
 const Loader = () => (
   <div className="flex justify-center items-center h-screen">
@@ -46,6 +47,7 @@ const Dashboard = () => {
   const [users, setUsers] = useState([]);
   const [subscription, setSubscription] = useState<boolean>(false);
   const [checkOutLink, setCheckOutLink] = useState("");
+  const [stripeCustomerId, setStripeCustomerId] = useState("");
 
   // Function to toggle navbar state
   const toggleNav = () => {
@@ -69,6 +71,17 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
+    const createUserStripeId = async () => {
+      try {
+        const response = await axios.get("/api/stripeCreateCustomer")
+      } catch (error) {
+        console.log("ERROR CREATING CURSTOMER [STRIPE]", error);
+      }
+    }
+    createUserStripeId();
+  }, []);
+
+  useEffect(() => {
     const fetchSubscriptionData = async () => {
       try {
         const response = await axios.get("/api/checkSubscription");
@@ -79,17 +92,6 @@ const Dashboard = () => {
     }
     fetchSubscriptionData();
   }, [])
-
-  useEffect(() => {
-    const createUserStripeId = async () => {
-      try {
-        await createCustomerIfNull();
-      } catch (error) {
-        console.log("ERROR CREATING CURSTOMER [STRIPE]", error);  
-      }
-    }
-    createUserStripeId();
-  }, []);
 
   useEffect(() => {
     const fetchCheckOutLink = async () => {
@@ -160,15 +162,28 @@ const Dashboard = () => {
             <UserIcon className="h-4 w-4" />
             Profile
           </Link>
+          <div className='mt-4'>
+            {!subscription && (
+              <Link href={"" + checkOutLink}>
+                <Button
+                  className='w-full'
+                  variant="upgrade"
+                >
+                  Upgrade to PRO
+                </Button>
+              </Link>
+            )}
+          </div>
+          <Label className='mt-4'>Theme:</Label>
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="icon" className={cn(subscription ? ("mt-[290px]") : (" mt-60"))}>
+            <DropdownMenuTrigger asChild className='w-full'>
+              <Button variant="outline" size="icon" className="mt-auto">
                 <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                 <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                 <span className="sr-only">Toggle theme</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className='w-full'>
               <DropdownMenuItem onClick={() => setTheme("light")}>
                 Light
               </DropdownMenuItem>
@@ -180,18 +195,6 @@ const Dashboard = () => {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <div className='mt-2'>
-            {!subscription && (
-              <Link href={"" + checkOutLink}>
-                <Button
-                  className='w-full'
-                  variant="upgrade"
-                >
-                  Upgrade
-                </Button>
-              </Link>
-            )}
-          </div>
         </nav>
       </div>
       {/* Mobile Navbar Toggle Button */}
@@ -254,15 +257,28 @@ const Dashboard = () => {
               <UserIcon className="h-4 w-4" />
               Profile
             </Link>
+            <div className='mt-4'>
+              {!subscription && (
+                <Link href={"" + checkOutLink}>
+                  <Button
+                    className='w-full'
+                    variant="upgrade"
+                  >
+                    Upgrade to PRO
+                  </Button>
+                </Link>
+              )}
+            </div>
+            <Label className='mt-4'>Theme:</Label>
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="icon" className={cn(subscription ? ("mt-[290px]") : (" mt-72"))}>
+              <DropdownMenuTrigger asChild className='w-full'>
+                <Button variant="outline" size="icon" className="mt-auto">
                   <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                   <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                   <span className="sr-only">Toggle theme</span>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
+              <DropdownMenuContent align="end" className='w-full'>
                 <DropdownMenuItem onClick={() => setTheme("light")}>
                   Light
                 </DropdownMenuItem>
@@ -274,18 +290,6 @@ const Dashboard = () => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <div className='mt-2'>
-              {!subscription && (
-                <Link href={"" + checkOutLink}>
-                  <Button 
-                    className='w-full'
-                    variant="upgrade"
-                    >
-                    Upgrade
-                  </Button>
-                </Link>
-              )}
-            </div>
           </nav>
         </div>
       </div>

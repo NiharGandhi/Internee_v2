@@ -10,7 +10,14 @@ export async function GET() {
         return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const hasSubscribed = await hasSubscription();
+    try {
+        const hasSubscribed = await hasSubscription();
 
-    return NextResponse.json(hasSubscribed);
+        return NextResponse.json(hasSubscribed);
+    } catch (error) {
+        console.log("[CHECK SUBSCRIPTION ERROR] " + error);
+        return new NextResponse("[INTERNAL SERVER ERRRO]" + error);
+    }
+
+    
 }

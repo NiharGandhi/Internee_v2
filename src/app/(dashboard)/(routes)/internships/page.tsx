@@ -53,7 +53,11 @@ const InternshipsPage = async () => {
                             <CardDescription>{internship.InternshipDescription}</CardDescription>
                         </CardHeader>
                         <CardFooter>
-                            <Link className='ml-auto' href={`/internships/${internship.id}`}>Explore</Link>
+                            <Link className='ml-auto' href={`/internships/${internship.id}`}>
+                                <Button>
+                                    Explore
+                                </Button>
+                            </Link>
                         </CardFooter>
                     </Card>
                 ))}

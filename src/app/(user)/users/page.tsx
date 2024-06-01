@@ -18,6 +18,7 @@ import Header from '@/components/header';
 import Link from 'next/link';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { format } from 'date-fns';
+import AnimatedGradientText from '@/components/magicui/animated-gradient-text';
 
 
 
@@ -93,7 +94,9 @@ const UsersPage = async () => {
                                     </div>
                                 </PopoverContent>
                             </Popover>
-                            <Link className='ml-auto' href={`/users/${user.id}`}>Explore</Link>
+                            <Link className='ml-auto' href={`/users/${user.id}`}>
+                                    <AnimatedGradientText>Explore</AnimatedGradientText>
+                            </Link>
                         </CardFooter>
                     </Card>
                 ))}
