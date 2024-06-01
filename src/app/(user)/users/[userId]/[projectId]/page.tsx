@@ -90,19 +90,23 @@ const PublicProjectPage = async ({
                         </div>
                         <div className='mt-4 px-4 '>
                             <h2 className='text-2xl font-semibold'>Image</h2>
-                            <Image
-                                src={project.imageUrl || fallbackImageUrl} // Use fallback image URL if project.imageUrl is null
-                                alt="Hero"
-                                className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
-                                width={"550"}
-                                height={"310"}
-                            />
+                            {project.imageUrl ? (
+                                <Image
+                                    src={project.imageUrl}
+                                    alt="Hero"
+                                    className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
+                                    width={"550"}
+                                    height={"310"}
+                                />
+                            ) : (
+                                <p className=' text-muted-foreground'>No Project Image uploaded</p>
+                            )}
                         </div>
                     </div>
                     <div className='w-full lg:w-1/2 md:w-1/2 space-y-6 lg:py-16'>
                         <div className='mt-4 px-4'>
                             <h2 className='text-2xl font-semibold'>Description</h2>
-                            <p className='py-2 px-2 text-gray-800 bg-gray-100 rounded-lg'>{project.description}</p>
+                            <p className='py-2 px-2 rounded-lg'>{project.description}</p>
                         </div>
                         <div className='mt-4 px-4'>
                             <h2 className='text-2xl font-semibold'>Link</h2>
@@ -116,7 +120,7 @@ const PublicProjectPage = async ({
                                 </>
                             ) : ( // Render just the div if project does not have a link
                                 <>
-                                    <div className='py-2 px-2 text-gray-800 bg-gray-100 rounded-lg'>
+                                    <div className='py-2 px-2 text-gray-800 bg-gray-100/30 dark:text-gray-300 rounded-lg'>
                                         <p>No Links</p>
                                     </div>
                                 </>

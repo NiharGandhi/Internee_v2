@@ -77,6 +77,7 @@ const AddCertificatesPage = () => {
     const [userData, setUserData] = useState<any>(null);
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true); // State to track loading
+    const [subscription, setSubscription] = useState<boolean>(false);
 
     const toggleEdit = () => {
         setIsEditing(!isEditing);
@@ -94,6 +95,18 @@ const AddCertificatesPage = () => {
         fetchUserData();
         setLoading(false);
     }, []);
+
+    useEffect(() => {
+        const fetchSubscriptionData = async () => {
+            try {
+                const response = await axios.get("/api/checkSubscription");
+                setSubscription(response.data);
+            } catch (error) {
+                console.error("Error fetching subscription data:", error);
+            }
+        }
+        fetchSubscriptionData();
+    }, [])
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -132,6 +145,62 @@ const AddCertificatesPage = () => {
     // Button rendering logic
     const renderButtons = () => {
             return <Button className='ml-1' onClick={() => onSubmit(form.getValues())}>Save</Button>;
+    };
+
+    const renderEnhanceButton = () => {
+        return (
+            <>
+                {subscription && (
+                    <Button variant="upgrade" className='ml-1' onClick={handleEnhanceDescription}>Enhance</Button>
+                )}
+            </>
+        );
+    };
+
+    const handleEnhanceDescription = async () => {
+        const description = form.getValues().description;
+        if (!description) {
+            toast({
+                title: "Error",
+                description: "Description is empty.",
+            });
+            return;
+        }
+
+        const options = {
+            method: 'POST',
+            url: 'https://gpt-4o.p.rapidapi.com/chat/completions',
+            headers: {
+                'content-type': 'application/json',
+                'X-RapidAPI-Key': 'e9a0d93d50mshe98a3e570cb3576p1bc973jsn3823a95811ea',
+                'X-RapidAPI-Host': 'gpt-4o.p.rapidapi.com'
+            },
+            data: {
+                model: 'gpt-4o',
+                messages: [
+                    {
+                        role: 'user',
+                        content: "Enhance the following description for my Certification, do keep it short and informative (Only Give me the Description, without any styling, you can make them as pointer's if necessary): " + description
+                    }
+                ]
+            }
+        };
+
+        try {
+            const response = await axios.request(options);
+            const enhancedText = response.data.choices[0].message.content; // Assuming the first response choice is chosen
+            form.setValue("description", enhancedText);
+            toast({
+                title: "Success",
+                description: "Description enhanced successfully.",
+            });
+        } catch (error) {
+            toast({
+                title: "Error",
+                description: "Error enhancing description.",
+            });
+            console.error("Error enhancing description:", error);
+        }
     };
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -257,7 +326,6 @@ const AddCertificatesPage = () => {
                                             <FormControl>
                                                 <Textarea
                                                     placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing...."
-                                                    className="resize-none"
                                                     {...field}
                                                 />
                                             </FormControl>
@@ -266,6 +334,7 @@ const AddCertificatesPage = () => {
 
                                     )}
                                 />
+                                {renderEnhanceButton()}
                                 <FormField
                                     control={form.control}
                                     name="link"

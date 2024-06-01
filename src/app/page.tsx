@@ -9,6 +9,7 @@ import Header from "@/components/header";
 import AnimatedGradientText from "@/components/magicui/animated-gradient-text";
 import AnimatedShinyText from "@/components/magicui/animated-shiny-text";
 import ShimmerButton from "@/components/magicui/shimmer-button";
+import { StripePricingTable } from "@/helpers/priceTable";
 
 export default function Home() {
   return (
@@ -160,38 +161,9 @@ export default function Home() {
                 Choose the plan that best fits your needs and budget.
               </p>
             </div>
-            <div className="mx-auto grid max-w-4xl grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:gap-8">
-              <Card className="bg-white dark:bg-gray-950">
-                <CardHeader className="border-b border-gray-200 dark:border-gray-700 p-6">
-                  <CardTitle>Free</CardTitle>
-                  <div className="mt-2 flex items-baseline">
-                    <span className="text-4xl font-bold">$0</span>
-                    <span className="ml-1 text-sm text-gray-500 dark:text-gray-400">/month</span>
-                  </div>
-                </CardHeader>
-                <CardContent className="p-6">
-                  <ul className="space-y-2">
-                    <li className="flex items-center">
-                      <CheckIcon className="mr-2 h-4 w-4 text-green-500" />
-                      Create profile
-                    </li>
-                    <li className="flex items-center">
-                      <CheckIcon className="mr-2 h-4 w-4 text-green-500" />
-                      Browse internships
-                    </li>
-                    <li className="flex items-center">
-                      <XIcon className="mr-2 h-4 w-4 text-red-500" />
-                      Apply to internships
-                    </li>
-                    <li className="flex items-center">
-                      <XIcon className="mr-2 h-4 w-4 text-red-500" />
-                      Track applications
-                    </li>
-                  </ul>
-                </CardContent>
-                <CardFooter className="border-t border-gray-200 dark:border-gray-700 p-6" />
-              </Card>
-            </div>
+          </div>
+          <div className="">
+            <StripePricingTable />
           </div>
         </section>
       </main>

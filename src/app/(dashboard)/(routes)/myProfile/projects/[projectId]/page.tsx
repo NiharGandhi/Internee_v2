@@ -275,7 +275,6 @@ const ProjectEditPage = ({
                                           <FormControl>
                                               <Textarea
                                                   placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing...."
-                                                  className="resize-none"
                                                   {...field}
                                                   disabled={!isEditing}
                                               />

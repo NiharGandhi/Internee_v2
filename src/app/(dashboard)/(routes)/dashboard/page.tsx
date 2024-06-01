@@ -11,6 +11,17 @@ import ResourceCard from '@/components/ResourceCard';
 import NumberTicker from '@/components/magicui/number-ticker';
 import useRecommendedBooks from '@/hooks/useRecommendedBooks';
 import useUsefulTool from '@/hooks/useTool';
+import axios from 'axios';
+import { Button } from '@/components/ui/button';
+import { Moon, Sun } from "lucide-react"
+import { useTheme } from "next-themes"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { cn } from '@/lib/utils';
 
 const Loader = () => (
   <div className="flex justify-center items-center h-screen">
@@ -23,6 +34,8 @@ const Loader = () => (
 );
 
 const Dashboard = () => {
+  const { setTheme } = useTheme()
+
   const { events, loading, error } = useEvents();
   const { onlineResources, loadingRes, errorRes } = useOnlineResources();
   const { recommendedBooks, loadingBooks, errorBooks } = useRecommendedBooks();
@@ -30,6 +43,8 @@ const Dashboard = () => {
 
   const [isNavOpen, setIsNavOpen] = useState(false); // State to track if navbar is open
   const [users, setUsers] = useState([]);
+  const [subscription, setSubscription] = useState<boolean>(false);
+  const [checkOutLink, setCheckOutLink] = useState("");
 
   // Function to toggle navbar state
   const toggleNav = () => {
@@ -52,12 +67,36 @@ const Dashboard = () => {
     fetchUsers();
   }, []);
 
+  useEffect(() => {
+    const fetchCheckOutLink = async () => {
+      try {
+        const response = await axios.get("/api/stripeCheckoutLink");
+        setCheckOutLink(response.data);
+      } catch (error) {
+        console.log("Checkout Link Error", error);
+      }
+    }
+    fetchCheckOutLink();
+  }, [])
+
+  useEffect(() => {
+    const fetchSubscriptionData = async () => {
+      try {
+        const response = await axios.get("/api/checkSubscription");
+        setSubscription(response.data);
+      } catch (error) {
+        console.error("Error fetching subscription data:", error);
+      }
+    }
+    fetchSubscriptionData();
+  }, [])
+
   if (loading) return <div><Loader /></div>;
   if (error) return <div>{error}</div>;
 
   return (
     <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr] overflow-hidden">
-      {/* Navbar */}
+      {/* Mobile Navbar */}
       <div className={`lg:hidden h-full flex-col border-r bg-[#6c5ce7] dark:border-gray-800 dark:bg-gray-950 absolute top-0 left-0 transform lg:translate-x-0 ${isNavOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out`}>
         {/* Close button */}
         <button onClick={toggleNav} className="absolute top-3 right-3 lg:hidden">
@@ -108,6 +147,38 @@ const Dashboard = () => {
             <UserIcon className="h-4 w-4" />
             Profile
           </Link>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="icon" className={cn(subscription ? ("mt-[290px]") : (" mt-60"))}>
+                <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <span className="sr-only">Toggle theme</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => setTheme("light")}>
+                Light
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("dark")}>
+                Dark
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("system")}>
+                System
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <div className='mt-2'>
+            {!subscription && (
+              <Link href={"" + checkOutLink}>
+                <Button
+                  className='w-full'
+                  variant="upgrade"
+                >
+                  Upgrade
+                </Button>
+              </Link>
+            )}
+          </div>
         </nav>
       </div>
       {/* Mobile Navbar Toggle Button */}
@@ -170,6 +241,38 @@ const Dashboard = () => {
               <UserIcon className="h-4 w-4" />
               Profile
             </Link>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="icon" className={cn(subscription ? ("mt-[290px]") : (" mt-72"))}>
+                  <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                  <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                  <span className="sr-only">Toggle theme</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => setTheme("light")}>
+                  Light
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("dark")}>
+                  Dark
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("system")}>
+                  System
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <div className='mt-2'>
+              {!subscription && (
+                <Link href={"" + checkOutLink}>
+                  <Button 
+                    className='w-full'
+                    variant="upgrade"
+                    >
+                    Upgrade
+                  </Button>
+                </Link>
+              )}
+            </div>
           </nav>
         </div>
       </div>

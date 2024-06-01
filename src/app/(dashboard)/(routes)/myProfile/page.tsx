@@ -50,9 +50,12 @@ import { FileUpload } from '@/components/file-upload';
 import Link from 'next/link';
 import ProfileProjectsDisplay from '@/components/profileProjectsDisplay';
 import ProfileCertificatesDisplay from '@/components/profileCertificatesDisplay';
+import ShimmerButton from '@/components/magicui/shimmer-button';
+import { Textarea } from '@/components/ui/textarea';
 
 const formSchema = z.object({
     name: z.string().min(2).max(50),
+    bio: z.string().min(10),
     institutionName: z.string().min(2).max(150),
     educationLevel: z.enum(["High School", "Bachelors", "Masters"], {
         required_error: "You need to select a Education Level.",
@@ -88,10 +91,24 @@ const MyProfile = () => {
     const [loading, setLoading] = useState<boolean>(true); // State to track loading
     const [projects, setProjects] = useState<any>(null);
     const [certificates, setCertificates] = useState<any>(null);
+    const [manageLink, setManageLink] = useState("");
+    const [subscription, setSubscription] = useState<boolean>(false);
 
     const toggleEdit = () => {
         setIsEditing(!isEditing);
     };
+
+    useEffect(() => {
+        const fetchSubscriptionData = async () => {
+            try {
+                const response = await axios.get("/api/checkSubscription");
+                setSubscription(response.data);
+            } catch (error) {
+                console.error("Error fetching subscription data:", error);
+            }
+        }
+        fetchSubscriptionData();
+    }, [])
 
     useEffect(() => {
         const fetchUserProjects = async () => {
@@ -132,10 +149,24 @@ const MyProfile = () => {
         setLoading(false);
     }, []);
 
+    useEffect(() => {
+        const fetchManageLink = async () => {
+            try {
+                const response = await axios.get("/api/stripeCustomerPortal");
+                console.log("response link:" + response);
+                setManageLink(response.data);
+            } catch (error) {
+                console.log("Portal Link Error", error);
+            }
+        }
+        fetchManageLink();
+    }, [])
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: "",
+            bio: "",
             institutionName: "",// or another default
             yearOfGrad: new Date(), // or a sensible default date
             skill: "en",
@@ -148,6 +179,7 @@ const MyProfile = () => {
         if (userData) {
             form.reset({
                 name: userData.name,
+                bio: userData.bio,
                 institutionName: userData.InstitutionName,
                 educationLevel: userData.EducationLevel,
                 yearOfGrad: new Date(userData.GraduationDate),
@@ -211,6 +243,65 @@ const MyProfile = () => {
         }
     };
 
+    const renderEnhanceButton = () => {
+        return (
+            <>
+                {subscription && (
+                    <Button variant="upgrade" className='ml-1' onClick={handleEnhanceDescription} disabled={!isEditing && userData !== null}>Enhance Bio</Button>
+                )}
+            </>
+        );
+    };
+
+    const handleEnhanceDescription = async () => {
+
+        if (subscription) {
+            const bio = form.getValues().bio;
+            if (!bio) {
+                toast({
+                    title: "Error",
+                    description: "Bio is empty.",
+                });
+                return;
+            }
+
+            const options = {
+                method: 'POST',
+                url: 'https://gpt-4o.p.rapidapi.com/chat/completions',
+                headers: {
+                    'content-type': 'application/json',
+                    'X-RapidAPI-Key': 'e9a0d93d50mshe98a3e570cb3576p1bc973jsn3823a95811ea',
+                    'X-RapidAPI-Host': 'gpt-4o.p.rapidapi.com'
+                },
+                data: {
+                    model: 'gpt-4o',
+                    messages: [
+                        {
+                            role: 'user',
+                            content: "Enhance the following Bio for me (Only Give me the Description, without any styling, you can make them as pointer's if necessary): " + bio
+                        }
+                    ]
+                }
+            };
+
+            try {
+                const response = await axios.request(options);
+                const enhancedText = response.data.choices[0].message.content; // Assuming the first response choice is chosen
+                form.setValue("bio", enhancedText);
+                toast({
+                    title: "Success",
+                    description: "Bio enhanced successfully.",
+                });
+            } catch (error) {
+                toast({
+                    title: "Error",
+                    description: "Error enhancing Bio.",
+                });
+                console.error("Error enhancing Bio:", error);
+            }
+        }
+    };
+
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
             const response = await axios.post("/api/users", values);
@@ -258,9 +349,17 @@ const MyProfile = () => {
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>
-                <h1 className='text-4xl font-bold font-sans'>
-                    Your Profile
-                </h1>
+                <div className='flex'>
+                    <h1 className='text-4xl font-bold font-sans'>
+                        Your Profile
+                    </h1>
+                    <Link
+                        className='ml-auto mt-4 lg:mt-0'
+                        href={"" + manageLink}
+                    >
+                        <Button>Manage Subscription</Button>
+                    </Link>
+                </div>
                 <div className='flex-col lg:flex-wrap'>
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className='flex-col lg:flex lg:flex-row'>
@@ -282,6 +381,24 @@ const MyProfile = () => {
 
                                     )}
                                 />
+                                <FormField
+                                    control={form.control}
+                                    name="bio"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Bio</FormLabel>
+                                            <FormControl>
+                                                <Textarea placeholder="Tell us about yourself" {...field} disabled={!isEditing && userData !== null} />
+                                            </FormControl>
+                                            <FormDescription>
+                                                Tell us about yourself
+                                            </FormDescription>
+                                            <FormMessage />
+                                        </FormItem>
+
+                                    )}
+                                />
+                                {renderEnhanceButton()}
                                 <FormField
                                     control={form.control}
                                     name="educationLevel"

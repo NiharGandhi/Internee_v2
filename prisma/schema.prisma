@@ -21,6 +21,7 @@ model User {
   InstitutionName String? @db.Text
   GraduationDate DateTime?
   email String? @unique @db.Text
+  stripe_customer_id String? @db.Text
   
   skills String? @db.Text
 
@@ -98,6 +99,7 @@ model Company {
 model CreateInternship {
   id          String   @id @default(uuid())
   name        String   @db.Text
+  bio String? @db.Text
   EducationLevel String? @db.Text
   InternshipDescription String? @db.Text
   InternshipRequirement String? @db.Text
