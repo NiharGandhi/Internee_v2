@@ -24,7 +24,7 @@ export async function POST(req: Request) {
         return NextResponse.json(newUsefulTools);
 
     } catch (error) {
-        console.log("[ONLINE RESOURCE CREATION/UPDATE]", error);
+        console.log("[USEFUL TOOL CREATION/UPDATE]", error);
         return new NextResponse("Internal Server Error", { status: 500 });
     }
 }
@@ -40,12 +40,12 @@ export async function GET(req: Request) {
         const existingUsefulTools = await db.usefulTools.findMany();
 
         if (!existingUsefulTools) {
-            return new NextResponse("Not Online Resources Found", { status: 404 });
+            return new NextResponse("Not Useful Tools Found", { status: 404 });
         }
 
         return NextResponse.json(existingUsefulTools);
     } catch (error) {
-        console.error("[USER RETRIEVAL]", error);
+        console.error("[USEFUL TOOL RETRIEVAL]", error);
         return new NextResponse("Internal Server Error", { status: 500 });
     }
 }

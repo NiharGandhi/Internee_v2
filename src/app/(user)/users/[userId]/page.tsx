@@ -60,7 +60,7 @@ const UserPublicPage = async ({
         }
     });
 
-    console.log("CERT",certificates)
+    // console.log("CERT",certificates)
 
     return (
         <div>
@@ -90,6 +90,12 @@ const UserPublicPage = async ({
                     <CardContent>
                         <Badge>{user?.skills}</Badge>
                         <div className='flex flex-col py-2 justify-center'>
+                            <div>
+                                Bio:
+                            </div>
+                            <p>
+                                {user?.bio}
+                            </p>
                             <div>
                                 Education Level: {user?.EducationLevel}
                             </div>

@@ -13,12 +13,12 @@ export async function GET(req: Request) {
         const existingUsers = await db.company.findMany();
 
         if (!existingUsers) {
-            return new NextResponse("User Not Found", { status: 404 });
+            return new NextResponse("Companines Not Found", { status: 404 });
         }
 
         return NextResponse.json(existingUsers);
     } catch (error) {
-        console.error("[USER RETRIEVAL]", error);
+        console.error("[COMPANIES RETRIEVAL]", error);
         return new NextResponse("Internal Server Error", { status: 500 });
     }
 }

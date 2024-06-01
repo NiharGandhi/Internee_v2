@@ -152,13 +152,11 @@ const AddProjectsPage = () => {
     };
 
     const renderEnhanceButton = () => {
-        return (
-            <>
-                {subscription && (
-                    <Button variant="upgrade" className='ml-1' onClick={handleEnhanceDescription}>Enhance</Button>
-                )}
-            </>
-        );
+        if (!subscription) {
+            return (
+                <Button variant="upgrade" className='ml-1' onClick={handleEnhanceDescription} disabled={!isEditing && userData !== null}>Enhance Bio</Button>
+            )
+        }
     };
 
     const handleEnhanceDescription = async () => {

@@ -39,12 +39,12 @@ export async function GET(req: Request) {
         const existingEvent = await db.events.findMany();
 
         if (!existingEvent) {
-            return new NextResponse("User Events Found", { status: 404 });
+            return new NextResponse("No Events Found", { status: 404 });
         }
 
         return NextResponse.json(existingEvent);
     } catch (error) {
-        console.error("[USER RETRIEVAL]", error);
+        console.error("[EVENT RETRIEVAL]", error);
         return new NextResponse("Internal Server Error", { status: 500 });
     }
 }

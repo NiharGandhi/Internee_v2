@@ -24,7 +24,7 @@ export async function POST(req: Request) {
         return NextResponse.json(newRecommendedBook);
 
     } catch (error) {
-        console.log("[ONLINE RESOURCE CREATION/UPDATE]", error);
+        console.log("[RECOMMENDED BOOKS CREATION/UPDATE]", error);
         return new NextResponse("Internal Server Error", { status: 500 });
     }
 }
@@ -40,12 +40,12 @@ export async function GET(req: Request) {
         const existingRecommendedBook = await db.recommendedBooks.findMany();
 
         if (!existingRecommendedBook) {
-            return new NextResponse("Not Online Resources Found", { status: 404 });
+            return new NextResponse("No Recommended Books Found", { status: 404 });
         }
 
         return NextResponse.json(existingRecommendedBook);
     } catch (error) {
-        console.error("[USER RETRIEVAL]", error);
+        console.error("[RECOMMENDED BOOKS RETRIEVAL]", error);
         return new NextResponse("Internal Server Error", { status: 500 });
     }
 }

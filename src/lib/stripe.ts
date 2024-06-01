@@ -1,7 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import Stripe from "stripe";
 import { db } from "./db";
-import { randomUUID } from "crypto";
 
 
 export const stripe = new Stripe(String(process.env.STRIPE_SECRET), {
@@ -49,7 +48,7 @@ export async function generateCustomerPortalLink(customerId: string) {
             return_url: process.env.RETURN_URL + "/myProfile",
         });
 
-        console.log()
+        // console.log()
 
         return portalSession.url;
     } catch (error) {

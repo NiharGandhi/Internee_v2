@@ -40,12 +40,12 @@ export async function GET(req: Request) {
         const existingOnlineResource = await db.onlineReourses.findMany();
 
         if (!existingOnlineResource) {
-            return new NextResponse("Not Online Resources Found", { status: 404 });
+            return new NextResponse("No Online Resources Found", { status: 404 });
         }
 
         return NextResponse.json(existingOnlineResource);
     } catch (error) {
-        console.error("[USER RETRIEVAL]", error);
+        console.error("[ONLINE RESOURCES RETRIEVAL]", error);
         return new NextResponse("Internal Server Error", { status: 500 });
     }
 }

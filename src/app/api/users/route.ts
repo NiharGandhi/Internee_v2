@@ -77,7 +77,7 @@ export async function GET(req: Request) {
 
         return NextResponse.json(existingUser);
     } catch (error) {
-        console.error("[USER RETRIEVAL]", error);
+        console.error("[USERS RETRIEVAL]", error);
         return new NextResponse("Internal Server Error", { status: 500 });
     }
 }
