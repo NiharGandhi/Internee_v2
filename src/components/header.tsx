@@ -10,6 +10,7 @@ import { hasSubscription } from '@/lib/stripe'
 const Header = async () => {
 
     const hasSubscribed = await hasSubscription();
+    
     return (
         <div className='bg-[#6c5ce7] dark:border-gray-800 dark:bg-gray-950 flex items-center justify-between py-2 px-4'>
             {hasSubscribed ? (

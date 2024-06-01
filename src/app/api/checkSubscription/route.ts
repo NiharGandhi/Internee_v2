@@ -10,12 +10,6 @@ export async function GET() {
         return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const user = await db.user.findFirst({
-        where: {
-            userId: userId
-        }
-    })
-
     const hasSubscribed = await hasSubscription();
 
     return NextResponse.json(hasSubscribed);

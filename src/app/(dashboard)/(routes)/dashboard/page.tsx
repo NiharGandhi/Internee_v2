@@ -53,17 +53,6 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    const createUserStripeId = async () => {
-      try {
-        await createCustomerIfNull();
-      } catch (error) {
-        console.log("ERROR CREATING CURSTOMER [STRIPE]", error);  
-      }
-    }
-    createUserStripeId();
-  }, []);
-
-  useEffect(() => {
     // Fetch users data from API
     const fetchUsers = async () => {
       try {
@@ -80,6 +69,29 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
+    const fetchSubscriptionData = async () => {
+      try {
+        const response = await axios.get("/api/checkSubscription");
+        setSubscription(response.data);
+      } catch (error) {
+        console.error("Error fetching subscription data:", error);
+      }
+    }
+    fetchSubscriptionData();
+  }, [])
+
+  useEffect(() => {
+    const createUserStripeId = async () => {
+      try {
+        await createCustomerIfNull();
+      } catch (error) {
+        console.log("ERROR CREATING CURSTOMER [STRIPE]", error);  
+      }
+    }
+    createUserStripeId();
+  }, []);
+
+  useEffect(() => {
     const fetchCheckOutLink = async () => {
       try {
         const response = await axios.get("/api/stripeCheckoutLink");
@@ -91,17 +103,6 @@ const Dashboard = () => {
     fetchCheckOutLink();
   }, [])
 
-  useEffect(() => {
-    const fetchSubscriptionData = async () => {
-      try {
-        const response = await axios.get("/api/checkSubscription");
-        setSubscription(response.data);
-      } catch (error) {
-        console.error("Error fetching subscription data:", error);
-      }
-    }
-    fetchSubscriptionData();
-  }, [])
 
   if (loading) return <div><Loader /></div>;
   if (error) return <div>{error}</div>;
