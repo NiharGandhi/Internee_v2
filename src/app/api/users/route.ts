@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
     try {
         const { userId } = auth();
-        const { name, institutionName, educationLevel, yearOfGrad, skills, email, resumeUrl } = await req.json();
+        const { name, bio, institutionName, educationLevel, yearOfGrad, skills, email, resumeUrl } = await req.json();
 
         if (!userId) {
             return new NextResponse("UnAuthorized", { status: 401 });
@@ -24,6 +24,7 @@ export async function POST(req: Request) {
                 },
                 data: {
                     name: name,
+                    bio: bio,
                     EducationLevel: educationLevel,
                     InstitutionName: institutionName,
                     GraduationDate: yearOfGrad,
@@ -40,6 +41,7 @@ export async function POST(req: Request) {
                 data: {
                     userId: userId,
                     name: name,
+                    bio: bio,
                     EducationLevel: educationLevel,
                     InstitutionName: institutionName,
                     GraduationDate: yearOfGrad,
@@ -83,7 +85,7 @@ export async function GET(req: Request) {
 export async function PUT(req: Request) {
     try {
         const { userId } = auth();
-        const { name, institutionName, educationLevel, yearOfGrad, skills, email, resumeUrl } = await req.json();
+        const { name, bio, institutionName, educationLevel, yearOfGrad, skills, email, resumeUrl } = await req.json();
 
         if (!userId) {
             return new NextResponse("UnAuthorized", { status: 401 });
@@ -104,6 +106,7 @@ export async function PUT(req: Request) {
             },
             data: {
                 name: name,
+                bio: bio,
                 EducationLevel: educationLevel,
                 InstitutionName: institutionName,
                 GraduationDate: yearOfGrad,

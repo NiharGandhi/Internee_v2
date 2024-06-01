@@ -17,6 +17,7 @@ model User {
   id String @id @default(uuid())
   userId String @unique
   name String @db.Text
+  bio String? @db.Text
   EducationLevel String? @db.Text
   InstitutionName String? @db.Text
   GraduationDate DateTime?
@@ -99,7 +100,6 @@ model Company {
 model CreateInternship {
   id          String   @id @default(uuid())
   name        String   @db.Text
-  bio String? @db.Text
   EducationLevel String? @db.Text
   InternshipDescription String? @db.Text
   InternshipRequirement String? @db.Text

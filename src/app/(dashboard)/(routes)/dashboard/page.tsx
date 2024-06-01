@@ -160,7 +160,7 @@ const Dashboard = () => {
             href="/myProfile"
           >
             <UserIcon className="h-4 w-4" />
-            Profile
+            My Profile
           </Link>
           <div className='mt-4'>
             {!subscription && (
@@ -255,7 +255,7 @@ const Dashboard = () => {
               href="/myProfile"
             >
               <UserIcon className="h-4 w-4" />
-              Profile
+              My Profile
             </Link>
             <div className='mt-4'>
               {!subscription && (

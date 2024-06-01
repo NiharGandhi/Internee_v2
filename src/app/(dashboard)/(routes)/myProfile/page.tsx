@@ -321,7 +321,7 @@ const MyProfile = () => {
         try {
             const values = form.getValues(); // Retrieve form values
             const response = await axios.put("/api/users", values);
-            // router.push(`/users/${response.data.id}`);
+            window.location.reload();
             toast({
                 title: "Congratulations",
                 description: "Profile Updated Successfully.",
