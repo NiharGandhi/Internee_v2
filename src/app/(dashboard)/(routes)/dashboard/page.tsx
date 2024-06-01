@@ -22,6 +22,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { cn } from '@/lib/utils';
+import { createCustomerIfNull } from '@/lib/stripe';
 
 const Loader = () => (
   <div className="flex justify-center items-center h-screen">
@@ -50,6 +51,17 @@ const Dashboard = () => {
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
   };
+
+  useEffect(() => {
+    const createUserStripeId = async () => {
+      try {
+        await createCustomerIfNull();
+      } catch (error) {
+        console.log("ERROR CREATING CURSTOMER [STRIPE]", error);  
+      }
+    }
+    createUserStripeId();
+  }, []);
 
   useEffect(() => {
     // Fetch users data from API

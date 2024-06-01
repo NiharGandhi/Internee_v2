@@ -4,26 +4,10 @@ import React from 'react'
 import { Button } from "@/components/ui/button"
 import Link from 'next/link'
 import ShimmerButton from './magicui/shimmer-button'
-import { createCheckoutLink, createCustomerIfNull, hasSubscription } from '@/lib/stripe'
-import { auth } from '@clerk/nextjs/server'
-import { db } from '@/lib/db'
-import { redirect } from 'next/navigation'
+import { hasSubscription } from '@/lib/stripe'
+
 
 const Header = async () => {
-
-    await createCustomerIfNull();
-
-    const { userId } = auth();
-
-    if (!userId) {
-        redirect("/");
-    }
-
-    const user = await db.user.findFirst({
-        where: {
-            userId: userId
-        }
-    })
 
     const hasSubscribed = await hasSubscription();
     return (
@@ -45,7 +29,7 @@ const Header = async () => {
             <div className='flex items-center ml-auto'>
                 <SignedOut>
                     <SignInButton mode="modal">
-                        <Button variant="linktree_default">Sign In</Button>
+                        <Button variant="default">Sign In</Button>
                     </SignInButton>
                 </SignedOut>
                 <SignedIn>
