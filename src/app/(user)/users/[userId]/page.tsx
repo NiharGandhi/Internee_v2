@@ -60,7 +60,7 @@ const UserPublicPage = async ({
         }
     });
 
-    // console.log("CERT",certificates)
+    const userSkills = user?.skills ? user.skills.split(',') : [];
 
     return (
         <div>
@@ -88,19 +88,27 @@ const UserPublicPage = async ({
                         <CardDescription>{user?.InstitutionName}</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <Badge>{user?.skills}</Badge>
-                        <div className='flex flex-col py-2 justify-center'>
+                        <div className='flex space-x-2'>
+                            {userSkills ? userSkills.map((skill, index) => (
+                                <Badge key={index}>{skill.trim()}</Badge>
+                            )) : (
+                                <p className='text-sm  text-muted-foreground'>No Skills Added</p>
+                            )}
+                        </div>
+                        <div className='flex flex-col mt-4 justify-center space-y-2'>
                             <div>
-                                Bio:
+                                <h2 className='font-semibold'>Bio:</h2>
+                                <p className='whitespace-pre-wrap ml-2'>
+                                    {user?.bio}
+                                </p>
                             </div>
-                            <p>
-                                {user?.bio}
-                            </p>
-                            <div>
-                                Education Level: {user?.EducationLevel}
+                            <div className='flex'>
+                                <h2 className='font-semibold mr-2'>Education Level:</h2>
+                                {user?.EducationLevel}
                             </div>
-                            <div>
-                                Graduation Date: {user?.GraduationDate ? user.GraduationDate.toDateString() : 'N/A'}
+                            <div className='flex'>
+                                <h2 className='font-semibold mr-2'>Graduation Date:</h2>
+                                {user?.GraduationDate ? user.GraduationDate.toDateString() : 'N/A'}
                             </div>
                         </div>
                         {user?.resume ? (

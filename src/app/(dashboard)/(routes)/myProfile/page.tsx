@@ -3,17 +3,18 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Link from 'next/link';
 
 import { format } from "date-fns";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { z } from "zod";
+
+import { useForm } from "react-hook-form";
 
 import { cn } from '@/lib/utils';
 
 import { Button } from "@/components/ui/button";
-
 import {
     Form,
     FormControl,
@@ -23,16 +24,13 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-
 import { Input } from "@/components/ui/input";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Calendar } from "@/components/ui/calendar";
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
-
 import { 
     Breadcrumb, 
     BreadcrumbItem, 
@@ -41,17 +39,22 @@ import {
     BreadcrumbPage, 
     BreadcrumbSeparator } 
 from '@/components/ui/breadcrumb';
-
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { useToast } from '@/components/ui/use-toast';
 import { Separator } from "@/components/ui/separator"
+import { Textarea } from '@/components/ui/textarea';
 
-import { CalendarIcon, DownloadCloudIcon, FileIcon } from 'lucide-react';
+import { CalendarIcon, ChevronDown, DownloadCloudIcon, FileIcon } from 'lucide-react';
+
 import { FileUpload } from '@/components/file-upload';
-import Link from 'next/link';
 import ProfileProjectsDisplay from '@/components/profileProjectsDisplay';
 import ProfileCertificatesDisplay from '@/components/profileCertificatesDisplay';
-import ShimmerButton from '@/components/magicui/shimmer-button';
-import { Textarea } from '@/components/ui/textarea';
+
 
 const formSchema = z.object({
     name: z.string().min(2).max(50),
@@ -64,9 +67,6 @@ const formSchema = z.object({
         required_error: "A Graduation Daate is required.",
     }),
     skills: z.string().min(2).max(150),
-    skill: z.string({
-        required_error: "Please select a language.",
-    }).min(1),
     email: z.string().email(),
     resumeUrl: z.string().min(1)
 })
@@ -168,7 +168,7 @@ const MyProfile = () => {
             bio: "",
             institutionName: "",// or another default
             yearOfGrad: new Date(), // or a sensible default date
-            skill: "en",
+            skills: "",
             email: "",
             resumeUrl: "",
         },
@@ -402,37 +402,27 @@ const MyProfile = () => {
                                     name="educationLevel"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Education Level</FormLabel>
+                                            <FormLabel>Education Level:</FormLabel>
                                             <FormControl>
-                                                <RadioGroup
-                                                    onValueChange={field.onChange}
-                                                    defaultValue={field.value}
-                                                    className="flex flex-col space-y-1"
-                                                    disabled={!isEditing && userData !== null}
-                                                >
-                                                    <FormItem className="flex items-center space-x-3 space-y-0">
-                                                        <FormControl>
-                                                            <RadioGroupItem value="High School" />
-                                                        </FormControl>
-                                                        <FormLabel className="font-normal">
+                                                <DropdownMenu>
+                                                    <DropdownMenuTrigger asChild>
+                                                        <Button className="ml-2" disabled={!isEditing && userData !== null}>
+                                                            {field.value || "Select education level"}
+                                                            <ChevronDown className="ml-2 h-4 w-4" />
+                                                        </Button>
+                                                    </DropdownMenuTrigger>
+                                                    <DropdownMenuContent>
+                                                        <DropdownMenuItem onClick={() => field.onChange("High School")}>
                                                             High School
-                                                        </FormLabel>
-                                                    </FormItem>
-                                                    <FormItem className="flex items-center space-x-3 space-y-0">
-                                                        <FormControl>
-                                                            <RadioGroupItem value="Bachelors" />
-                                                        </FormControl>
-                                                        <FormLabel className="font-normal">
+                                                        </DropdownMenuItem>
+                                                        <DropdownMenuItem onClick={() => field.onChange("Bachelors")}>
                                                             Bachelors
-                                                        </FormLabel>
-                                                    </FormItem>
-                                                    <FormItem className="flex items-center space-x-3 space-y-0">
-                                                        <FormControl>
-                                                            <RadioGroupItem value="Masters" />
-                                                        </FormControl>
-                                                        <FormLabel className="font-normal">Masters</FormLabel>
-                                                    </FormItem>
-                                                </RadioGroup>
+                                                        </DropdownMenuItem>
+                                                        <DropdownMenuItem onClick={() => field.onChange("Masters")}>
+                                                            Masters
+                                                        </DropdownMenuItem>
+                                                    </DropdownMenuContent>
+                                                </DropdownMenu>
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -527,6 +517,7 @@ const MyProfile = () => {
                                             <FormControl>
                                                 <Input placeholder="Internee" {...field} disabled={!isEditing && userData !== null} />
                                             </FormControl>
+                                            <FormDescription>Multiple Skils Separeted by commas (eg: photography, graphic Design)</FormDescription>
                                             <FormMessage />
                                         </FormItem>
 
