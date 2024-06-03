@@ -5,18 +5,6 @@ import { redirect } from 'next/navigation';
 import React from 'react';
 
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-
-import {
     Breadcrumb,
     BreadcrumbItem,
     BreadcrumbLink,
@@ -25,8 +13,7 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import Link from 'next/link';
-import { ArrowBigRight, CalendarIcon, DownloadCloudIcon, FileIcon, InfoIcon, LinkIcon, PencilIcon } from 'lucide-react';
-import Image from 'next/image';
+import {  DownloadCloudIcon, FileIcon, InfoIcon } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
 const PublicCertificatePage = async ({

@@ -244,7 +244,7 @@ const MyProfile = () => {
     };
 
     const renderEnhanceButton = () => {
-        if (!subscription) {
+        if (subscription) {
             return (
                 <Button variant="upgrade" className='ml-1' onClick={handleEnhanceDescription} disabled={!isEditing && userData !== null}>Enhance Bio</Button>
             )
