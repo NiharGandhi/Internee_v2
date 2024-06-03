@@ -75,7 +75,7 @@ const OrganizationPage = async ({ params } : { params : {
                     className='h-[191px]'
                 />
                 <div style={{ position: 'absolute', top: 5, left: 10 }} className='bg-slate-200 rounded-lg'>
-                    <Link href={"/dashboard"}>
+                    <Link href={"/organizations"}>
                         <ArrowLeft className='text-black' />
                     </Link>
                 </div>
