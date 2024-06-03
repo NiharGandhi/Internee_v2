@@ -9,6 +9,7 @@ const isProtectedRoute = createRouteMatcher([
     '/events(.*)',
     '/internships(.*)',
     '/myProfile(.*)',
+    'organizations(.*)',
     '/resources(.*)',
     '/users(.*)',
 ]);
