@@ -100,7 +100,7 @@ const SearchOrganizationsPage = ({ companies } : { companies : any }) => {
                     />
                 </div>
                 {/* Filter Dropdown */}
-                <div className='flex space-x-2'>
+                <div className='space-x-2'>
                     <select
                         value={selectedLocation}
                         onChange={(e) => handleLocationChange(e.target.value)}
