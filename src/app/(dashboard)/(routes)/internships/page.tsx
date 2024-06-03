@@ -29,7 +29,11 @@ const InternshipsPage = async () => {
         return redirect("/")
     }
 
-    const internships = await db.createInternship.findMany();
+    const internships = await db.createInternship.findMany({
+        include: {
+            user: true,
+        }
+    });
 
     return (
         <div>
@@ -50,8 +54,18 @@ const InternshipsPage = async () => {
                     <Card key={internship.id} className='mb-4'>
                         <CardHeader>
                             <CardTitle className='font-bold'>{internship.name}</CardTitle>
-                            <CardDescription>{internship.InternshipDescription}</CardDescription>
+                            <CardDescription>
+                                <Link href={`/organizations/${internship.user.id}`}>
+                                    {internship.user.name}
+                                </Link>
+                            </CardDescription>
                         </CardHeader>
+                        <CardContent>
+                            <div className='flex flex-col lg:flex-row lg:space-x-2'>
+                                <h3 className='font-semibold'>Description:</h3>
+                                <p className='text-md'>{internship.InternshipDescription}</p>
+                            </div>
+                        </CardContent>
                         <CardFooter>
                             <Link className='ml-auto' href={`/internships/${internship.id}`}>
                                 <Button>
