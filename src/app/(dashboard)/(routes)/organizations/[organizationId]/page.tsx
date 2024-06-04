@@ -1,11 +1,14 @@
 import { db } from '@/lib/db';
 import { auth } from '@clerk/nextjs/server';
+
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
+import Image from 'next/image';
+
 import React from 'react';
 
 import {
     Card,
-    CardContent,
     CardDescription,
     CardFooter,
     CardHeader,
@@ -13,14 +16,18 @@ import {
 } from "@/components/ui/card";
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import Header from '@/components/header';
-import Link from 'next/link';
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
-import { format } from 'date-fns';
-import Image from 'next/image';
+import { 
+    Breadcrumb, 
+    BreadcrumbItem, 
+    BreadcrumbLink, 
+    BreadcrumbList, 
+    BreadcrumbPage, 
+    BreadcrumbSeparator 
+} from '@/components/ui/breadcrumb';
 import { ScrollArea } from '@/components/ui/scroll-area';
+
 import { ArrowLeft } from 'lucide-react';
+
 import FallBack from "../../../../../../public/fallback.png";
 
 

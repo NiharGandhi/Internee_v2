@@ -1,4 +1,3 @@
-import Header from '@/components/header';
 import { db } from '@/lib/db';
 import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation';
@@ -15,7 +14,6 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -23,10 +21,8 @@ import {
     BreadcrumbList,
     BreadcrumbPage,
     BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import Link from 'next/link';
-import { ArrowBigRight, CalendarIcon, DownloadCloudIcon, FileIcon, LinkIcon, PencilIcon } from 'lucide-react';
-import { sendMail } from '@/lib/mail';
+} from "@/components/ui/breadcrumb";
+
 import ApplyButton from '@/components/ApplyButton';
 
 const SelectedInternshipPage = async ({

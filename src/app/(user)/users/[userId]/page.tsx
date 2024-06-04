@@ -1,7 +1,12 @@
 import Header from '@/components/header';
+
 import { db } from '@/lib/db';
-import { auth } from '@clerk/nextjs/server'
+
+import { auth } from '@clerk/nextjs/server';
+
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
+
 import React from 'react'
 
 import {
@@ -15,7 +20,6 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -23,9 +27,9 @@ import {
     BreadcrumbList,
     BreadcrumbPage,
     BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import Link from 'next/link';
-import { ArrowBigRight, CalendarIcon, DownloadCloudIcon, FileIcon, LinkIcon, PencilIcon } from 'lucide-react';
+} from "@/components/ui/breadcrumb";
+
+import { ArrowBigRight, CalendarIcon, DownloadCloudIcon, FileIcon, LinkIcon } from 'lucide-react';
 
 
 const UserPublicPage = async ({

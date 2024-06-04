@@ -3,25 +3,22 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
 
+import Link from 'next/link';
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
-
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-
 import { Input } from "@/components/ui/input";
-
-
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -29,28 +26,15 @@ import {
     BreadcrumbList,
     BreadcrumbPage,
     BreadcrumbSeparator
-}
-    from '@/components/ui/breadcrumb';
-
+} from '@/components/ui/breadcrumb';
 import { useToast } from '@/components/ui/use-toast';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { CalendarIcon, DeleteIcon, DownloadCloudIcon, EllipsisVertical, FileIcon, LinkIcon, MenuIcon, PencilIcon, Trash2Icon } from 'lucide-react';
-import Link from 'next/link';
-import { redirect, useRouter } from 'next/navigation';
-
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { FileUpload } from '@/components/file-upload';
-import { auth } from '@clerk/nextjs/server';
-import { db } from '@/lib/db';
-import Image from 'next/image';
 import { Textarea } from '@/components/ui/textarea';
+
+import { DownloadCloudIcon, FileIcon } from 'lucide-react';
+
+import { FileUpload } from '@/components/file-upload';
+
+
 
 const formSchema = z.object({
     name: z.string().min(2),

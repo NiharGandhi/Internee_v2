@@ -2,8 +2,6 @@
 
 import React from 'react'
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
-import { BarChart, BookIcon, CalendarIcon, NetworkIcon, UserIcon, UsersIcon } from 'lucide-react'
-import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/components/ui/card";
 import useEvents from '@/hooks/useEvents';
 import EventCard from '@/components/EventCard';
 import { isBefore } from 'date-fns';

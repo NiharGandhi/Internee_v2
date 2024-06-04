@@ -1,22 +1,29 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
+
 import { db } from '@/lib/db';
+
 import { auth } from '@clerk/nextjs/server';
+
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
+
 import {
     Card,
-    CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
-    CardTitle,
 } from "@/components/ui/card";
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import Header from '@/components/header';
-import Link from 'next/link';
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
+import { 
+    Breadcrumb, 
+    BreadcrumbItem, 
+    BreadcrumbLink, 
+    BreadcrumbList, 
+    BreadcrumbPage, 
+    BreadcrumbSeparator 
+} from '@/components/ui/breadcrumb';
 import { Input } from '@/components/ui/input';
 
 const SearchOrganizationsPage = ({ companies } : { companies : any }) => {

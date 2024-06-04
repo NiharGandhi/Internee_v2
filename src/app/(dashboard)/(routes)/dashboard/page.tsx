@@ -1,6 +1,6 @@
 "use client";
 
-import { BookIcon, CalendarIcon, CogIcon, Laptop2Icon, NetworkIcon, StarIcon, UserIcon, UsersIcon, WorkflowIcon } from 'lucide-react'
+import { BookIcon, CalendarIcon, CogIcon, NetworkIcon, StarIcon, UserIcon, UsersIcon } from 'lucide-react'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/components/ui/card";
@@ -21,8 +21,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { cn } from '@/lib/utils';
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { Label } from '@/components/ui/label';
 
 const Loader = () => (
@@ -47,7 +45,6 @@ const Dashboard = () => {
   const [users, setUsers] = useState([]);
   const [subscription, setSubscription] = useState<boolean>(false);
   const [checkOutLink, setCheckOutLink] = useState("");
-  const [stripeCustomerId, setStripeCustomerId] = useState("");
 
   // Function to toggle navbar state
   const toggleNav = () => {

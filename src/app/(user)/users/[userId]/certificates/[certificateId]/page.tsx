@@ -1,7 +1,12 @@
 import Header from '@/components/header';
+
 import { db } from '@/lib/db';
+
 import { auth } from '@clerk/nextjs/server';
+
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
+
 import React from 'react';
 
 import {
@@ -12,9 +17,9 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import Link from 'next/link';
-import {  DownloadCloudIcon, FileIcon, InfoIcon } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
+
+import {  DownloadCloudIcon, FileIcon, InfoIcon } from 'lucide-react';
 
 const PublicCertificatePage = async ({
     params

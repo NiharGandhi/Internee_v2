@@ -1,16 +1,23 @@
 "use client";
 
-import React from 'react'
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
-import { BarChart, BookIcon, CalendarIcon, LinkIcon, NetworkIcon, PenToolIcon, UserIcon, UsersIcon } from 'lucide-react'
-import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/components/ui/card";
-import Link from 'next/link';
-import useOnlineResources from '@/hooks/useOnlineResource';
+import React from 'react';
+
+import { 
+    Breadcrumb, 
+    BreadcrumbItem, 
+    BreadcrumbLink, 
+    BreadcrumbList, 
+    BreadcrumbPage, 
+    BreadcrumbSeparator 
+} from '@/components/ui/breadcrumb';
+
 import ResourceCard from '@/components/ResourceCard';
-import useRecommendedBooks from '@/hooks/useRecommendedBooks';
 import OnlineBookCard from '@/components/OnlineBooksCard';
-import useUsefulTool from '@/hooks/useTool';
 import UsefulToolCard from '@/components/UsefulToolCard';
+
+import useOnlineResources from '@/hooks/useOnlineResource';
+import useRecommendedBooks from '@/hooks/useRecommendedBooks';
+import useUsefulTool from '@/hooks/useTool';
 
 
 const ResourcesPage = () => {

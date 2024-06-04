@@ -1,7 +1,13 @@
 import Header from '@/components/header';
+
 import { db } from '@/lib/db';
+
 import { auth } from '@clerk/nextjs/server';
+
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
+import Image from 'next/image';
+
 import React from 'react';
 
 import {
@@ -12,11 +18,12 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import Link from 'next/link';
-import { InfoIcon } from 'lucide-react';
-import Image from 'next/image';
-import FallBack from "../../../../../../public/fallback.png";
 import { ScrollArea } from '@/components/ui/scroll-area';
+
+import { InfoIcon } from 'lucide-react';
+
+import FallBack from "../../../../../../public/fallback.png";
+
 
 const PublicProjectPage = async ({
     params

@@ -1,10 +1,15 @@
 // UsersPage.tsx
 
 import { db } from '@/lib/db';
+
 import { auth } from '@clerk/nextjs/server';
+
 import React from 'react';
+
 import Header from '@/components/header';
+
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
+
 import SearchUsersPage from './_components/SearchUsersPage';
 
 const UsersPage = async () => {
