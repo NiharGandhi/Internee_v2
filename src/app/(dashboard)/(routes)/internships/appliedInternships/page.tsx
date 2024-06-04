@@ -69,7 +69,7 @@ const InternshipsPage = async () => {
             </Breadcrumb>
             <h1 className='font-bold text-4xl mt-2 px-10'>Applied Internships</h1>
             <div className='py-4 px-8'>
-                {appliedInternships.map(internships => (
+                {appliedInternships ? ( appliedInternships.map(internships => (
                     <Link key={internships.id} href={`/internships/${internships.internship.id}`}>
                         <Card className='mb-4'>
                             <CardHeader>
@@ -82,7 +82,11 @@ const InternshipsPage = async () => {
                             </CardFooter>
                         </Card>
                     </Link>
-                ))}
+                ))) : (
+                    <div className='flex items-center justify-center text-muted-foreground text-2xl'>
+                        No Interships Applied. Apply Now!!!
+                    </div>
+                )}
             </div>
         </div>
     );
