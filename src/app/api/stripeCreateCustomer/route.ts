@@ -14,23 +14,27 @@ export async function GET() {
                 }
             });
 
-            if (!user?.stripe_customer_id) {
-                const customer = await stripe.customers.create({
-                    email: String(user?.email)
-                })
+            if (user) {
+                if (!user?.stripe_customer_id) {
+                    const customer = await stripe.customers.create({
+                        email: String(user?.email)
+                    })
 
-                await db.user.update({
-                    where: {
-                        id: user?.id
-                    },
-                    data: {
-                        stripe_customer_id: customer.id
-                    }
-                })
+                    await db.user.update({
+                        where: {
+                            id: user?.id
+                        },
+                        data: {
+                            stripe_customer_id: customer.id
+                        }
+                    })
+                }
+
+                const user2 = await db.user.findFirst({ where: { userId: userId } });
+                return NextResponse.json(user2?.stripe_customer_id);
+            } else {
+                return NextResponse.json(null);
             }
-
-            const user2 = await db.user.findFirst({ where: { userId: userId } });
-            return NextResponse.json(user2?.stripe_customer_id);
         }   
     } catch (error) {
         console.log("[STRIPE CREATE CUSTOMER ERROR]", error);

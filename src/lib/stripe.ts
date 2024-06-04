@@ -13,6 +13,10 @@ export async function hasSubscription() {
     if (userId) {
         const user = await db.user.findFirst({ where: { userId: userId } });
 
+        if (!user?.stripe_customer_id) {
+            return 0
+        }
+
         const subscriptions = await stripe.subscriptions.list({
             customer: String(user?.stripe_customer_id)
         })

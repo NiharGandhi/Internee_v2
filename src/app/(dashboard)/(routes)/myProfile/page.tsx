@@ -104,13 +104,13 @@ const MyProfile = () => {
                 const response = await axios.get("/api/checkSubscription");
                 setSubscription(response.data);
             } catch (error) {
-                console.error("Error fetching subscription data:", error);
+                console.error("Error fetching subscription data");
             }
         }
         fetchSubscriptionData();
     }, [])
 
-    console.log("SUBSCRIPTION: " + subscription);
+    // console.log("SUBSCRIPTION: " + subscription);
 
     useEffect(() => {
         const fetchUserProjects = async () => {
@@ -118,7 +118,7 @@ const MyProfile = () => {
                 const response = await axios.get("/api/addProjects");
                 setProjects(response.data);
             } catch (error) {
-                console.error("Error fetching user data:", error);
+                console.error("Error fetching user data");
             }
         };
         fetchUserProjects();
@@ -130,7 +130,7 @@ const MyProfile = () => {
                 const response = await axios.get("/api/addCertificates");
                 setCertificates(response.data);
             } catch (error) {
-                console.error("Error fetching user data:", error);
+                console.error("Error fetching user data");
             }
         };
         fetchUserCertificates();
@@ -142,7 +142,7 @@ const MyProfile = () => {
                 const response = await axios.get("/api/users");
                 setUserData(response.data);
             } catch (error) {
-                console.error("Error fetching user data:", error);
+                console.error("Error fetching user data");
             }
         };
         fetchUserData();
@@ -155,7 +155,7 @@ const MyProfile = () => {
                 console.log("response link:" + response);
                 setManageLink(response.data);
             } catch (error) {
-                console.log("Portal Link Error", error);
+                console.log("Portal Link Error");
             }
         }
         fetchManageLink();
@@ -351,12 +351,14 @@ const MyProfile = () => {
                     <h1 className='text-4xl font-bold font-sans'>
                         Your Profile
                     </h1>
-                    <Link
-                        className='ml-auto mt-4 lg:mt-0'
-                        href={"" + manageLink}
-                    >
-                        <Button>Manage Subscription</Button>
-                    </Link>
+                    {manageLink && (
+                        <Link
+                            className='ml-auto mt-4 lg:mt-0'
+                            href={"" + manageLink}
+                        >
+                            <Button>Manage Subscription</Button>
+                        </Link>
+                    )}
                 </div>
                 <div className='flex-col lg:flex-wrap'>
                     <Form {...form}>

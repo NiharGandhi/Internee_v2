@@ -16,6 +16,10 @@ export async function GET() {
         }
     })
 
+    if (!user?.stripe_customer_id) {
+        return NextResponse.json(null);
+    }
+
     try {
         const portalLink = await generateCustomerPortalLink("" + user?.stripe_customer_id);
 

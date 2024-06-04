@@ -16,12 +16,16 @@ export async function GET() {
         }
     })
 
-    try {
-        const checkOutLink = await createCheckoutLink("" + user?.stripe_customer_id);
+    if (!user?.stripe_customer_id) {
+        return NextResponse.json(null);
+    } else {
+        try {
+            const checkOutLink = await createCheckoutLink("" + user?.stripe_customer_id);
 
-        return NextResponse.json(checkOutLink);
-    } catch (error) {
-        console.log("Error: ", error)
-        return new NextResponse("[CHECKOUT LINK API ERROR]", { status: 404 });
+            return NextResponse.json(checkOutLink);
+        } catch (error) {
+            console.log("Error: ", error)
+            return new NextResponse("[CHECKOUT LINK API ERROR]", { status: 404 });
+        }
     }
 }
