@@ -6,6 +6,8 @@ import { auth } from '@clerk/nextjs/server';
 
 import React from 'react';
 
+import { redirect } from 'next/navigation';
+
 import Header from '@/components/header';
 
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
@@ -16,7 +18,7 @@ const UsersPage = async () => {
     const { userId } = auth();
 
     if (!userId) {
-        return <div>Redirecting...</div>; // Handle redirecting or displaying a message
+        redirect("/") // Handle redirecting or displaying a message
     }
 
     const users = await db.user.findMany();

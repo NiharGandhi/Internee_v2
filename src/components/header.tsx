@@ -4,16 +4,23 @@ import React from 'react'
 import { Button } from "@/components/ui/button"
 import Link from 'next/link'
 import ShimmerButton from './magicui/shimmer-button'
+import { auth } from '@clerk/nextjs/server'
 
 const Header = async () => {
 
-    // const hasSubscribed = await hasSubscription();
+    const { userId } = auth();
     
     return (
         <div className='bg-[#6c5ce7] dark:border-gray-800 dark:bg-gray-950 flex items-center justify-between py-2 px-4'>
-            <Link href="/">
-                <h1 className='font-bold text-white text-4xl font-sans'>Internee</h1>
-            </Link>
+            {userId ? (
+                <Link href="/dashboard">
+                    <h1 className='font-bold text-white text-4xl font-sans'>Internee</h1>
+                </Link>
+            ) : (
+                <Link href="/">
+                    <h1 className='font-bold text-white text-4xl font-sans'>Internee</h1>
+                </Link>
+            )}
             <div className='flex items-center ml-auto'>
                 <SignedOut>
                     <SignInButton mode="modal">
