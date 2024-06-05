@@ -40,7 +40,7 @@ export async function GET() {
         const existingUsefulTools = await db.usefulTools.findMany();
 
         if (!existingUsefulTools) {
-            return new NextResponse("Not Useful Tools Found", { status: 404 });
+            return NextResponse.json("Not Useful Tools Found");
         }
 
         return NextResponse.json(existingUsefulTools);
