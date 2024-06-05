@@ -25,7 +25,7 @@ export default function RootLayout({
           <link rel="icon" href="/favicon.ico" sizes="any" />
           <link
             rel="apple-touch-icon"
-            href="/apple-icon?<generated>"
+            href="/apple-touch-icon?<generated>"
             type="image/<generated>"
             sizes="<generated>"
           />
