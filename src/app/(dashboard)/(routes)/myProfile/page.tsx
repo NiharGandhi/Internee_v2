@@ -197,15 +197,23 @@ const MyProfile = () => {
         } else if (userData) {
             if (isEditing) {
                 return <FileUpload endpoint="userResume" onChange={handleResumeUpload} />;
+            } else if (userData.resume) {
+                return (
+                    <Link href={userData.resume}>
+                        <div className="flex items-center justify-center p-3 w-full bg-purple-100 border-purple-200 border text-purple-700 rounded-md">
+                            {userData.name}&apos;s Resume
+                            <DownloadCloudIcon className='h-5 w-5 mr-2'/>
+                        </div>
+                    </Link>
+                );
             } else {
-            return (
-                <Link href={userData.resume}>
-                    <div className="flex items-center justify-center p-3 w-full bg-purple-100 border-purple-200 border text-purple-700 rounded-md">
-                        {userData.name}&apos;s Resume
-                        <DownloadCloudIcon className='h-5 w-5 mr-2'/>
+                return (
+                    <div className='flex items-center justify-center h-16 bg-slate-100 rounded-md text-slate-400'>
+                        <FileIcon className='h-5 w-5 text-slate-400 mr-2' />
+                        No Resume Uploaded. Upload Now!!!
                     </div>
-                </Link>
-            );}
+                )
+            }
         } else {
             return (
                 <div className='flex items-center justify-center h-16 bg-slate-100 rounded-md text-slate-400'>
