@@ -72,7 +72,7 @@ export async function GET(req: Request) {
         });
 
         if (!existingUser) {
-            return new NextResponse("User Not Found", { status: 404 });
+            return NextResponse.json(null);
         }
 
         return NextResponse.json(existingUser);

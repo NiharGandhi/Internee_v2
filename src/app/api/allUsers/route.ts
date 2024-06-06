@@ -13,7 +13,7 @@ export async function GET() {
         const existingUsers = await db.user.findMany();
 
         if (!existingUsers) {
-            return new NextResponse("Users Not Found", { status: 404 });
+            return NextResponse.json("No Users Yet")
         }
 
         return NextResponse.json(existingUsers);
