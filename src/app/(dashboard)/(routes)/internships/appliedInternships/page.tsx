@@ -86,7 +86,7 @@ const InternshipsPage = async () => {
                 ))) : (
                     <div className='py-4 px-8'>
                         <div className='flex flex-col items-center justify-center text-muted-foreground text-xl lg:text-4xl space-y-4'>
-                                <h1>No Interships Applied.</h1>
+                                <h1>No Internships Applied.</h1>
                                 <Button variant="secondary"><Link href={"/internships"}>Apply Now!!!</Link></Button>
                         </div>
                     </div>
