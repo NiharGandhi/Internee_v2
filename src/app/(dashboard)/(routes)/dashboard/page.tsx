@@ -51,6 +51,7 @@ const Dashboard = () => {
   const [users, setUsers] = useState([]);
   const [subscription, setSubscription] = useState<boolean>(false);
   const [checkOutLink, setCheckOutLink] = useState("");
+  const [loaded, setLoaded] = useState(true);
 
   // Function to toggle navbar state
   const toggleNav = () => {
@@ -75,7 +76,6 @@ const Dashboard = () => {
       try {
         const response = await fetch('/api/allUsers');
         const data = await response.json();
-        // console.log(data);
         setUsers(data);
       } catch (error) {
         console.error('Failed to fetch users', error);
@@ -113,6 +113,7 @@ const Dashboard = () => {
       try {
         const response = await axios.get("/api/stripeCheckoutLink");
         setCheckOutLink(response.data);
+        setLoaded(false);
       } catch (error) {
         console.log("Checkout Link Error", error);
       }
@@ -121,7 +122,7 @@ const Dashboard = () => {
   }, [])
 
 
-  if (loading) return <div><Loader /></div>;
+  if (loading || loaded) return <div><Loader /></div>;
   if (error) return <div>{error}</div>;
 
   if (!userData) {
