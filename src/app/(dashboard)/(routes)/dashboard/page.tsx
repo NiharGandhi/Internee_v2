@@ -125,7 +125,7 @@ const Dashboard = () => {
   if (loading || loaded || loadingRes || loadingBooks || loadingTools) return <div><Loader /></div>;
   if (error || errorRes || errorBooks || errorTools) return <div>{error}</div>;
 
-  if (!userData) {
+  if (userData !== null) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
         <p className="mb-4 text-lg text-gray-700 dark:text-gray-300">Please complete your profile to access the app&apos;s features.</p>
