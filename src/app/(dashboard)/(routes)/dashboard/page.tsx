@@ -122,8 +122,8 @@ const Dashboard = () => {
   }, [])
 
 
-  if (loading || loaded) return <div><Loader /></div>;
-  if (error) return <div>{error}</div>;
+  if (loading || loaded || loadingRes || loadingBooks || loadingTools) return <div><Loader /></div>;
+  if (error || errorRes || errorBooks || errorTools) return <div>{error}</div>;
 
   if (!userData) {
     return (
