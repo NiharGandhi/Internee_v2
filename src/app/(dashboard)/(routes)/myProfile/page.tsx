@@ -113,7 +113,7 @@ const MyProfile = () => {
                 setProjects(projectsResponse.data);
                 setCertificates(certificatesResponse.data);
                 setManageLink(manageLinkResponse.data);
-                setLoading(false); // Set loading to false after all data is retrieved
+                setLoading(false);
             } catch (error) {
                 console.error("Error fetching data", error);
             }
@@ -121,69 +121,6 @@ const MyProfile = () => {
 
         fetchData();
     }, []);
-
-    // useEffect(() => {
-    //     const fetchSubscriptionData = async () => {
-    //         try {
-    //             const response = await axios.get("/api/checkSubscription");
-    //             setSubscription(response.data);
-    //         } catch (error) {
-    //             console.error("Error fetching subscription data");
-    //         }
-    //     }
-    //     fetchSubscriptionData();
-    // }, [])
-
-    // // console.log("SUBSCRIPTION: " + subscription);
-
-    // useEffect(() => {
-    //     const fetchUserProjects = async () => {
-    //         try {
-    //             const response = await axios.get("/api/addProjects");
-    //             setProjects(response.data);
-    //         } catch (error) {
-    //             console.error("Error fetching user data");
-    //         }
-    //     };
-    //     fetchUserProjects();
-    // }, []);
-
-    // useEffect(() => {
-    //     const fetchUserCertificates = async () => {
-    //         try {
-    //             const response = await axios.get("/api/addCertificates");
-    //             setCertificates(response.data);
-    //         } catch (error) {
-    //             console.error("Error fetching user data");
-    //         }
-    //     };
-    //     fetchUserCertificates();
-    // }, []);
-
-    // useEffect(() => {
-    //     const fetchUserData = async () => {
-    //         try {
-    //             const response = await axios.get("/api/users");
-    //             setUserData(response.data);
-    //         } catch (error) {
-    //             console.error("Error fetching user data");
-    //         }
-    //     };
-    //     fetchUserData();
-    // }, []);
-
-    // useEffect(() => {
-    //     const fetchManageLink = async () => {
-    //         try {
-    //             const response = await axios.get("/api/stripeCustomerPortal");
-    //             console.log("response link:" + response);
-    //             setManageLink(response.data);
-    //         } catch (error) {
-    //             console.log("Portal Link Error");
-    //         }
-    //     }
-    //     fetchManageLink();
-    // }, [])
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -283,7 +220,6 @@ const MyProfile = () => {
     };
 
     const handleEnhanceDescription = async () => {
-
         if (subscription) {
             const bio = form.getValues().bio;
             if (!bio) {
@@ -312,21 +248,20 @@ const MyProfile = () => {
                     ]
                 }
             };
-
             try {
                 const response = await axios.request(options);
                 const enhancedText = response.data.choices[0].message.content; // Assuming the first response choice is chosen
                 form.setValue("bio", enhancedText);
                 toast({
                     title: "Success",
-                    description: "Bio enhanced successfully.",
+                    description: "Bio Enhanced successfully.",
                 });
             } catch (error) {
                 toast({
                     title: "Error",
-                    description: "Error enhancing Bio.",
+                    description: "Error Enhancing Bio.",
                 });
-                console.error("Error enhancing Bio:", error);
+                // console.error("Error enhancing Bio:", error);
             }
         }
     };
@@ -344,7 +279,7 @@ const MyProfile = () => {
                 title: "Error",
                 description: "Error while Creating Profile .",
             })
-            console.log("[ERROR] Something went wrong while creating User");
+            console.log("[USER RETRIEVAL ERROR] Something went wrong while creating User");
         }
     }
 
