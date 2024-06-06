@@ -113,13 +113,13 @@ const MyProfile = () => {
                 setProjects(projectsResponse.data);
                 setCertificates(certificatesResponse.data);
                 setManageLink(manageLinkResponse.data);
-                setLoading(false);
             } catch (error) {
                 console.error("Error fetching data", error);
             }
         };
 
         fetchData();
+        setLoading(false);
     }, []);
 
     const form = useForm<z.infer<typeof formSchema>>({
