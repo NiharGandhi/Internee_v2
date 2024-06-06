@@ -9,6 +9,7 @@ import React from 'react';
 
 import {
     Card,
+    CardContent,
     CardDescription,
     CardFooter,
     CardHeader,
@@ -29,6 +30,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { ArrowLeft } from 'lucide-react';
 
 import FallBack from "../../../../../../public/fallback.png";
+import { Separator } from '@/components/ui/separator';
 
 
 
@@ -58,21 +60,6 @@ const OrganizationPage = async ({ params } : { params : {
 
     return (
         <div>
-            <Breadcrumb className='mt-3 ml-10'>
-                <BreadcrumbList>
-                    <BreadcrumbItem>
-                        <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
-                    </BreadcrumbItem>
-                    <BreadcrumbSeparator />
-                    <BreadcrumbItem>
-                        <BreadcrumbLink href="/organizations">Organizations</BreadcrumbLink>
-                    </BreadcrumbItem>
-                    <BreadcrumbSeparator />
-                    <BreadcrumbItem>
-                        <BreadcrumbPage>{company?.name}</BreadcrumbPage>
-                    </BreadcrumbItem>
-                </BreadcrumbList>
-            </Breadcrumb>
             <div style={{ position: 'relative' }}>
                 <Image
                     src={company?.CompanyImageUrl || FallBack}
@@ -99,30 +86,45 @@ const OrganizationPage = async ({ params } : { params : {
             <div className='px-10 space-y-2 lg:mt-4 lg:ml-24 mt-16'>
                 <h1 className='font-bold text-4xl'>{company?.name}</h1>
                 <Badge>{company?.Location}</Badge>
-                <div className='mt-4'>
-                    <h2 className='text-2xl font-semibold'>Description</h2>
-                    <ScrollArea className='py-2 rounded-lg whitespace-pre-wrap'>
+                <Separator />
+                <div>
+                    <h2 className='text-2xl font-semibold mt-6'>About Us</h2>
+                    <p className='text-muted-foreground rounded-lg whitespace-pre-wrap'>
                         {company?.CompanyDescription}
-                    </ScrollArea>
+                    </p>
                 </div>
             </div>
-            <h1 className='font-bold text-3xl mt-4 px-10'>Internships from {company?.name}</h1>
-            <div className='py-4 px-8'>
-                {internships.map(internship => (
-                    <Card key={internship.id} className='mb-4'>
-                        <CardHeader>
-                            <CardTitle className='font-bold'>{internship.name}</CardTitle>
-                            <CardDescription>{internship.InternshipDescription}</CardDescription>
-                        </CardHeader>
-                        <CardFooter>
-                            <Link className='ml-auto' href={`/internships/${internship.id}`}>
-                                <Button>
-                                    Explore
-                                </Button>
-                            </Link>
-                        </CardFooter>
-                    </Card>
-                ))}
+            <div className='px-10 space-y-2 lg:mt-6 lg:ml-24 mt-16'>
+                <h1 className='font-bold text-3xl mt-6'>Internships at <span className='text-purple-300'>{company?.name}</span></h1>
+                <div>
+                    {internships.map(internship => (
+                        <Card key={internship.id} className='mb-4'>
+                            <CardHeader>
+                                <CardTitle className='font-bold'>{internship.name}</CardTitle>
+                                <CardDescription>{company?.name}</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <div>
+                                    <div className='flex'>
+                                        <p className='text-muted-foreground'>Mode: </p>
+                                        <p className='ml-2 font-semibold'>{internship.InternshipType}</p>
+                                    </div>
+                                    <div>
+                                        <p className='text-muted-foreground'>Description: </p>
+                                        <p className='whitespace-pre-wrap'>{internship.InternshipDescription}</p>
+                                    </div>
+                                </div>
+                            </CardContent>
+                            <CardFooter>
+                                <Link className='ml-auto' href={`/internships/${internship.id}`}>
+                                    <Button>
+                                        Explore
+                                    </Button>
+                                </Link>
+                            </CardFooter>
+                        </Card>
+                    ))}
+                </div>
             </div>
         </div>
     );

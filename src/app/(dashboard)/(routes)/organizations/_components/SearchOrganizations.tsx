@@ -11,8 +11,10 @@ import Link from 'next/link';
 
 import {
     Card,
+    CardContent,
     CardDescription,
     CardHeader,
+    CardTitle,
 } from "@/components/ui/card";
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -25,6 +27,8 @@ import {
     BreadcrumbSeparator 
 } from '@/components/ui/breadcrumb';
 import { Input } from '@/components/ui/input';
+import Image from 'next/image';
+import FallBack from "../../../../../../public/fallback.png";
 
 const SearchOrganizationsPage = ({ companies } : { companies : any }) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -121,13 +125,35 @@ const SearchOrganizationsPage = ({ companies } : { companies : any }) => {
                     <Button variant="ghost" onClick={clearFilters}>Clear Filters</Button>
                 </div>
                 {/* Company Cards */}
-                {currentCompanies.map((company: { id: React.Key | null | undefined; name: string; Location: string; CompanyDescription: string }) => (
-                    <div key={company.id} className='px-4 py-2'>
+                {currentCompanies.map((company: { id: React.Key | null | undefined; name: string; Location: string; CompanyDescription: string; CompanyLogoUrl: string; }) => (
+                    <div key={company.id} className='py-2'>
                         <Link href={`/organizations/${company.id}`}>
-                            <Card className='px-4 py-2'>
-                                <CardHeader className='font-bold text-4xl'>{company.name}</CardHeader>
-                                <Badge className='ml-6'>{company.Location}</Badge>
-                                <CardDescription className='rounded-lg whitespace-pre-wrap ml-6 mt-4'>{company.CompanyDescription}</CardDescription>
+                            <Card className=''>
+                                <CardHeader className='font-bold text-4xl'>
+                                    <div className='flex'>
+                                        <Image
+                                            src={company?.CompanyLogoUrl || FallBack}
+                                            alt='Logo'
+                                            width={50}
+                                            height={50}
+                                            className='h-[50px]'
+                                        />
+                                        <div className='ml-4'>
+                                            <CardTitle>{company.name}</CardTitle>
+                                            <CardDescription>
+                                                {company.Location}
+                                            </CardDescription>
+                                        </div>
+                                    </div>
+                                </CardHeader>
+                                <CardContent>
+                                    <div>
+                                        <p className='text-muted-foreground'>About Us:</p>
+                                    </div>
+                                    <p className='rounded-lg whitespace-pre-wrap'>
+                                        {company.CompanyDescription}
+                                    </p>
+                                </CardContent>
                             </Card>
                         </Link>
                     </div>

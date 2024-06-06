@@ -22,7 +22,13 @@ const InternshipsPage = async () => {
 
     return (
         <div>
-            <SearchInternshipsPage internships={internships} />
+            {internships ? (
+                <SearchInternshipsPage internships={internships} />
+            ) : (
+                <div className='items-center justify-center'>
+                    <p>No Internships Available Right Now</p>
+                </div>
+            )}
         </div>
     );
 }

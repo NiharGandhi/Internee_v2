@@ -171,10 +171,15 @@ const SearchInternshipsPage = ({ internships } : { internships : any }) => {
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
-                            <Badge>{internship.InternshipType}</Badge>
-                            <div className='flex flex-col lg:flex-row lg:space-x-2'>
-                                <h3 className='font-semibold'>Description:</h3>
-                                <p className='text-md'>{internship.InternshipDescription}</p>
+                            <div>
+                                <div className='flex'>
+                                    <p className='text-muted-foreground'>Mode: </p>
+                                    <p className='ml-2 font-semibold'>{internship.InternshipType}</p>
+                                </div>
+                                <div>
+                                    <p className='text-muted-foreground'>Description: </p>
+                                    <p className='whitespace-pre-wrap'>{internship.InternshipDescription}</p>
+                                </div>
                             </div>
                         </CardContent>
                         <CardFooter>

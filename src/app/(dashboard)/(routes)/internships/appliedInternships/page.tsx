@@ -24,6 +24,7 @@ import {
 } from '@/components/ui/breadcrumb';
 
 import ApplicationStatusLabel from '@/components/ApplicationStatusLabel';
+import { Button } from '@/components/ui/button';
 
 
 
@@ -69,7 +70,7 @@ const InternshipsPage = async () => {
             </Breadcrumb>
             <h1 className='font-bold text-4xl mt-2 px-10'>Applied Internships</h1>
             <div className='py-4 px-8'>
-                {appliedInternships ? ( appliedInternships.map(internships => (
+                {appliedInternships.length > 0 ? ( appliedInternships.map(internships => (
                     <Link key={internships.id} href={`/internships/${internships.internship.id}`}>
                         <Card className='mb-4'>
                             <CardHeader>
@@ -83,8 +84,11 @@ const InternshipsPage = async () => {
                         </Card>
                     </Link>
                 ))) : (
-                    <div className='flex items-center justify-center text-muted-foreground text-2xl'>
-                        No Interships Applied. Apply Now!!!
+                    <div className='py-4 px-8'>
+                        <div className='flex flex-col items-center justify-center text-muted-foreground text-xl lg:text-4xl space-y-4'>
+                                <h1>No Interships Applied.</h1>
+                                <Button variant="secondary"><Link href={"/internships"}>Apply Now!!!</Link></Button>
+                        </div>
                     </div>
                 )}
             </div>

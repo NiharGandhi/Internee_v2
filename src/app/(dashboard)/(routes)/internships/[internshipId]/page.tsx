@@ -24,6 +24,11 @@ import {
 } from "@/components/ui/breadcrumb";
 
 import ApplyButton from '@/components/ApplyButton';
+import Image from 'next/image';
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
+import FallBack from "../../../../../../public/fallback.png";
+import { Separator } from '@/components/ui/separator';
 
 const SelectedInternshipPage = async ({
     params
@@ -72,49 +77,81 @@ const SelectedInternshipPage = async ({
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
-
-            <div className='py-4 px-8'>
-                <Card>
-                    <CardHeader>
-                        <CardTitle className='font-bold'>{internship?.name}</CardTitle>
-                        <CardDescription>{company?.name}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        {internship?.Paid && (
-                            <Badge>{internship.AmountPaid}</Badge>
-                        )}
-                        <div className='flex flex-col py-2 justify-center'>
-                            <div>
-                                Education Level: {internship?.EducationLevel}
-                            </div>
-                            <div>
-                                Internship Description: {internship?.InternshipDescription}
-                            </div>
-                            <div>
-                                Requirements: {internship?.InternshipRequirement}
-                            </div>
-                        </div>
-                    </CardContent>
-                    <CardFooter className='space-x-2'>
-                        <Popover>
-                            <PopoverTrigger asChild>
-                                <Button>Contact</Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-80 px-4">
-                                <div className="grid gap-4">
-                                    <div className="space-y-2">
-                                        <h4 className="font-medium leading-none">Email ID</h4>
-                                        <p className="text-sm text-muted-foreground">
-                                            {company?.email}
-                                        </p>
-                                    </div>
+            <div style={{ position: 'relative' }} className='mt-4'>
+                <Image
+                    src={company?.CompanyImageUrl || FallBack}
+                    alt='Banner'
+                    width={1584}
+                    height={396}
+                    className='h-[191px]'
+                />
+                <div style={{ position: 'absolute', top: 150, left: 20 }}>
+                    <Image
+                        src={company?.CompanyLogoUrl || FallBack}
+                        alt='Logo'
+                        width={100}
+                        height={100}
+                        className='h-[100px]'
+                    />
+                </div>
+            </div>
+            <div className='px-10 space-y-2 lg:mt-4 lg:ml-24 mt-16'>
+                <Link href={`/organizations/${company?.id}`}>
+                    <h1 className='font-bold text-4xl'>{company?.name}</h1>
+                </Link>
+                <Separator />
+                <div className='py-4'>
+                    <Card className='w-full'>
+                        <CardHeader>
+                            <CardTitle className='font-bold'>{internship?.name}</CardTitle>
+                            <CardDescription>{company?.name}</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <div className='flex flex-col justify-center'>
+                                <div className='py-1'>
+                                    <p className='text-muted-foreground'>Internship Mode:</p>
+                                    <p className='font-semibold'>{internship?.InternshipType}</p>
                                 </div>
-                            </PopoverContent>
-                        </Popover>
-                        {/* <Button onClick={applyInternship}>Apply</Button> */}
-                        <ApplyButton user={user} company={company} internship={internship} />
-                    </CardFooter>
-                </Card>
+                                <div className='py-1'>
+                                    <p className='text-muted-foreground'>Education Level:</p>
+                                    <p className='font-semibold'>{internship?.EducationLevel}</p>
+                                </div>
+                                <div className='py-1'>
+                                    <p className='text-muted-foreground'>Internship Description:</p>
+                                    <p className='font-semibold whitespace-pre-wrap'>{internship?.InternshipDescription}</p>
+                                </div>
+                                <div className='py-1'>
+                                    <p className='text-muted-foreground'>Internship Requirements:</p>
+                                    <p className='font-semibold whitespace-pre-wrap'>{internship?.InternshipRequirement}</p>
+                                </div>
+                                {internship?.Paid && (
+                                    <div className='flex py-1'>
+                                        <p className='text-muted-foreground'>Pay:</p>
+                                        <p className='ml-2 font-semibold whitespace-pre-wrap'>{internship?.AmountPaid}</p>
+                                    </div>
+                                )}
+                            </div>
+                        </CardContent>
+                        <CardFooter className='space-x-2'>
+                            <Popover>
+                                <PopoverTrigger asChild>
+                                    <Button>Contact</Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-80 px-4">
+                                    <div className="grid gap-4">
+                                        <div className="space-y-2">
+                                            <h4 className="font-medium leading-none">Email ID</h4>
+                                            <p className="text-sm text-muted-foreground">
+                                                {company?.email}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </PopoverContent>
+                            </Popover>
+                            <ApplyButton user={user} company={company} internship={internship} />
+                        </CardFooter>
+                    </Card>
+                </div>
             </div>
         </div>
     )

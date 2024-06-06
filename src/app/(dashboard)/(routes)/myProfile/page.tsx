@@ -99,67 +99,91 @@ const MyProfile = () => {
     };
 
     useEffect(() => {
-        const fetchSubscriptionData = async () => {
+        const fetchData = async () => {
             try {
-                const response = await axios.get("/api/checkSubscription");
-                setSubscription(response.data);
+                const [userSubscriptionLink, userDataResponse, projectsResponse, certificatesResponse, manageLinkResponse] = await Promise.all([
+                    axios.get("/api/checkSubscription"),
+                    axios.get("/api/users"),
+                    axios.get("/api/addProjects"),
+                    axios.get("/api/addCertificates"),
+                    axios.get("/api/stripeCustomerPortal")
+                ]);
+                setSubscription(userSubscriptionLink.data);
+                setUserData(userDataResponse.data);
+                setProjects(projectsResponse.data);
+                setCertificates(certificatesResponse.data);
+                setManageLink(manageLinkResponse.data);
+                setLoading(false); // Set loading to false after all data is retrieved
             } catch (error) {
-                console.error("Error fetching subscription data");
-            }
-        }
-        fetchSubscriptionData();
-    }, [])
-
-    // console.log("SUBSCRIPTION: " + subscription);
-
-    useEffect(() => {
-        const fetchUserProjects = async () => {
-            try {
-                const response = await axios.get("/api/addProjects");
-                setProjects(response.data);
-            } catch (error) {
-                console.error("Error fetching user data");
+                console.error("Error fetching data", error);
             }
         };
-        fetchUserProjects();
+
+        fetchData();
     }, []);
 
-    useEffect(() => {
-        const fetchUserCertificates = async () => {
-            try {
-                const response = await axios.get("/api/addCertificates");
-                setCertificates(response.data);
-            } catch (error) {
-                console.error("Error fetching user data");
-            }
-        };
-        fetchUserCertificates();
-    }, []);
+    // useEffect(() => {
+    //     const fetchSubscriptionData = async () => {
+    //         try {
+    //             const response = await axios.get("/api/checkSubscription");
+    //             setSubscription(response.data);
+    //         } catch (error) {
+    //             console.error("Error fetching subscription data");
+    //         }
+    //     }
+    //     fetchSubscriptionData();
+    // }, [])
 
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const response = await axios.get("/api/users");
-                setUserData(response.data);
-            } catch (error) {
-                console.error("Error fetching user data");
-            }
-        };
-        fetchUserData();
-    }, []);
+    // // console.log("SUBSCRIPTION: " + subscription);
 
-    useEffect(() => {
-        const fetchManageLink = async () => {
-            try {
-                const response = await axios.get("/api/stripeCustomerPortal");
-                console.log("response link:" + response);
-                setManageLink(response.data);
-            } catch (error) {
-                console.log("Portal Link Error");
-            }
-        }
-        fetchManageLink();
-    }, [])
+    // useEffect(() => {
+    //     const fetchUserProjects = async () => {
+    //         try {
+    //             const response = await axios.get("/api/addProjects");
+    //             setProjects(response.data);
+    //         } catch (error) {
+    //             console.error("Error fetching user data");
+    //         }
+    //     };
+    //     fetchUserProjects();
+    // }, []);
+
+    // useEffect(() => {
+    //     const fetchUserCertificates = async () => {
+    //         try {
+    //             const response = await axios.get("/api/addCertificates");
+    //             setCertificates(response.data);
+    //         } catch (error) {
+    //             console.error("Error fetching user data");
+    //         }
+    //     };
+    //     fetchUserCertificates();
+    // }, []);
+
+    // useEffect(() => {
+    //     const fetchUserData = async () => {
+    //         try {
+    //             const response = await axios.get("/api/users");
+    //             setUserData(response.data);
+    //         } catch (error) {
+    //             console.error("Error fetching user data");
+    //         }
+    //     };
+    //     fetchUserData();
+    // }, []);
+
+    // useEffect(() => {
+    //     const fetchManageLink = async () => {
+    //         try {
+    //             const response = await axios.get("/api/stripeCustomerPortal");
+    //             console.log("response link:" + response);
+    //             setManageLink(response.data);
+    //         } catch (error) {
+    //             console.log("Portal Link Error");
+    //         }
+    //     }
+    //     fetchManageLink();
+    // }, [])
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -187,7 +211,6 @@ const MyProfile = () => {
                 resumeUrl: userData.resume,
             });
         }
-        setLoading(false);
     }, [form, userData]);
 
     // Resume URL rendering logic
@@ -399,7 +422,7 @@ const MyProfile = () => {
                                                 <Textarea placeholder="Tell us about yourself" {...field} disabled={!isEditing && userData !== null} />
                                             </FormControl>
                                             <FormDescription>
-                                                Tell us about yourself
+                                                Tell us a bit about yourself
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -434,6 +457,9 @@ const MyProfile = () => {
                                                     </DropdownMenuContent>
                                                 </DropdownMenu>
                                             </FormControl>
+                                            <FormDescription>
+                                                Your highest Level of Education right now
+                                            </FormDescription>
                                             <FormMessage />
                                         </FormItem>
                                     )}
@@ -448,7 +474,7 @@ const MyProfile = () => {
                                                 <Input placeholder="Rochester Institute of Technology" {...field} disabled={!isEditing && userData !== null} />
                                             </FormControl>
                                             <FormDescription>
-                                                Currently Studing in or Recently Graduated From
+                                                Currently studying at or recently Graduated from
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -513,6 +539,9 @@ const MyProfile = () => {
                                             <FormControl>
                                                 <Input placeholder="intern@gmail.com" {...field} disabled={!isEditing && userData !== null} />
                                             </FormControl>
+                                            <FormDescription>
+                                                An Email to recieve updates and to be contacted at by the public
+                                            </FormDescription>
                                             <FormMessage />
                                         </FormItem>
 
@@ -543,6 +572,9 @@ const MyProfile = () => {
                                                 <FormControl>
                                                     {renderResumeUrl()}
                                                 </FormControl>
+                                                <FormDescription>
+                                                    This is your public display resume
+                                                </FormDescription>
                                                 <FormMessage />
                                             </FormItem>
                                         </FormControl>
