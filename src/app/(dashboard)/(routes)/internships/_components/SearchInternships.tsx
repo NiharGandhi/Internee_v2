@@ -18,6 +18,8 @@ import Link from 'next/link';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { Input } from '@/components/ui/input';
 import { XIcon } from 'lucide-react';
+import Image from 'next/image';
+import FallBackUrl from "../../../../../../public/CompanyLogoFallback.svg";
 
 const SearchInternshipsPage = ({ internships } : { internships : any }) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -160,15 +162,28 @@ const SearchInternshipsPage = ({ internships } : { internships : any }) => {
                 </select>
                 <Button variant="ghost" onClick={clearFilters}>Clear Filters</Button>
                 {/* Internship Cards */}
-                {currentInternships.map((internship: { id: React.Key | null | undefined; name: string; InternshipType: string; InternshipDescription: string; user: { id: string; name: string } }) => (
-                    <Card key={internship.id} className='mb-4'>
+                {currentInternships.map((internship: { id: React.Key | null | undefined; name: string; InternshipType: string; InternshipDescription: string; user: { id: string; name: string; CompanyLogoUrl: string } }) => (
+                    <Card key={internship.id} className='mb-4 hover:shadow-md hover:shadow-yellow-100'>
                         <CardHeader>
-                            <CardTitle className='font-bold'>{internship.name}</CardTitle>
-                            <CardDescription>
-                                <Link href={`/organizations/${internship.user.id}`}>
-                                    {internship.user.name}
-                                </Link>
-                            </CardDescription>
+                            <div className='flex'>
+                                <div>
+                                    <CardTitle className='font-bold'>{internship.name}</CardTitle>
+                                    <CardDescription>
+                                        <Link href={`/organizations/${internship.user.id}`}>
+                                            {internship.user.name}
+                                        </Link>
+                                    </CardDescription>
+                                </div>
+                                <div className='ml-auto'>
+                                    <Image
+                                        src={internship.user.CompanyLogoUrl || FallBackUrl}
+                                        alt='Logo'
+                                        width={70}
+                                        height={70}
+                                        className='h-[70px]'
+                                    />
+                                </div>
+                            </div>
                         </CardHeader>
                         <CardContent>
                             <div>

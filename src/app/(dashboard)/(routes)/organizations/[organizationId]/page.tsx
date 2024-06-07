@@ -30,7 +30,10 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { ArrowLeft } from 'lucide-react';
 
 import FallBack from "../../../../../../public/fallback.png";
+import CompanyLogo from "../../../../../../public/CompanyLogoFallback.svg";
+import CompanyBanner from "../../../../../../public/CompanyBannerFallback.png";
 import { Separator } from '@/components/ui/separator';
+import { cn } from '@/lib/utils';
 
 
 
@@ -62,11 +65,11 @@ const OrganizationPage = async ({ params } : { params : {
         <div>
             <div style={{ position: 'relative' }}>
                 <Image
-                    src={company?.CompanyImageUrl || FallBack}
+                    src={company?.CompanyImageUrl || CompanyBanner}
                     alt='Banner'
                     width={1584}
-                    height={396}
-                    className='h-[191px]'
+                    height={200}
+                    className='h-[200px]'
                 />
                 <div style={{ position: 'absolute', top: 5, left: 10 }} className='bg-slate-200 rounded-lg'>
                     <Link href={"/organizations"}>
@@ -75,11 +78,11 @@ const OrganizationPage = async ({ params } : { params : {
                 </div>
                 <div style={{ position: 'absolute', top: 150, left: 20 }}>
                     <Image
-                        src={company?.CompanyLogoUrl || FallBack}
+                        src={company?.CompanyLogoUrl || CompanyLogo}
                         alt='Logo'
                         width={100}
                         height={100}
-                        className='h-[100px]'
+                        className={cn("h-[100px] rounded-md", CompanyLogo && "bg-gray-300 rounded-md opacity-100")}
                     />
                 </div>
             </div>
