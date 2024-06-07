@@ -28,14 +28,19 @@ import {
 } from '@/components/ui/breadcrumb';
 import { Input } from '@/components/ui/input';
 import Image from 'next/image';
-import FallBack from "../../../../../../public/fallback.png";
+import LogoFallBack from "../../../../../../public/CompanyLogoFallback.svg";
 
-const SearchOrganizationsPage = ({ companies } : { companies : any }) => {
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import { ChevronsUpDown } from 'lucide-react';
+
+const SearchOrganizationsPage = ({ companies }: { companies: any }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [companiesPerPage] = useState(5);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedLocation, setSelectedLocation] = useState('');
     const [locations, setLocations] = useState<string[]>([]);
+    const [openLocation, setOpenLocation] = useState(false);
 
     // Extract all unique values for locations
     useEffect(() => {
@@ -64,9 +69,10 @@ const SearchOrganizationsPage = ({ companies } : { companies : any }) => {
         setCurrentPage(1);
     };
 
-    const handleLocationChange = (value: React.SetStateAction<string>) => {
+    const handleLocationChangeCombobox = (value: string) => {
         setSelectedLocation(value);
         setCurrentPage(1);
+        setOpenLocation(false);
     };
 
     const handleNextPage = () => {
@@ -110,20 +116,40 @@ const SearchOrganizationsPage = ({ companies } : { companies : any }) => {
                         onChange={handleSearchChange}
                     />
                 </div>
-                {/* Filter Dropdown */}
-                <div className='space-x-2'>
-                    <select
-                        value={selectedLocation}
-                        onChange={(e) => handleLocationChange(e.target.value)}
-                        className='filter-box'
-                    >
-                        <option value="">All Locations</option>
-                        {locations.map(location => (
-                            <option key={location} value={location}>{location}</option>
-                        ))}
-                    </select>
-                    <Button variant="ghost" onClick={clearFilters}>Clear Filters</Button>
-                </div>
+                {/* Location Combobox */}
+                <Popover open={openLocation} onOpenChange={setOpenLocation}>
+                    <PopoverTrigger asChild>
+                        <Button
+                            variant="outline"
+                            role="combobox"
+                            aria-expanded={openLocation}
+                            className="justify-between"
+                        >
+                            {selectedLocation || "All Locations"}
+                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                        <Command>
+                            <CommandInput
+                                placeholder="Location..."
+                                onInput={(e) => setSelectedLocation(e.currentTarget.value)}
+                            />
+                            <CommandEmpty>No Locations Found</CommandEmpty>
+                            <CommandList>
+                                {locations.map(location => (
+                                    <CommandItem
+                                        key={location}
+                                        onSelect={() => handleLocationChangeCombobox(location)}
+                                    >
+                                        {location}
+                                    </CommandItem>
+                                ))}
+                            </CommandList>
+                        </Command>
+                    </PopoverContent>
+                </Popover>
+                <Button variant="ghost" onClick={clearFilters}>Clear Filters</Button>
                 {/* Company Cards */}
                 {currentCompanies.map((company: { id: React.Key | null | undefined; name: string; Location: string; CompanyDescription: string; CompanyLogoUrl: string; }) => (
                     <div key={company.id} className='py-2'>
@@ -132,7 +158,7 @@ const SearchOrganizationsPage = ({ companies } : { companies : any }) => {
                                 <CardHeader className='font-bold text-4xl'>
                                     <div className='flex'>
                                         <Image
-                                            src={company?.CompanyLogoUrl || FallBack}
+                                            src={company?.CompanyLogoUrl || LogoFallBack}
                                             alt='Logo'
                                             width={50}
                                             height={50}

@@ -17,6 +17,8 @@ import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import AnimatedGradientText from '@/components/magicui/animated-gradient-text';
 import { Input } from '@/components/ui/input';
+import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import { ChevronsUpDown } from 'lucide-react';
 
 const SearchUsersPage = ({ userId, users }: { userId: string, users: any }) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -28,6 +30,9 @@ const SearchUsersPage = ({ userId, users }: { userId: string, users: any }) => {
     const [skills, setSkills] = useState<string[]>([]);
     const [institutions, setInstitutions] = useState<string[]>([]);
     const [educationLevels, setEducationLevels] = useState<string[]>([]);
+    const [openSkill, setOpenSkill] = useState(false);
+    const [openInstitution, setOpenInstitution] = useState(false);
+    const [openEducationLevel, setOpenEducationLevel] = useState(false);
 
     // Extract all unique values for skills, institution, and education level
     useEffect(() => {
@@ -76,19 +81,22 @@ const SearchUsersPage = ({ userId, users }: { userId: string, users: any }) => {
         setCurrentPage(1);
     };
 
-    const handleSkillChange = (value: React.SetStateAction<string>) => {
+    const handleSkillChangeCombobox = (value: string) => {
         setSelectedSkill(value);
         setCurrentPage(1);
+        setOpenSkill(false);
     };
 
-    const handleInstitutionChange = (value: React.SetStateAction<string>) => {
+    const handleInstitutionChangeCombobox = (value: string) => {
         setSelectedInstitution(value);
         setCurrentPage(1);
+        setOpenInstitution(false);
     };
 
-    const handleEducationLevelChange = (value: React.SetStateAction<string>) => {
+    const handleEducationLevelChangeCombobox = (value: string) => {
         setSelectedEducationLevel(value);
         setCurrentPage(1);
+        setOpenEducationLevel(false);
     };
 
     const handleNextPage = () => {
@@ -124,40 +132,108 @@ const SearchUsersPage = ({ userId, users }: { userId: string, users: any }) => {
                     value={searchQuery}
                     onChange={handleSearchChange}
                 />
-                {/* Filter Dropdowns */}
-                <select
-                    value={selectedSkill}
-                    onChange={(e) => handleSkillChange(e.target.value)}
-                    className='filter-box'
-                >
-                    <option value="">All Skills</option>
-                    {skills.map(skill => (
-                        <option key={skill} value={skill}>{skill}</option>
-                    ))}
-                </select>
-                <select
-                    value={selectedInstitution}
-                    onChange={(e) => handleInstitutionChange(e.target.value)}
-                    className='filter-box'
-                >
-                    <option value="">All Institutions</option>
-                    {institutions.map(institution => (
-                        <option key={institution} value={institution}>{institution}</option>
-                    ))}
-                </select>
-                <select
-                    value={selectedEducationLevel}
-                    onChange={(e) => handleEducationLevelChange(e.target.value)}
-                    className='filter-box'
-                >
-                    <option value="">All Education Levels</option>
-                    {educationLevels.map(level => (
-                        <option key={level} value={level}>{level}</option>
-                    ))}
-                </select>
+                {/* Skill Combobox */}
+                <Popover open={openSkill} onOpenChange={setOpenSkill}>
+                    <PopoverTrigger asChild>
+                        <Button
+                            variant="outline"
+                            role="combobox"
+                            aria-expanded={openSkill}
+                            className="justify-between"
+                        >
+                            {selectedSkill || "All Skills"}
+                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                        <Command>
+                            <CommandInput
+                                placeholder="Skill..."
+                                onInput={(e) => setSelectedSkill(e.currentTarget.value)}
+                            />
+                            <CommandEmpty>No Skills Found</CommandEmpty>
+                            <CommandList>
+                                {skills.map(skill => (
+                                    <CommandItem
+                                        key={skill}
+                                        onSelect={() => handleSkillChangeCombobox(skill)}
+                                    >
+                                        {skill}
+                                    </CommandItem>
+                                ))}
+                            </CommandList>
+                        </Command>
+                    </PopoverContent>
+                </Popover>
+                {/* Institution Combobox */}
+                <Popover open={openInstitution} onOpenChange={setOpenInstitution}>
+                    <PopoverTrigger asChild>
+                        <Button
+                            variant="outline"
+                            role="combobox"
+                            aria-expanded={openInstitution}
+                            className="justify-between"
+                        >
+                            {selectedInstitution || "All Institutions"}
+                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                        <Command>
+                            <CommandInput
+                                placeholder="Institution..."
+                                onInput={(e) => setSelectedInstitution(e.currentTarget.value)}
+                            />
+                            <CommandEmpty>No Institutions Found</CommandEmpty>
+                            <CommandList>
+                                {institutions.map(institution => (
+                                    <CommandItem
+                                        key={institution}
+                                        onSelect={() => handleInstitutionChangeCombobox(institution)}
+                                    >
+                                        {institution}
+                                    </CommandItem>
+                                ))}
+                            </CommandList>
+                        </Command>
+                    </PopoverContent>
+                </Popover>
+                {/* Education Level Combobox */}
+                <Popover open={openEducationLevel} onOpenChange={setOpenEducationLevel}>
+                    <PopoverTrigger asChild>
+                        <Button
+                            variant="outline"
+                            role="combobox"
+                            aria-expanded={openEducationLevel}
+                            className="justify-between"
+                        >
+                            {selectedEducationLevel || "All Education Levels"}
+                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                        <Command>
+                            <CommandInput
+                                placeholder="Education Level..."
+                                onInput={(e) => setSelectedEducationLevel(e.currentTarget.value)}
+                            />
+                            <CommandEmpty>No Education Levels Found</CommandEmpty>
+                            <CommandList>
+                                {educationLevels.map(level => (
+                                    <CommandItem
+                                        key={level}
+                                        onSelect={() => handleEducationLevelChangeCombobox(level)}
+                                    >
+                                        {level}
+                                    </CommandItem>
+                                ))}
+                            </CommandList>
+                        </Command>
+                    </PopoverContent>
+                </Popover>
                 <Button variant="ghost" onClick={clearFilters}>Clear Filters</Button>
                 {/* User Cards */}
-                {currentUsers.map((user: { id: React.Key | null | undefined; name: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; InstitutionName: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; skills: string; EducationLevel: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; GraduationDate: string | number | Date; email: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; }) => (
+                {currentUsers.map((user: { id: React.Key | null | undefined; name: string; InstitutionName: string; skills: string; EducationLevel: string; GraduationDate: string | number | Date; email: string; }) => (
                     <Card key={user.id} className='mb-4'>
                         <CardHeader>
                             <CardTitle className='font-bold'>{user.name}</CardTitle>

@@ -12,14 +12,16 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { Input } from '@/components/ui/input';
-import { XIcon } from 'lucide-react';
+
 import Image from 'next/image';
 import FallBackUrl from "../../../../../../public/CompanyLogoFallback.svg";
+import { ChevronsUpDown } from 'lucide-react';
 
 const SearchInternshipsPage = ({ internships } : { internships : any }) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -31,6 +33,9 @@ const SearchInternshipsPage = ({ internships } : { internships : any }) => {
     const [types, setTypes] = useState<string[]>([]);
     const [organizations, setOrganizations] = useState<string[]>([]);
     const [locations, setLocations] = useState<string[]>([]);
+    const [openOrganization, setOpenOrganization] = useState(false);
+    const [openType, setOpenType] = useState(false);
+    const [openLocation, setOpenLocation] = useState(false);
 
     // Extract all unique values for types and organizations
     useEffect(() => {
@@ -79,7 +84,7 @@ const SearchInternshipsPage = ({ internships } : { internships : any }) => {
         setCurrentPage(1);
     };
 
-    const handleOrganizationChange = (value: React.SetStateAction<string>) => {
+    const handleOrganizationChange = (value: string) => {
         setSelectedOrganization(value);
         setCurrentPage(1);
     };
@@ -130,36 +135,102 @@ const SearchInternshipsPage = ({ internships } : { internships : any }) => {
                     onChange={handleSearchChange}
                 />
                 {/* Filter Dropdowns */}
-                <select
-                    value={selectedType}
-                    onChange={(e) => handleTypeChange(e.target.value)}
-                    className='filter-box'
-                >
-                    <option value="">All Types</option>
-                    {types.map(type => (
-                        <option key={type} value={type}>{type}</option>
-                    ))}
-                </select>
-                <select
-                    value={selectedOrganization}
-                    onChange={(e) => handleOrganizationChange(e.target.value)}
-                    className='filter-box'
-                >
-                    <option value="">All Organizations</option>
-                    {organizations.map(org => (
-                        <option key={org} value={org}>{org}</option>
-                    ))}
-                </select>
-                <select
-                    value={selectedLocation}
-                    onChange={(e) => handleLocationChange(e.target.value)}
-                    className='filter-box'
-                >
-                    <option value="">All Locations</option>
-                    {locations.map(org => (
-                        <option key={org} value={org}>{org}</option>
-                    ))}
-                </select>
+                <Popover open={openType} onOpenChange={setOpenType}>
+                    <PopoverTrigger asChild>
+                        <Button
+                            variant="outline"
+                            role="combobox"
+                            aria-expanded={openType}
+                            className="justify-between"
+                        >
+                            {selectedType || "All Types"}
+                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                        <Command>
+                            <CommandInput
+                                placeholder="Type..."
+                                onInput={(e) => setSelectedType(e.currentTarget.value)}
+                            />
+                            <CommandEmpty>No Types Found</CommandEmpty>
+                            <CommandList>
+                                {types.map(type => (
+                                    <CommandItem
+                                        key={type}
+                                        onSelect={() => handleTypeChange(type)}
+                                    >
+                                        {type}
+                                    </CommandItem>
+                                ))}
+                            </CommandList>
+                        </Command>
+                    </PopoverContent>
+                </Popover> 
+                <Popover open={openOrganization} onOpenChange={setOpenOrganization}>
+                    <PopoverTrigger asChild>
+                        <Button
+                            variant="outline"
+                            role="combobox"
+                            aria-expanded={openOrganization}
+                            className="justify-between"
+                        >
+                            {selectedOrganization || "All Organizations"}
+                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                        <Command>
+                            <CommandInput
+                                placeholder="Organization..."
+                                onInput={(e) => setSelectedOrganization(e.currentTarget.value)}
+                            />
+                            <CommandEmpty>No Organizations Found</CommandEmpty>
+                            <CommandList>
+                                {organizations.map(org => (
+                                    <CommandItem
+                                        key={org}
+                                        onSelect={() => handleOrganizationChange(org)}
+                                    >
+                                        {org}
+                                    </CommandItem>
+                                ))}
+                            </CommandList>
+                        </Command>
+                    </PopoverContent>
+                </Popover> 
+                <Popover open={openLocation} onOpenChange={setOpenLocation}>
+                    <PopoverTrigger asChild>
+                        <Button
+                            variant="outline"
+                            role="combobox"
+                            aria-expanded={openLocation}
+                            className="justify-between"
+                        >
+                            {selectedLocation || "All Locations"}
+                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                        <Command>
+                            <CommandInput
+                                placeholder="Location..."
+                                onInput={(e) => setSelectedLocation(e.currentTarget.value)}
+                            />
+                            <CommandEmpty>No Locations Found</CommandEmpty>
+                            <CommandList>
+                                {locations.map(loc => (
+                                    <CommandItem
+                                        key={loc}
+                                        onSelect={() => handleLocationChange(loc)}
+                                    >
+                                        {loc}
+                                    </CommandItem>
+                                ))}
+                            </CommandList>
+                        </Command>
+                    </PopoverContent>
+                </Popover> 
                 <Button variant="ghost" onClick={clearFilters}>Clear Filters</Button>
                 {/* Internship Cards */}
                 {currentInternships.map((internship: { id: React.Key | null | undefined; name: string; InternshipType: string; InternshipDescription: string; user: { id: string; name: string; CompanyLogoUrl: string } }) => (

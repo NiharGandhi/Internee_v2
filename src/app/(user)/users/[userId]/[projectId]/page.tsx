@@ -86,42 +86,36 @@ const PublicProjectPage = async ({
                         </div>
                         <div className='mt-4 px-4'>
                             <h2 className='text-2xl font-semibold'>Description</h2>
-                            <ScrollArea className='h-[370px] py-2 px-2 rounded-lg whitespace-pre-wrap'>
+                            <ScrollArea className='h-[270px] lg:h-[370px] py-2 rounded-lg whitespace-pre-wrap font-light'>
                                 {project.description}
                             </ScrollArea>
                         </div>
-                        <div className='mt-4 px-4'>
-                            <h2 className='text-2xl font-semibold'>Link</h2>
-                            {project.link ? ( // Check if project has a link
-                                <> {/* Wrap in Link if project has a link */}
-                                    <div className="py-16 px-2 text-gray-800 bg-gray-100 rounded-lg hover:text-blue-500 hover:underline w-auto">
-                                        <Link href={project.link}>
-                                            <p className='overflow-clip'>{project.link}</p>
-                                        </Link>
-                                    </div>
-                                </>
-                            ) : ( // Render just the div if project does not have a link
-                                <>
-                                    <div className='py-2 px-2 text-gray-800 bg-gray-100/30 dark:text-gray-300 rounded-lg'>
-                                        <p>No Links</p>
-                                    </div>
-                                </>
-                            )}
-                        </div>
                     </div>
-                    <div className='w-full lg:w-1/2 md:w-1/2 space-y-6 lg:py-14 py-6'>
-                        <div className='mt-4 px-4 '>
+                    <div className='w-full lg:w-1/2 md:w-1/2 space-y-6 lg:py-14'>
+                        <div className='mt-4 px-4 space-y-2'>
                             <h2 className='text-2xl font-semibold'>Image</h2>
                             {project.imageUrl ? (
                                 <Image
                                     src={project.imageUrl}
                                     alt="Hero"
-                                    className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
+                                    className="mx-auto aspect-video overflow-hidden object-cover object-center sm:w-full lg:order-last border shadow-md shadow-slate-100"
                                     width={"550"}
-                                    height={"310"}
+                                    height={"325"}
                                 />
                             ) : (
                                 <p className='text-muted-foreground'>No Project Image uploaded</p>
+                            )}
+                        </div>
+                        <div className='mt-4 px-4'>
+                            {project.link && ( // Check if project has a link
+                                <> {/* Wrap in Link if project has a link */}
+                                    <h2 className='text-2xl font-semibold'>Link</h2>
+                                    <div className="rounded-lg hover:text-blue-500 hover:underline w-auto">
+                                        <Link href={project.link}>
+                                            <p className='overflow-clip'>{project.link}</p>
+                                        </Link>
+                                    </div>
+                                </>
                             )}
                         </div>
                     </div>

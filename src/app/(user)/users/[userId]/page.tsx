@@ -30,6 +30,8 @@ import {
 } from "@/components/ui/breadcrumb";
 
 import { ArrowBigRight, CalendarIcon, DownloadCloudIcon, FileIcon, LinkIcon } from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Separator } from '@/components/ui/separator';
 
 
 const UserPublicPage = async ({
@@ -99,21 +101,24 @@ const UserPublicPage = async ({
                                 <p className='text-sm text-muted'>No Skills Added</p>
                             )}
                         </div>
-                        <div className='flex flex-col mt-4 justify-center space-y-2'>
+                        <div className='flex flex-col mt-4 justify-center space-y-2 mb-4'>
                             <div>
                                 <h2 className='font-semibold'>Bio:</h2>
-                                <p className='whitespace-pre-wrap ml-2'>
+                                <ScrollArea className='h-[270px] lg:h-[100px] whitespace-pre-wrap font-light'>
                                     {user?.bio}
-                                </p>
+                                </ScrollArea>
                             </div>
+                            <Separator />
                             <div className='flex'>
                                 <h2 className='font-semibold mr-2'>Education Level:</h2>
                                 {user?.EducationLevel}
                             </div>
+                            <Separator />
                             <div className='flex'>
                                 <h2 className='font-semibold mr-2'>Graduation Date:</h2>
                                 {user?.GraduationDate ? user.GraduationDate.toDateString() : 'N/A'}
                             </div>
+                            <Separator />
                         </div>
                         {user?.resume ? (
                             <Link href={user?.resume}>
@@ -128,6 +133,7 @@ const UserPublicPage = async ({
                                     No Resume Uploaded by {user?.name}
                                 </div>
                         )}
+                        <Separator className='mt-6'/>
                         <h2 className='py-4 font-sans text-2xl'>{user?.name}&apos;s Projects</h2>
                         {projects && projects.length > 0 ? (
                             <div className='grid grid-cols-1 gap-4 mt-4'>
@@ -174,6 +180,7 @@ const UserPublicPage = async ({
                                     No Projects Uploaded by {user?.name}
                                 </div>
                         )}
+                        <Separator className='mt-6' />
                         <h2 className='py-4 font-sans text-2xl'>{user?.name}&apos;s Certificates</h2>
                         {certificates && certificates.length > 0 ? (
                             <div className='grid grid-cols-1 gap-4 mt-4'>
@@ -204,6 +211,7 @@ const UserPublicPage = async ({
                                     No Certificates Uploaded by {user?.name}
                                 </div>
                         )}
+                        <Separator className='mt-6' />
                     </CardContent>
                     <CardFooter>
                         <Popover>
