@@ -18,7 +18,8 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import AnimatedGradientText from '@/components/magicui/animated-gradient-text';
 import { Input } from '@/components/ui/input';
 import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
-import { ChevronsUpDown } from 'lucide-react';
+import { BadgeCheckIcon, ChevronsUpDown } from 'lucide-react';
+import VerifiedBadge from "../../../../../public/verified_badge.svg";
 
 const SearchUsersPage = ({ userId, users }: { userId: string, users: any }) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -27,12 +28,14 @@ const SearchUsersPage = ({ userId, users }: { userId: string, users: any }) => {
     const [selectedSkill, setSelectedSkill] = useState('');
     const [selectedInstitution, setSelectedInstitution] = useState('');
     const [selectedEducationLevel, setSelectedEducationLevel] = useState('');
+    const [selectedVerified, setSelectedVerified] = useState(''); // State for verified filter
     const [skills, setSkills] = useState<string[]>([]);
     const [institutions, setInstitutions] = useState<string[]>([]);
     const [educationLevels, setEducationLevels] = useState<string[]>([]);
     const [openSkill, setOpenSkill] = useState(false);
     const [openInstitution, setOpenInstitution] = useState(false);
     const [openEducationLevel, setOpenEducationLevel] = useState(false);
+    const [openVerified, setOpenVerified] = useState(false); // State for verified filter popover
 
     // Extract all unique values for skills, institution, and education level
     useEffect(() => {
@@ -60,11 +63,12 @@ const SearchUsersPage = ({ userId, users }: { userId: string, users: any }) => {
         setEducationLevels(Array.from(allEducationLevels));
     }, [users]);
 
-    const filteredUsers = users.filter((user: { name: string; skills: string; InstitutionName: string; EducationLevel: string; }) =>
+    const filteredUsers = users.filter((user: { name: string; skills: string; InstitutionName: string; EducationLevel: string; verified: boolean }) =>
         user.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
         (selectedSkill === '' || (user.skills && user.skills.toLowerCase().includes(selectedSkill.toLowerCase()))) &&
         (selectedInstitution === '' || user.InstitutionName === selectedInstitution) &&
-        (selectedEducationLevel === '' || user.EducationLevel === selectedEducationLevel)
+        (selectedEducationLevel === '' || user.EducationLevel === selectedEducationLevel) &&
+        (selectedVerified === '' || (selectedVerified === 'verified' && user.verified) || (selectedVerified === 'unverified' && !user.verified))
     );
 
     const indexOfLastUser = currentPage * usersPerPage;
@@ -99,6 +103,12 @@ const SearchUsersPage = ({ userId, users }: { userId: string, users: any }) => {
         setOpenEducationLevel(false);
     };
 
+    const handleVerifiedChangeCombobox = (value: string) => {
+        setSelectedVerified(value);
+        setCurrentPage(1);
+        setOpenVerified(false);
+    };
+
     const handleNextPage = () => {
         if (currentPage < Math.ceil(filteredUsers.length / usersPerPage)) {
             setCurrentPage(currentPage + 1);
@@ -115,6 +125,7 @@ const SearchUsersPage = ({ userId, users }: { userId: string, users: any }) => {
         setSelectedEducationLevel('');
         setSelectedInstitution('');
         setSelectedSkill('');
+        setSelectedVerified(''); // Clear verified filter
         setCurrentPage(1);
     };
 
@@ -231,12 +242,55 @@ const SearchUsersPage = ({ userId, users }: { userId: string, users: any }) => {
                         </Command>
                     </PopoverContent>
                 </Popover>
+                {/* Verified Combobox */}
+                <Popover open={openVerified} onOpenChange={setOpenVerified}>
+                    <PopoverTrigger asChild>
+                        <Button
+                            variant="outline"
+                            role="combobox"
+                            aria-expanded={openVerified}
+                            className="justify-between"
+                        >
+                            {selectedVerified || "All Users"}
+                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                        <Command>
+                            <CommandInput
+                                placeholder="Verified Status..."
+                                onInput={(e) => setSelectedVerified(e.currentTarget.value)}
+                            />
+                            <CommandEmpty>No Verified Status Found</CommandEmpty>
+                            <CommandList>
+                                <CommandItem
+                                    onSelect={() => handleVerifiedChangeCombobox('')}
+                                >
+                                    All Users
+                                </CommandItem>
+                                <CommandItem
+                                    onSelect={() => handleVerifiedChangeCombobox('verified')}
+                                >
+                                    Verified Users
+                                </CommandItem>
+                                <CommandItem
+                                    onSelect={() => handleVerifiedChangeCombobox('unverified')}
+                                >
+                                    Unverified Users
+                                </CommandItem>
+                            </CommandList>
+                        </Command>
+                    </PopoverContent>
+                </Popover>
                 <Button variant="ghost" onClick={clearFilters}>Clear Filters</Button>
                 {/* User Cards */}
-                {currentUsers.map((user: { id: React.Key | null | undefined; name: string; InstitutionName: string; skills: string; EducationLevel: string; GraduationDate: string | number | Date; email: string; }) => (
+                {currentUsers.map((user: { id: React.Key | null | undefined; name: string; InstitutionName: string; skills: string; EducationLevel: string; GraduationDate: string | number | Date; email: string; verified: Boolean; }) => (
                     <Card key={user.id} className='mb-4'>
                         <CardHeader>
-                            <CardTitle className='font-bold'>{user.name}</CardTitle>
+                            <CardTitle className='font-bold flex'>
+                                {user.name}
+                                <span className='ml-2'>{user.verified && <BadgeCheckIcon />}</span>
+                            </CardTitle>
                             <CardDescription>{user.InstitutionName}</CardDescription>
                         </CardHeader>
                         <CardContent>

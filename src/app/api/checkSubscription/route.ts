@@ -13,6 +13,17 @@ export async function GET() {
     try {
         const hasSubscribed = await hasSubscription();
 
+        if (hasSubscribed) {
+            await db.user.update({
+                data: {
+                    verified: true,
+                },
+                where: {
+                    userId: userId
+                }
+            })
+        }
+
         return NextResponse.json(hasSubscribed);
     } catch (error) {
         console.log("[CHECK SUBSCRIPTION ERROR] " + error);

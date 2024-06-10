@@ -111,7 +111,7 @@ const PublicProjectPage = async ({
                                 <> {/* Wrap in Link if project has a link */}
                                     <h2 className='text-2xl font-semibold'>Link</h2>
                                     <div className="rounded-lg hover:text-blue-500 hover:underline w-auto">
-                                        <Link href={project.link}>
+                                        <Link href={project.link} rel="noopener noreferrer" target="_blank">
                                             <p className='overflow-clip'>{project.link}</p>
                                         </Link>
                                     </div>

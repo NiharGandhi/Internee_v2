@@ -29,7 +29,7 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
-import { ArrowBigRight, CalendarIcon, DownloadCloudIcon, FileIcon, LinkIcon } from 'lucide-react';
+import { ArrowBigRight, BadgeCheckIcon, CalendarIcon, DownloadCloudIcon, FileIcon, LinkIcon } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 
@@ -90,7 +90,10 @@ const UserPublicPage = async ({
             <div className='py-4 px-8'>
                 <Card>
                     <CardHeader>
-                        <CardTitle className='font-bold'>{user?.name}</CardTitle>
+                        <CardTitle className='font-bold flex'>
+                            {user?.name}
+                            <span className='ml-2'>{user?.verified && <BadgeCheckIcon />}</span>
+                        </CardTitle>
                         <CardDescription>{user?.InstitutionName}</CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -124,7 +127,7 @@ const UserPublicPage = async ({
                             <Link href={user?.resume}>
                                 <div className="flex items-center justify-center p-3 w-full bg-purple-100 border-purple-200 border text-purple-700 rounded-md mt-2">
                                     {user?.name}&apos;s Resume
-                                    <DownloadCloudIcon className='h-5 w-5 mr-2' />
+                                    <DownloadCloudIcon className='h-5 w-5 ml-2' />
                                 </div>
                             </Link>
                         ) : (

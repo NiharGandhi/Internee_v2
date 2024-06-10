@@ -23,6 +23,7 @@ model User {
   GraduationDate DateTime?
   email String? @unique 
   stripe_customer_id String?
+  verified Boolean @default(false)
   
   skills String?
 

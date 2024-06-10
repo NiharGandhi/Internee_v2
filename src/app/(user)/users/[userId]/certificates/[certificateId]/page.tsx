@@ -81,7 +81,7 @@ const PublicCertificatePage = async ({
                         <div className='mt-4 px-4 '>
                             <h2 className='text-2xl font-semibold'>Certificate Attachment</h2>
                             {(certificate.certificateUrl) ? (
-                                <Link href={certificate.certificateUrl}>
+                                <Link href={certificate.certificateUrl} rel="noopener noreferrer" target="_blank">
                                     <div className="flex items-center justify-center p-3 w-full bg-purple-100 border-purple-200 border text-purple-700 rounded-md mt-2">
                                         <DownloadCloudIcon className='h-5 w-5 mr-2' />
                                         {certificate.name} Certification
@@ -108,7 +108,7 @@ const PublicCertificatePage = async ({
                             {certificate.link ? ( // Check if certificate has a link
                                 <> {/* Wrap in Link if certificate has a link */}
                                     <div className="py-2 px-2 text-gray-800 bg-gray-100 rounded-lg hover:text-blue-500 hover:underline w-auto">
-                                        <Link href={certificate.link}>
+                                        <Link href={certificate.link} rel="noopener noreferrer" target="_blank">
                                             <p className='overflow-clip'>{certificate.link}</p>
                                         </Link>
                                     </div>
