@@ -1,20 +1,23 @@
 "use client";
 
-import { BookIcon, CalendarIcon, CogIcon, NetworkIcon, StarIcon, UserIcon, UsersIcon } from 'lucide-react'
-import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
-import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/components/ui/card";
+import Link from 'next/link';
+import { useTheme } from "next-themes"
+
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+
 import useEvents from '@/hooks/useEvents';
-import EventCard from '@/components/EventCard';
 import useOnlineResources from '@/hooks/useOnlineResource';
-import ResourceCard from '@/components/ResourceCard';
-import NumberTicker from '@/components/magicui/number-ticker';
 import useRecommendedBooks from '@/hooks/useRecommendedBooks';
 import useUsefulTool from '@/hooks/useTool';
-import axios from 'axios';
+
 import { Button } from '@/components/ui/button';
-import { Moon, Sun } from "lucide-react"
-import { useTheme } from "next-themes"
+import { CardTitle, 
+  CardDescription, 
+  CardHeader, 
+  CardContent, 
+  Card 
+} from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,11 +25,24 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Label } from '@/components/ui/label';
-import {
-  Popover,
-  PopoverContent,
-} from "@/components/ui/popover";
 
+import EventCard from '@/components/EventCard';
+import ResourceCard from '@/components/ResourceCard';
+
+import NumberTicker from '@/components/magicui/number-ticker';
+
+import { 
+  BookIcon, 
+  BriefcaseBusinessIcon, 
+  Building2Icon, 
+  CalendarIcon, 
+  LucideCheckCheck, 
+  Moon, 
+  NetworkIcon, 
+  Sun, 
+  UserIcon, 
+  UsersIcon 
+} from 'lucide-react';
 
 const Loader = () => (
   <div className="flex justify-center items-center h-screen">
@@ -158,21 +174,21 @@ const Dashboard = () => {
             className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-100 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
             href="/organizations"
           >
-            <NetworkIcon className="h-4 w-4" />
+            <Building2Icon className="h-4 w-4" />
             Organizations
           </Link>
           <Link
             className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-100 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
             href="/internships"
           >
-            <CogIcon className="h-4 w-4" />
+            <BriefcaseBusinessIcon className="h-4 w-4" />
             Internships
           </Link>
           <Link
             className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-100 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
             href="/internships/appliedInternships"
           >
-            <StarIcon className="h-4 w-4" />
+            <LucideCheckCheck className="h-4 w-4" />
             Applied Internships
           </Link>
           <Link
@@ -260,21 +276,21 @@ const Dashboard = () => {
               className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-100 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
               href="/organizations"
             >
-              <NetworkIcon className="h-4 w-4" />
+              <Building2Icon className="h-4 w-4" />
               Organizations
             </Link>
             <Link
               className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-100 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
               href="/internships"
             >
-              <CogIcon className="h-4 w-4" />
+              <BriefcaseBusinessIcon className="h-4 w-4" />
               Internships
             </Link>
             <Link
               className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-100 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
               href="/internships/appliedInternships"
             >
-              <StarIcon className="h-4 w-4" />
+              <LucideCheckCheck className="h-4 w-4" />
               Applied Internships
             </Link>
             <Link

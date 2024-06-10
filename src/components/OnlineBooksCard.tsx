@@ -1,7 +1,7 @@
 // components/EventCard.tsx
 import React from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { CalendarIcon } from 'lucide-react';
+import { BookAIcon, CalendarIcon, Laptop2Icon } from 'lucide-react';
 import Link from 'next/link';
 import { ScrollArea } from './ui/scroll-area';
 
@@ -32,7 +32,7 @@ const OnlineBookCard: React.FC<OnlineBookProps> = ({ resources, title, cardDesc 
                             {resources.map((resource) => (
                                 <div key={resource.id} className="flex items-center gap-4">
                                     <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800">
-                                        <CalendarIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+                                        <BookAIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
                                     </div>
                                     {resource.link ? (
                                         <Link href={resource.link} rel="noopener noreferrer" target="_blank">
