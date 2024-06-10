@@ -182,8 +182,7 @@ const UserPublicPage = async ({
                                 ))}
                             </div>
                         ) : (
-                                <div className='flex items-center justify-center h-16 bg-slate-100 rounded-md text-slate-400'>
-                                    <FileIcon className='h-5 w-5 text-slate-400 mr-2' />
+                                <div className='flex items-center justify-center text-muted-foreground'>
                                     No Projects Uploaded by {user?.name}
                                 </div>
                         )}
@@ -213,8 +212,7 @@ const UserPublicPage = async ({
                                 ))}
                             </div>
                         ) : (
-                                <div className='flex items-center justify-center h-16 bg-slate-100 rounded-md text-slate-400'>
-                                    <FileIcon className='h-5 w-5 text-slate-400 mr-2' />
+                                <div className='flex items-center justify-center text-muted-foreground'>
                                     No Certificates Uploaded by {user?.name}
                                 </div>
                         )}
