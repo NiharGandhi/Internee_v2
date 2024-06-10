@@ -105,13 +105,17 @@ const UserPublicPage = async ({
                             )}
                         </div>
                         <div className='flex flex-col mt-4 justify-center space-y-2 mb-4'>
-                            <div>
-                                <h2 className='font-semibold'>Bio:</h2>
-                                <ScrollArea className='h-[270px] lg:h-[100px] whitespace-pre-wrap font-light'>
-                                    {user?.bio}
-                                </ScrollArea>
-                            </div>
-                            <Separator />
+                            {user?.bio && (
+                                <>
+                                    <div>
+                                        <h2 className='font-semibold'>Bio:</h2>
+                                        <ScrollArea className='h-[270px] lg:h-[100px] whitespace-pre-wrap font-light'>
+                                            {user?.bio}
+                                        </ScrollArea>
+                                    </div>
+                                    <Separator />
+                                </>
+                            )}
                             <div className='flex'>
                                 <h2 className='font-semibold mr-2'>Education Level:</h2>
                                 {user?.EducationLevel}
@@ -124,7 +128,7 @@ const UserPublicPage = async ({
                             <Separator />
                         </div>
                         {user?.resume ? (
-                            <Link href={user?.resume}>
+                            <Link href={user?.resume} rel="noopener noreferrer" target="_blank">
                                 <div className="flex items-center justify-center p-3 w-full bg-purple-100 border-purple-200 border text-purple-700 rounded-md mt-2">
                                     {user?.name}&apos;s Resume
                                     <DownloadCloudIcon className='h-5 w-5 ml-2' />
