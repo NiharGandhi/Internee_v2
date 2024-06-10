@@ -43,12 +43,15 @@ import { CalendarIcon } from 'lucide-react';
 import EventCard from '@/components/EventCard';
 import useEvents from '@/hooks/useEvents';
 import { useToast } from '@/components/ui/use-toast';
+import { describe } from 'node:test';
+import { Textarea } from '@/components/ui/textarea';
 
 const formSchema = z.object({
   title: z.string().min(2).max(50),
   dateOfEvent: z.date({
     required_error: "A Date is required.",
   }),
+  description: z.string().min(2)
 });
 
 
@@ -64,6 +67,7 @@ const EventManagement = () => {
     defaultValues: {
       title: "",
       dateOfEvent: new Date(),
+      description: ""
     },
   });
 
@@ -158,6 +162,22 @@ const EventManagement = () => {
                     </Popover>
                     <FormDescription>
                       Your date of Event.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <Textarea placeholder="The Event is about..." {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      This is publicly displayed.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

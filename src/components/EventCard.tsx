@@ -4,6 +4,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { CalendarIcon } from 'lucide-react';
 import { format, isBefore } from 'date-fns';
+import Link from 'next/link';
 
 interface Event {
     id: string;
@@ -43,15 +44,17 @@ const EventCard: React.FC<EventCardProps> = ({ events, title, desc, upcomingEven
                             {upcomingEvents.length > 0 ? (
                                 <div className="grid gap-4">
                                     {upcomingEvents.map((event) => (
-                                        <div key={event.id} className="flex items-center gap-4">
-                                            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800">
-                                                <CalendarIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+                                        <Link key={event.id} href={`/events/${event.id}`}>
+                                            <div className="flex items-center gap-4">
+                                                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800">
+                                                    <CalendarIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+                                                </div>
+                                                <div className='w-52 lg:w-[800px]'>
+                                                    <h3 className="text-lg font-semibold">{event.title}</h3>
+                                                    <p className="text-sm text-gray-500 dark:text-gray-400">{formatDate(event.dateTime)}</p>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <h3 className="text-lg font-semibold">{event.title}</h3>
-                                                <p className="text-sm text-gray-500 dark:text-gray-400">{formatDate(event.dateTime)}</p>
-                                            </div>
-                                        </div>
+                                        </Link>
                                     ))}
                                 </div>
                             ) : (
@@ -68,7 +71,7 @@ const EventCard: React.FC<EventCardProps> = ({ events, title, desc, upcomingEven
                                             <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800">
                                                 <CalendarIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
                                             </div>
-                                            <div>
+                                            <div className='w-52 lg:w-[800px]'>
                                                 <h3 className="text-lg font-semibold">{event.title}</h3>
                                                 <p className="text-sm text-gray-500 dark:text-gray-400">{formatDate(event.dateTime)}</p>
                                             </div>
