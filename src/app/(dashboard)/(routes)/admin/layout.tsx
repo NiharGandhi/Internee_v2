@@ -24,7 +24,7 @@ const TeacherLayout = ({
         fetchUserData();
     }, []);
     
-    console.log("Bool", userRole !== "ADMIN");
+    // console.log("Bool", userRole !== "ADMIN");
 
     if (userRole==="USER") {
         return redirect("/")

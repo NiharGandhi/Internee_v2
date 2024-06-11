@@ -72,7 +72,7 @@ const ProjectEditPage = ({
     };
 
     const urlId = params.projectId
-    console.log("URL ID: " + urlId);
+    // console.log("URL ID: " + urlId);
 
     useEffect(() => {
         const fetchUserData = async () => {

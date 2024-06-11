@@ -29,7 +29,7 @@ import { Separator } from '@/components/ui/separator';
 const EventIdPage = async ({
     params
 } : {
-    params: { id: string }
+        params: { eventId: string }
 }) => {
     const { userId } = auth();
 
@@ -37,9 +37,13 @@ const EventIdPage = async ({
         return redirect("/")
     }
 
-    const event = await db.events.findFirst({
+    const eventUrlId = params.eventId;
+
+    console.log(eventUrlId);
+
+    const event = await db.events.findUnique({
         where: {
-            id: params.id
+            id: params.eventId
         }
     })
 
@@ -82,7 +86,7 @@ const EventIdPage = async ({
                               </>
                           )}
                           <div className='flex'>
-                              <h2 className='font-semibold mr-2'>Graduation Date:</h2>
+                              <h2 className='font-semibold mr-2'>Date:</h2>
                               {event?.dateTime ? event.dateTime.toDateString() : 'N/A'}
                           </div>
                           <Separator />

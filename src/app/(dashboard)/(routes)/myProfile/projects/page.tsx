@@ -264,10 +264,10 @@ const AddProjectsPage = () => {
             router.push(`/myProfile/projects/${projectId}`)
 
         } catch (error) {
-            console.error("Error deleting project:", error);
+            console.error("Error Editing project:", error);
             toast({
                 title: "Error",
-                description: "An error occurred while deleting the project.",
+                description: "An error occurred while Editing the project.",
             });
         }
     };
@@ -411,7 +411,6 @@ const AddProjectsPage = () => {
                                                             <DropdownMenuItem onClick={() => handleDelete(index)} className='text-red-500'>Delete</DropdownMenuItem>
                                                         </DropdownMenuContent>
                                                     </DropdownMenu>
-
                                                 </div>
                                             </div>
                                         ))}

@@ -39,12 +39,12 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
+
 import { CalendarIcon } from 'lucide-react';
-import EventCard from '@/components/EventCard';
 import useEvents from '@/hooks/useEvents';
 import { useToast } from '@/components/ui/use-toast';
-import { describe } from 'node:test';
 import { Textarea } from '@/components/ui/textarea';
+import AdminEventCard from './_components/AdminEventCard';
 
 const formSchema = z.object({
   title: z.string().min(2).max(50),
@@ -188,7 +188,7 @@ const EventManagement = () => {
           </Form>
         </div>
         <div className='w-full py-4 lg:px-10 md:px-10'>
-          <EventCard events={events} title='Upcoming Events' desc='Events you may be interested in' upcomingEventsActive={true} pastEventsActive={false}/>
+          <AdminEventCard events={events} title='Upcoming Events' desc='Events you may be interested in' upcomingEventsActive={true} pastEventsActive={false}/>
         </div>
       </div>
     </div>
