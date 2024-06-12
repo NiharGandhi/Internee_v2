@@ -11,14 +11,9 @@ import {
 import {
     Card,
     CardContent,
-    CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
@@ -78,9 +73,9 @@ const EventIdPage = async ({
                               <>
                                   <div>
                                       <h2 className='font-semibold'>Description:</h2>
-                                      <ScrollArea className='h-[270px] lg:h-[100px] whitespace-pre-wrap font-light'>
+                                      <p className='whitespace-pre-wrap font-light'>
                                           {event?.description}
-                                      </ScrollArea>
+                                      </p>
                                   </div>
                                   <Separator />
                               </>
