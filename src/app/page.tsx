@@ -1,15 +1,12 @@
-import { CardFooter, CardContent, CardHeader, CardDescription, Card, CardTitle } from "@/components/ui/card";
-import { BriefcaseIcon, CheckIcon, XIcon } from "lucide-react";
+import { CardFooter, CardContent, CardHeader, Card, CardTitle } from "@/components/ui/card";
+import { CheckIcon, XIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 import HeroImage from "../../public/placeholder.png";
 import FetaureImage from "../../public/features.jpeg";
 import Header from "@/components/header";
-import AnimatedGradientText from "@/components/magicui/animated-gradient-text";
-import AnimatedShinyText from "@/components/magicui/animated-shiny-text";
 import ShimmerButton from "@/components/magicui/shimmer-button";
-import { StripePricingTable } from "@/helpers/priceTable";
 
 export default function Home() {
   return (

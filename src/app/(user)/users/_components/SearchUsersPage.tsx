@@ -1,9 +1,12 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
+
 import { format } from 'date-fns';
+
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+
 import {
     Card,
     CardContent,
@@ -12,14 +15,15 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import AnimatedGradientText from '@/components/magicui/animated-gradient-text';
-import { Input } from '@/components/ui/input';
 import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+
+import AnimatedGradientText from '@/components/magicui/animated-gradient-text';
+
 import { BadgeCheckIcon, ChevronsUpDown } from 'lucide-react';
-import VerifiedBadge from "../../../../../public/verified_badge.svg";
 
 const SearchUsersPage = ({ userId, users }: { userId: string, users: any }) => {
     const [currentPage, setCurrentPage] = useState(1);

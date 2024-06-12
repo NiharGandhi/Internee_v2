@@ -17,22 +17,13 @@ import {
 } from "@/components/ui/card";
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { 
-    Breadcrumb, 
-    BreadcrumbItem, 
-    BreadcrumbLink, 
-    BreadcrumbList, 
-    BreadcrumbPage, 
-    BreadcrumbSeparator 
-} from '@/components/ui/breadcrumb';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { Separator } from '@/components/ui/separator';
 
 import { ArrowLeft } from 'lucide-react';
 
-import FallBack from "../../../../../../public/fallback.png";
 import CompanyLogo from "../../../../../../public/CompanyLogoFallback.svg";
 import CompanyBanner from "../../../../../../public/CompanyBannerFallback.png";
-import { Separator } from '@/components/ui/separator';
+
 import { cn } from '@/lib/utils';
 
 
