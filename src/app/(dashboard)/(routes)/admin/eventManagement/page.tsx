@@ -47,7 +47,7 @@ import { Textarea } from '@/components/ui/textarea';
 import AdminEventCard from './_components/AdminEventCard';
 
 const formSchema = z.object({
-  title: z.string().min(2).max(50),
+  title: z.string().min(2),
   dateOfEvent: z.date({
     required_error: "A Date is required.",
   }),
