@@ -69,6 +69,11 @@ const EventIdPage = async ({
                   </CardHeader>
                   <CardContent>
                       <div className='flex flex-col mt-4 justify-center space-y-2 mb-4'>
+                          <div className='flex'>
+                              <h2 className='font-semibold mr-2'>Date:</h2>
+                              {event?.dateTime ? event.dateTime.toDateString() : 'N/A'}
+                          </div>
+                          <Separator />
                           {event?.description !== 'null' && (
                               <>
                                   <div>
@@ -77,14 +82,8 @@ const EventIdPage = async ({
                                           {event?.description}
                                       </p>
                                   </div>
-                                  <Separator />
                               </>
                           )}
-                          <div className='flex'>
-                              <h2 className='font-semibold mr-2'>Date:</h2>
-                              {event?.dateTime ? event.dateTime.toDateString() : 'N/A'}
-                          </div>
-                          <Separator />
                       </div>
                   </CardContent>
               </Card>
