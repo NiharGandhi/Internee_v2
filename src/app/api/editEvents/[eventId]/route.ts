@@ -39,7 +39,7 @@ export async function PUT(req: Request,) {
             return new NextResponse("UNAUTHORIZED", { status: 500 })
         }
 
-        const { title, description, dateTime } = await req.json();
+        const { title, description, dateTime, link } = await req.json();
 
         const newEvent = await db.events.update({
             where: {
@@ -49,6 +49,7 @@ export async function PUT(req: Request,) {
                 title: title,
                 description: description,
                 dateTime: dateTime,
+                link: link,
             }
         })
 

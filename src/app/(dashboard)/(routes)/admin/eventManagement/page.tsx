@@ -51,7 +51,8 @@ const formSchema = z.object({
   dateOfEvent: z.date({
     required_error: "A Date is required.",
   }),
-  description: z.string().min(2)
+  description: z.string().min(2),
+  link: z.string()
 });
 
 
@@ -67,7 +68,8 @@ const EventManagement = () => {
     defaultValues: {
       title: "",
       dateOfEvent: new Date(),
-      description: ""
+      description: "",
+      link: "",
     },
   });
 
@@ -178,6 +180,22 @@ const EventManagement = () => {
                     </FormControl>
                     <FormDescription>
                       This is publicly displayed.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="link"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Registration Link (optional)</FormLabel>
+                    <FormControl>
+                      <Input placeholder="https://event...." {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      This is publicly displayed link.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

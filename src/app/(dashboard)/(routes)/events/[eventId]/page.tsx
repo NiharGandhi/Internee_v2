@@ -20,6 +20,8 @@ import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 const EventIdPage = async ({
     params
@@ -82,7 +84,17 @@ const EventIdPage = async ({
                                           {event?.description}
                                       </p>
                                   </div>
+                                  <Separator />
                               </>
+                          )}
+                          {event?.link  && event.link !== "" && (
+                            <>
+                                <div>
+                                      <Link href={event.link} className='whitespace-pre-wrap font-light' rel="noopener noreferrer" target="_blank">
+                                          <Button>Register</Button>
+                                      </Link>
+                                </div>
+                            </>
                           )}
                       </div>
                   </CardContent>

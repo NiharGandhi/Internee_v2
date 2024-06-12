@@ -65,6 +65,7 @@ model Events {
   title String 
   dateTime DateTime
   description String @default("null")
+  link String?
 }
 
 model OnlineReourses {
