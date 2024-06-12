@@ -337,7 +337,7 @@ const MyProfile = () => {
                                         <FormItem>
                                             <FormLabel>Name</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="Internee" {...field} disabled={!isEditing && userData !== null} />
+                                                <Input placeholder="Internee" {...field} disabled={!isEditing && userData !== null} required/>
                                             </FormControl>
                                             <FormDescription>
                                                 This is your public display name.
@@ -354,7 +354,7 @@ const MyProfile = () => {
                                         <FormItem>
                                             <FormLabel>Bio</FormLabel>
                                             <FormControl>
-                                                <Textarea placeholder="Tell us about yourself" {...field} disabled={!isEditing && userData !== null} />
+                                                <Textarea placeholder="Tell us about yourself" {...field} disabled={!isEditing && userData !== null} required/>
                                             </FormControl>
                                             <FormDescription>
                                                 Tell us a bit about yourself
@@ -406,7 +406,7 @@ const MyProfile = () => {
                                         <FormItem>
                                             <FormLabel>Institution Name</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="Rochester Institute of Technology" {...field} disabled={!isEditing && userData !== null} />
+                                                <Input placeholder="Rochester Institute of Technology" {...field} disabled={!isEditing && userData !== null} required/>
                                             </FormControl>
                                             <FormDescription>
                                                 Currently studying at or recently Graduated from
@@ -472,7 +472,7 @@ const MyProfile = () => {
                                         <FormItem>
                                             <FormLabel>Email</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="intern@gmail.com" {...field} disabled={!isEditing && userData !== null} />
+                                                <Input placeholder="intern@gmail.com" {...field} disabled={!isEditing && userData !== null} required/>
                                             </FormControl>
                                             <FormDescription>
                                                 An Email to recieve updates and to be contacted at by the public
@@ -489,7 +489,7 @@ const MyProfile = () => {
                                         <FormItem>
                                             <FormLabel>Skills</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="Internee" {...field} disabled={!isEditing && userData !== null} />
+                                                <Input placeholder="Internee" {...field} disabled={!isEditing && userData !== null} required/>
                                             </FormControl>
                                             <FormDescription>Multiple Skils Separeted by commas (eg: photography, graphic Design)</FormDescription>
                                             <FormMessage />

@@ -109,7 +109,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section id="testimonials" className="w-full py-12 md:py-24 lg:py-32 bg-[#f4f4f4] dark:bg-gray-800">
+        <section id="testimonials" className="w-full py-12 md:py-24 lg:py-32">
           <div className="container grid items-center justify-center gap-4 px-4 text-center md:px-6 lg:gap-10">
             <div className="space-y-3">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">What our users say</h2>
@@ -161,9 +161,70 @@ export default function Home() {
                 Choose the plan that best fits your needs and budget.
               </p>
             </div>
-          </div>
-          <div className="">
-            <StripePricingTable />
+            <div className="mx-auto grid max-w-4xl grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:gap-8">
+              <Card className="bg-white dark:bg-gray-950">
+                <CardHeader className="border-b border-gray-200 dark:border-gray-700 p-6">
+                  <CardTitle>Free</CardTitle>
+                  <div className="mt-2 flex items-baseline">
+                    <span className="text-4xl font-bold">$0</span>
+                    <span className="ml-1 text-sm text-gray-500 dark:text-gray-400">/month</span>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <ul className="space-y-2">
+                    <li className="flex items-center">
+                      <CheckIcon className="mr-2 h-4 w-4 text-green-500" />
+                      Create profile
+                    </li>
+                    <li className="flex items-center">
+                      <CheckIcon className="mr-2 h-4 w-4 text-green-500" />
+                      Browse & Apply internships
+                    </li>
+                    <li className="flex items-center">
+                      <XIcon className="mr-2 h-4 w-4 text-red-500" />
+                      Verified Profile
+                    </li>
+                    <li className="flex items-center">
+                      <XIcon className="mr-2 h-4 w-4 text-red-500" />
+                      AI Features
+                    </li>
+                  </ul>
+                </CardContent>
+                <CardFooter className="border-t border-gray-200 dark:border-gray-700 p-6" />
+              </Card>
+              <Card className="bg-white dark:bg-gray-950">
+                <CardHeader className="border-b border-gray-200 dark:border-gray-700 p-6">
+                  <CardTitle>Pro</CardTitle>
+                  <div className="mt-2 flex items-baseline">
+                    <span className="text-4xl font-bold">AED 9.99</span>
+                    <span className="ml-1 text-sm text-gray-500 dark:text-gray-400">/month</span>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <ul className="space-y-2">
+                    <li className="flex items-center">
+                      <CheckIcon className="mr-2 h-4 w-4 text-green-500" />
+                      Create profile
+                    </li>
+                    <li className="flex items-center">
+                      <CheckIcon className="mr-2 h-4 w-4 text-green-500" />
+                      Browse & Apply internships
+                    </li>
+                    <li className="flex items-center">
+                      <CheckIcon className="mr-2 h-4 w-4 text-green-500" />
+                      Verified Profile
+                    </li>
+                    <li className="flex items-center">
+                      <CheckIcon className="mr-2 h-4 w-4 text-green-500" />
+                      AI Feature
+                    </li>
+                  </ul>
+                </CardContent>
+                <CardFooter className="border-t border-gray-200 dark:border-gray-700 p-6">
+
+                </CardFooter>
+              </Card>
+            </div>
           </div>
         </section>
       </main>
