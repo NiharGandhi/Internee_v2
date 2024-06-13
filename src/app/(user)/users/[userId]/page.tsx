@@ -31,8 +31,8 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
-import { ArrowBigRight, BadgeCheckIcon, CalendarIcon, DownloadCloudIcon, FileIcon, LinkIcon } from 'lucide-react';
-import { AiFillInstagram } from "react-icons/ai";
+import { ArrowBigRight, BadgeCheckIcon, CalendarIcon, DownloadCloudIcon, FileIcon, LinkIcon, Mail } from 'lucide-react';
+import { AiFillInstagram, AiFillMail } from "react-icons/ai";
 
 import { SocialIcon } from 'react-social-icons';
 
@@ -69,9 +69,15 @@ const UserPublicPage = async ({
         }
     });
 
-    const userSkills = user?.skills ? user.skills.split(',') : [];
-
-    console.log(user?.instagramLink)
+    const copyToClipboard = (text : string) => {
+        navigator.clipboard.writeText(text)
+            .then(() => {
+                alert('Email copied to clipboard');
+            })
+            .catch((err) => {
+                console.error('Failed to copy: ', err);
+            });
+    };
 
     return (
         <div>
@@ -122,6 +128,13 @@ const UserPublicPage = async ({
                                 )}
                                 {user?.xLink && (
                                     <SocialIcon url={user?.xLink} rel="noopener noreferrer" target="_blank" style={{ height: 40, width: 40 }} />
+                                )}
+                                {user?.email && (
+                                    <SocialIcon 
+                                        network='email'
+                                        style={{ height: 40, width: 40 }}
+                                        href={`mailto:${user?.email}`}
+                                    />
                                 )}
                             </div>
                         </div>
@@ -240,21 +253,14 @@ const UserPublicPage = async ({
                         <Separator className='mt-6' />
                     </CardContent>
                     <CardFooter>
-                        <Popover>
-                            <PopoverTrigger asChild>
-                                <Button>Contact Me</Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-80 px-4">
-                                <div className="grid gap-4">
-                                    <div className="space-y-2">
-                                        <h4 className="font-medium leading-none">Email ID</h4>
-                                        <p className="text-sm text-muted-foreground">
-                                            {user?.email}
-                                        </p>
-                                    </div>
-                                </div>
-                            </PopoverContent>
-                        </Popover>
+                        <Button 
+                            className='flex'
+                        >   
+                            <Link href={`mailto:${user?.email}`}>
+                                Email Me
+                            </Link>
+                            <Mail className='ml-1 h-5 w-5'/>
+                        </Button>
                     </CardFooter>
                 </Card>
             </div>
