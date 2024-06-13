@@ -143,7 +143,7 @@ const UserPublicPage = async ({
                                 <>
                                     <div>
                                         <h2 className='font-semibold'>Bio:</h2>
-                                        <ScrollArea className='h-[270px] lg:h-[100px] whitespace-pre-wrap font-light'>
+                                        <ScrollArea className='h-[270px] lg:h-[200px] whitespace-pre-wrap font-light'>
                                             {user?.bio}
                                         </ScrollArea>
                                     </div>

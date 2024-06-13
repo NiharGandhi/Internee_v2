@@ -55,6 +55,7 @@ import { SocialIcon } from 'react-social-icons'
 import { FileUpload } from '@/components/file-upload';
 import ProfileProjectsDisplay from '@/components/profileProjectsDisplay';
 import ProfileCertificatesDisplay from '@/components/profileCertificatesDisplay';
+
 import { Loader } from '@/components/Loader';
 
 
@@ -114,7 +115,6 @@ const MyProfile = () => {
         };
 
         fetchData();
-        setLoading(false);
     }, []);
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -148,7 +148,9 @@ const MyProfile = () => {
                 linkedInLink: userData.linkedInLink,
                 xLink: userData.xLink,
             });
+            setLoading(false);
         }
+        setLoading(false);
     }, [form, userData]);
 
     // Resume URL rendering logic
@@ -190,7 +192,6 @@ const MyProfile = () => {
     const handleResumeUpload = (url?: string) => {
         if (url) {
             form.setValue("resumeUrl", url);
-            onSave();
         }
     };
 
