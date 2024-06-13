@@ -17,6 +17,8 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -30,8 +32,9 @@ import {
 } from "@/components/ui/breadcrumb";
 
 import { ArrowBigRight, BadgeCheckIcon, CalendarIcon, DownloadCloudIcon, FileIcon, LinkIcon } from 'lucide-react';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Separator } from '@/components/ui/separator';
+import { AiFillInstagram } from "react-icons/ai";
+
+import { SocialIcon } from 'react-social-icons';
 
 
 const UserPublicPage = async ({
@@ -68,6 +71,8 @@ const UserPublicPage = async ({
 
     const userSkills = user?.skills ? user.skills.split(',') : [];
 
+    console.log(user?.instagramLink)
+
     return (
         <div>
             <Header />
@@ -103,6 +108,22 @@ const UserPublicPage = async ({
                             )) : (
                                 <p className='text-sm text-muted'>No Skills Added</p>
                             )}
+                        </div>
+                        <div className='mt-4'>
+                            <h2 className='font-semibold'>
+                                Socials
+                            </h2>
+                            <div className='flex space-x-4 py-2'>
+                                {user?.linkedInLink && (
+                                    <SocialIcon url={user?.linkedInLink} rel="noopener noreferrer" target="_blank" style={{ height: 40, width: 40 }} />
+                                )}
+                                {user?.instagramLink && (
+                                    <SocialIcon url={user?.instagramLink} rel="noopener noreferrer" target="_blank" style={{ height: 40, width: 40 }} />
+                                )}
+                                {user?.xLink && (
+                                    <SocialIcon url={user?.xLink} rel="noopener noreferrer" target="_blank" style={{ height: 40, width: 40 }} />
+                                )}
+                            </div>
                         </div>
                         <div className='flex flex-col mt-4 justify-center space-y-2 mb-4'>
                             {user?.bio && (

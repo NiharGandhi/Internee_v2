@@ -49,7 +49,8 @@ import { useToast } from '@/components/ui/use-toast';
 import { Separator } from "@/components/ui/separator"
 import { Textarea } from '@/components/ui/textarea';
 
-import { CalendarIcon, ChevronDown, DownloadCloudIcon, FileIcon } from 'lucide-react';
+import { CalendarIcon, ChevronDown, DownloadCloudIcon, FileIcon, Instagram, Linkedin } from 'lucide-react';
+import { SocialIcon } from 'react-social-icons'
 
 import { FileUpload } from '@/components/file-upload';
 import ProfileProjectsDisplay from '@/components/profileProjectsDisplay';
@@ -69,7 +70,10 @@ const formSchema = z.object({
     }),
     skills: z.string().min(2).max(150),
     email: z.string().email(),
-    resumeUrl: z.string().min(1)
+    resumeUrl: z.string().min(1),
+    instagramLink: z.string().min(1).max(80),
+    linkedInLink: z.string().min(1).max(157),
+    xLink: z.string().min(1).max(150),
 })
 
 const MyProfile = () => {
@@ -123,6 +127,9 @@ const MyProfile = () => {
             skills: "",
             email: "",
             resumeUrl: "",
+            instagramLink: "",
+            linkedInLink: "",
+            xLink: "",
         },
     });
 
@@ -137,6 +144,9 @@ const MyProfile = () => {
                 skills: userData.skills,
                 email: userData.email,
                 resumeUrl: userData.resume,
+                instagramLink: userData.instagramLink,
+                linkedInLink: userData.linkedInLink,
+                xLink: userData.xLink,
             });
         }
     }, [form, userData]);
@@ -483,6 +493,63 @@ const MyProfile = () => {
                                                 <Input placeholder="Internee" {...field} disabled={!isEditing && userData !== null} required/>
                                             </FormControl>
                                             <FormDescription>Multiple Skils Separeted by commas (eg: photography, graphic Design)</FormDescription>
+                                            <FormMessage />
+                                        </FormItem>
+
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="instagramLink"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>
+                                                <SocialIcon url='https://www.instagram.com/' style={{ height: 40, width: 40 }} />
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Input placeholder="www.instagram.com/..." {...field} disabled={!isEditing && userData !== null} required />
+                                            </FormControl>
+                                            <FormDescription>
+                                                This is your public display Social.
+                                            </FormDescription>
+                                            <FormMessage />
+                                        </FormItem>
+
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="linkedInLink"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>
+                                                <SocialIcon url='https://www.linkedin.com/' style={{ height: 40, width: 40 }} />
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Input placeholder="www.linkedIn.com/...." {...field} disabled={!isEditing && userData !== null} required />
+                                            </FormControl>
+                                            <FormDescription>
+                                                This is your public display Social.
+                                            </FormDescription>
+                                            <FormMessage />
+                                        </FormItem>
+
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="xLink"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>
+                                                <SocialIcon url="https://www.x.com/" style={{ height: 40, width: 40 }} />
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Input placeholder="www.x.com/..." {...field} disabled={!isEditing && userData !== null} required />
+                                            </FormControl>
+                                            <FormDescription>
+                                                This is your public display Social.
+                                            </FormDescription>
                                             <FormMessage />
                                         </FormItem>
 

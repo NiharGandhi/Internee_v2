@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
     try {
         const { userId } = auth();
-        const { name, bio, institutionName, educationLevel, yearOfGrad, skills, email, resumeUrl } = await req.json();
+        const { name, bio, institutionName, educationLevel, yearOfGrad, skills, email, resumeUrl, instagramLink, linkedInLink, xLink } = await req.json();
 
         if (!userId) {
             return new NextResponse("UnAuthorized", { status: 401 });
@@ -30,7 +30,10 @@ export async function POST(req: Request) {
                     GraduationDate: yearOfGrad,
                     skills: skills,
                     email: email,
-                    resume: resumeUrl
+                    resume: resumeUrl,
+                    instagramLink: instagramLink,
+                    linkedInLink: linkedInLink,
+                    xLink: xLink,
                 }
             })
 
@@ -48,6 +51,9 @@ export async function POST(req: Request) {
                     skills: skills,
                     email: email,
                     resume: resumeUrl,
+                    instagramLink: instagramLink,
+                    linkedInLink: linkedInLink,
+                    xLink: xLink,
                 },
             });
 
@@ -85,7 +91,7 @@ export async function GET(req: Request) {
 export async function PUT(req: Request) {
     try {
         const { userId } = auth();
-        const { name, bio, institutionName, educationLevel, yearOfGrad, skills, email, resumeUrl } = await req.json();
+        const { name, bio, institutionName, educationLevel, yearOfGrad, skills, email, resumeUrl, instagramLink, linkedInLink, xLink } = await req.json();
 
         if (!userId) {
             return new NextResponse("UnAuthorized", { status: 401 });
@@ -113,6 +119,9 @@ export async function PUT(req: Request) {
                 skills: skills,
                 email: email,
                 resume: resumeUrl,
+                instagramLink: instagramLink,
+                linkedInLink: linkedInLink,
+                xLink: xLink,
             }
         });
 

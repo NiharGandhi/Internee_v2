@@ -24,6 +24,9 @@ model User {
   email String? @unique 
   stripe_customer_id String?
   verified Boolean @default(false)
+  instagramLink String?
+  linkedInLink String?
+  xLink String?
   
   skills String?
 
