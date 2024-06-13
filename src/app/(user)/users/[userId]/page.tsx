@@ -32,7 +32,6 @@ import {
 } from "@/components/ui/breadcrumb";
 
 import { ArrowBigRight, BadgeCheckIcon, CalendarIcon, DownloadCloudIcon, FileIcon, LinkIcon, Mail } from 'lucide-react';
-import { AiFillInstagram, AiFillMail } from "react-icons/ai";
 
 import { SocialIcon } from 'react-social-icons';
 
