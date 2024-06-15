@@ -4,7 +4,7 @@ import { db } from '@/lib/db';
 import { NextResponse } from 'next/server';
 import { auth } from "@clerk/nextjs/server";
 
-export async function GET(req: { url: string | URL; }) {
+export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const applicationId = searchParams.get('applicationId');
 
