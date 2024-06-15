@@ -32,7 +32,7 @@ export async function GET(req: Request) {
     }
 }
 
-export async function POST(req: { json: () => PromiseLike<{ applicationId: any; content: any; }> | { applicationId: any; content: any; }; }) {
+export async function POST(req: Request) {
     const { applicationId, content } = await req.json();
     const { userId } = auth(); // Ensure you have a way to get the logged-in user
 
