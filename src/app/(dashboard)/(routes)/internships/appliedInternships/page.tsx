@@ -25,6 +25,7 @@ import {
 
 import ApplicationStatusLabel from '@/components/ApplicationStatusLabel';
 import { Button } from '@/components/ui/button';
+import { MessageCircle } from 'lucide-react';
 
 
 
@@ -80,6 +81,11 @@ const InternshipsPage = async () => {
                             <CardFooter>
                                 Status:
                                 <ApplicationStatusLabel applicationId={internships.id} />
+                                <Link href={`/messages/${internships.id}`} className='ml-auto'>
+                                    <Button>
+                                        <MessageCircle />
+                                    </Button>
+                                </Link>
                             </CardFooter>
                         </Card>
                     </Link>
